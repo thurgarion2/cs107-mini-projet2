@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16a3e9f0-50f7-4c24-92a7-3211b87a59b4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="16a3e9f0-50f7-4c24-92a7-3211b87a59b4" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -197,7 +195,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="15" />
     <option name="y" value="30" />
     <option name="width" value="1890" />
@@ -228,7 +226,7 @@
     <property name="SearchEverywhereHistoryKey" value="getCurr&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.actor.Interactable#getCurrentCells&#10;setViewCa&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.Area#setViewCandidate&#10;Ba&#9;FILE&#9;file://C:/Users/esera/Desktop/projet02/GridGame/cs107-mini-projet2/java/ch/epfl/cs107/play/game/areagame/actor/Background.java&#10;ba&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.actor.ImageGraphics#removeBackground&#10;background&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.Area#background&#10;setCur&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.AreaGame#setCurrentArea&#10;Area&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.Area&#10;Area up&#9;PSI&#9;JAVA://javax.imageio.ImageReader#addIIOReadUpdateListener" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543248561987" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543248616950" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/res" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -290,7 +288,7 @@
       <workItem from="1543149599120" duration="1859000" />
       <workItem from="1543223388941" duration="7382000" />
       <workItem from="1543231166399" duration="3065000" />
-      <workItem from="1543246818953" duration="1525000" />
+      <workItem from="1543246818953" duration="1774000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1543223434596</created>
@@ -331,11 +329,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38693000" />
+    <option name="totallyTimeSpent" value="38942000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.13315217" visible="true" weight="0.27125505" />
       <window_info id="Structure" order="1" sideWeight="0.8668478" side_tool="true" weight="0.2534413" />
