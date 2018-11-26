@@ -195,7 +195,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="15" />
     <option name="y" value="30" />
     <option name="width" value="1890" />
@@ -226,7 +226,7 @@
     <property name="SearchEverywhereHistoryKey" value="getCurr&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.actor.Interactable#getCurrentCells&#10;setViewCa&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.Area#setViewCandidate&#10;Ba&#9;FILE&#9;file://C:/Users/esera/Desktop/projet02/GridGame/cs107-mini-projet2/java/ch/epfl/cs107/play/game/areagame/actor/Background.java&#10;ba&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.actor.ImageGraphics#removeBackground&#10;background&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.Area#background&#10;setCur&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.AreaGame#setCurrentArea&#10;Area&#9;PSI&#9;JAVA://ch.epfl.cs107.play.game.areagame.Area&#10;Area up&#9;PSI&#9;JAVA://javax.imageio.ImageReader#addIIOReadUpdateListener" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543248616950" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543249061319" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/res" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
