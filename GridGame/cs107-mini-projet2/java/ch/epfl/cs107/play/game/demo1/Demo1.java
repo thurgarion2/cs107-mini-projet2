@@ -67,10 +67,9 @@ public class Demo1 implements Game {
             actor2.update(deltaTime);
         }
 
-        float decalage=0.045961f;
+        float decalage=(float)Math.sqrt(2*0.2*0.2);
         Vector position =actor2.getPosition().add(new Vector(decalage, decalage));
         float dist=position.getLength();
-
 
         if(dist<=radius+0.062f ){
            text.draw(window);

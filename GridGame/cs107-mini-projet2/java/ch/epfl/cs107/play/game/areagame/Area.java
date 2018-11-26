@@ -222,11 +222,13 @@ public abstract class Area implements Playable {
     /**set the camera at the right position*/
     private void updateCamera () {
         // TODO implements me #PROJECT #TUTO
+
+        Vector center = viewCenter;
         if(viewCandidate!=null){
-            viewCenter=viewCandidate.getPosition();
+            center=viewCandidate.getPosition();
         }
 
-        Transform viewTransform = Transform.I.scaled(getCameraScaleFactor()).translated(viewCenter);
+        Transform viewTransform = Transform.I.scaled(getCameraScaleFactor()).translated(center);
         window.setRelativeTransform(viewTransform);
     }
 

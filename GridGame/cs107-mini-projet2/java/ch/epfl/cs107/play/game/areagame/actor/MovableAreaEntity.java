@@ -1,3 +1,4 @@
+
 package ch.epfl.cs107.play.game.areagame.actor;
 
 import ch.epfl.cs107.play.game.areagame.Area;
@@ -7,6 +8,9 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Vector;
 
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * MovableAreaEntity are AreaEntity able to move on a grid
@@ -14,6 +18,15 @@ import ch.epfl.cs107.play.math.Vector;
 public abstract class MovableAreaEntity extends AreaEntity {
 
     // TODO implements me #PROJECT #TUTO
+
+    protected  final List<DiscreteCoordinates> getLeavingCells(){
+        return  this.getCurrentCells();
+    }
+    protected final List<DiscreteCoordinates> getEnteringCells(){
+        List<DiscreteCoordinates> out = new LinkedList<>();
+        out.add( getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
+        return out;
+    }
 
     /**
      * Default MovableAreaEntity constructor

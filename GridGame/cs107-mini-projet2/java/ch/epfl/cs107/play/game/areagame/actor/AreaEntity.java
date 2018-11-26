@@ -6,14 +6,23 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.Vector;
 
 
 /**
  * Actors leaving in a grid
  */
-public abstract class AreaEntity extends Entity {
+public abstract class AreaEntity extends Entity implements Interactable {
 
     // TODO implements me #PROJECT #TUTO
+
+    /// an AreaEntity knows its own Area
+    private Area ownerArea;
+    /// Orientation of the AreaEntity in the Area
+    private Orientation orientation;
+    /// Coordinate of the main Cell linked to the entity
+    private DiscreteCoordinates currentMainCellCoordinates;
+
 
     /**
      * Default AreaEntity constructor
@@ -21,12 +30,44 @@ public abstract class AreaEntity extends Entity {
      * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
      * @param position (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
-    public AreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) {
+    public AreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException{
 
         super(position.toVector());
         // TODO implements me #PROJECT #TUTO
+        if(area==null){
+            throw new NullPointerException("initial Owner is null");
+        }
+
+        ownerArea=area;
+
+        if(orientation==null){
+            throw new NullPointerException("initial Orientation is null");
+        }
+
+        this.orientation=orientation;
+
+        if(position==null){
+            throw new NullPointerException("initial position is null");
+        }
+
+        this.currentMainCellCoordinates=position;
+
     }
 
+    @Override
+    protected void setCurrentPosition(Vector v) {
+        super.setCurrentPosition(v.round());
+    }
+
+    /**Getter for orientation*/
+    protected Orientation getOrientation(){
+        return orientation;
+    }
+
+    /**Getter for orientation*/
+    protected void setOrientationOrientation(Orientation orientation){
+       this.orientation=orientation;
+    }
 
     /**
      * Getter for the coordinates of the main cell occupied by the AreaEntity
@@ -34,7 +75,7 @@ public abstract class AreaEntity extends Entity {
      */
     protected DiscreteCoordinates getCurrentMainCellCoordinates(){
         // TODO implements me #PROJECT #TUTO
-        return null;
+        return currentMainCellCoordinates;
     }
 
 }
