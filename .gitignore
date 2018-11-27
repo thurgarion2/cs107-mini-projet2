@@ -1,6 +1,8 @@
-"" 
-*.idea
+""
+/out 
+/idea
 /bin
+*.class
 *.classpath
 *.project
 *.iml
