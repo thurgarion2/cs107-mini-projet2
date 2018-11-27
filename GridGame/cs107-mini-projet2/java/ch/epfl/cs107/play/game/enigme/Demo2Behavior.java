@@ -56,5 +56,20 @@ public class Demo2Behavior extends AreaBehavior {
             super(x, y);
             this.type=type;
         }
+
+        @Override
+        public boolean takeCellSpace() {
+            return false;
+        }
+
+        @Override
+        public boolean isViewInteractable() {
+            return false;
+        }
+
+        @Override
+        public boolean isCellInteractable() {
+            return false;
+        }
     }
 }
