@@ -1,6 +1,7 @@
 ""
 /out 
-/idea
+/.idea
+*.idea
 /bin
 *.class
 *.classpath
