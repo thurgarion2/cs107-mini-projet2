@@ -48,17 +48,28 @@ public class Demo2Behavior extends AreaBehavior {
         }
     }
 
-    class Demo2Cell extends Cell{
+    private class Demo2Cell extends Cell {
 
         private Demo2CellType type;
 
-        private   Demo2Cell(int x, int y, Demo2CellType type) {
+        private Demo2Cell(int x, int y, Demo2CellType type) {
             super(x, y);
-            this.type=type;
+            this.type = type;
         }
 
-        public abstrarclass getDemo2Cell() {
-            return Demo2Cell;
+        @Override
+        public boolean takeCellSpace() {
+            return false;
+        }
+
+        @Override
+        public boolean isViewInteractable() {
+            return false;
+        }
+
+        @Override
+        public boolean isCellInteractable() {
+            return false;
         }
     }
 }

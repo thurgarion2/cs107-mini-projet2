@@ -8,9 +8,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * AreaBehavior manages a map of Cells.
@@ -59,6 +57,41 @@ public abstract class AreaBehavior
         return height;
     }
 
+    public boolean canLeave(Interactable entity, List<DiscreteCoordinates> coordinates){
+        boolean out = true;
+        for(DiscreteCoordinates coordinate : coordinates){
+            if(!cells[coordinate.x][coordinate.y].canLeave(entity)){
+                out = false;
+            }
+        }
+        return out;
+    }
+
+    public boolean canEnter(Interactable entity, List<DiscreteCoordinates> coordinates){
+        boolean out = true;
+        for(DiscreteCoordinates coordinate : coordinates){
+            if(!cells[coordinate.x][coordinate.y].canEnter(entity)){
+                out = false;
+            }
+            if((coordinate.x < getWitdth() && coordinate.x >= 0) || (coordinate.y < getHeight() && coordinate.y >= 0)){
+                out = false;
+            }
+        }
+        return out;
+    }
+
+    protected void leave(Interactable entity, List<DiscreteCoordinates> coordinates){
+        for (DiscreteCoordinates coordinate : coordinates) {
+            cells[coordinate.x][coordinate.y].leave(entity);
+        }
+    }
+
+    protected void enter(Interactable entity, List<DiscreteCoordinates> coordinates){
+        for(DiscreteCoordinates coordinate : coordinates){
+            cells[coordinate.x][coordinate.y].enter(entity);
+        }
+    }
+
     public abstract class Cell implements Interactable{
         private DiscreteCoordinates coordinate;
         private Set<Interactable>  canInteract;
@@ -72,7 +105,24 @@ public abstract class AreaBehavior
 
         public Cell(int x, int y){
             coordinate=new DiscreteCoordinates(x,y);
+            canInteract = new HashSet<>();
         }
+
+        private void enter(Interactable i){
+            if(canEnter(i)) {
+                canInteract.add(i);
+            }
+        }
+
+        private void leave(Interactable i){
+            if(canLeave(i)) {
+                canInteract.remove(i);
+            }
+        }
+
+        protected abstract boolean canEnter(Interactable entity);
+
+        protected abstract boolean canLeave(Interactable entity);
     }
 
 }

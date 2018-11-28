@@ -38,7 +38,7 @@ public abstract class AreaEntity extends Entity implements Interactable {
             throw new NullPointerException("initial Owner is null");
         }
 
-        ownerArea=area;
+        this.ownerArea=area;
 
         if(orientation==null){
             throw new NullPointerException("initial Orientation is null");
@@ -64,7 +64,7 @@ public abstract class AreaEntity extends Entity implements Interactable {
         return orientation;
     }
 
-    /**Getter for orientation*/
+    /**Setter for orientation*/
     protected void setOrientationOrientation(Orientation orientation){
        this.orientation=orientation;
     }

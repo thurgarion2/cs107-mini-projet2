@@ -4,8 +4,10 @@ import ch.epfl.cs107.play.game.Playable;
 import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.actor.GraphicsEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Background;
+import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.demo1.actor.MovingRock;
 import ch.epfl.cs107.play.io.FileSystem;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Transform;
 import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Keyboard;
@@ -13,6 +15,7 @@ import ch.epfl.cs107.play.window.Window;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -45,7 +48,26 @@ public abstract class Area implements Playable {
     //the method begin has been already called
     private boolean initialised=false;
 
+    //Liste des intercables a entrer et sortir
+    private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
+    private Map<Interactable, List<DiscreteCoordinates>> intercablesToLeave;
+
     /**@return (boolean): if begin has been called once*/
+    public final boolean enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
+        boolean cond = areaBehavior.canEnter(entity, coordinates);
+        if(cond) {
+            intercablesToEnter.put(entity, coordinates);
+        }
+        return cond;
+    }
+
+    public final boolean leaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
+        boolean cond = areaBehavior.canLeave(entity, coordinates);
+        if(cond){
+            intercablesToLeave.put(entity, coordinates);
+        }
+        return cond;
+    }
 
     public boolean isInitialised(){
         return initialised;
@@ -72,11 +94,13 @@ public abstract class Area implements Playable {
      */
     private void addActor(Actor a, boolean forced) {
         // TODO implements me #PROJECT #TUTO
-
+        boolean errorOccured = !actors.add(a);
         // Here decisions at the area level to decide if an actor
         // must be added or not
+        if( a instanceof Interactable){
+            errorOccured = errorOccured || !enterAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+        }
 
-        boolean errorOccured = !actors.add(a);
         if(errorOccured && !forced) {
             System.out.println("Actor " + a + " cannot be completely added, so remove it from where it was");
             removeActor(a, true);
@@ -110,6 +134,11 @@ public abstract class Area implements Playable {
 
      private final void purgeRegistration(){
         //if an actor cannot be add or deleted we do not leave it in the list (registered actor..)
+        //private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
+        for(Intercable entry : intercablesToEnter.keySet()){
+            areaBehavior.enter(entry, intercablesToEnter.get(entry));
+        //TODO next QESADIRE : "Entrer dans le truc du machin toute fin de 4.7.3 "
+        }
 
         for(Actor actor : registeredActors){
             addActor(actor,false);

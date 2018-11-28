@@ -19,12 +19,29 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
     // TODO implements me #PROJECT #TUTO
 
+    /// Indicate if the actor is currently moving
+    private boolean isMoving=false;
+    /// Indicate how many frames the current move is supposed to take
+    private int framesForCurrentMove;
+    /// The target cell (i.e. where the mainCell will be after the motion)
+    private DiscreteCoordinates targetMainCellCoordinates;
+
+
+
+    /**@return (List<DiscreteCoordinates>): all the leaving coordinate*/
     protected  final List<DiscreteCoordinates> getLeavingCells(){
         return  this.getCurrentCells();
     }
+
+    /**@return (List<DiscreteCoordinates>): all the coordinate where the Entity should pass*/
     protected final List<DiscreteCoordinates> getEnteringCells(){
+        //possibliy to change of data structure
         List<DiscreteCoordinates> out = new LinkedList<>();
-        out.add( getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
+
+        for(DiscreteCoordinates coord : this.getCurrentCells()){
+            out.add( coord.jump(getOrientation().toVector()));
+        }
+
         return out;
     }
 
@@ -37,6 +54,7 @@ public abstract class MovableAreaEntity extends AreaEntity {
     public MovableAreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
         // TODO implements me #PROJECT #TUTO
+        resetMotion();
     }
 
     /**
@@ -44,16 +62,31 @@ public abstract class MovableAreaEntity extends AreaEntity {
      */
     protected void resetMotion(){
         // TODO implements me #PROJECT #TUTO
+        isMoving=false;
+        framesForCurrentMove=0;
+        targetMainCellCoordinates=getCurrentMainCellCoordinates();
     }
 
     /**
      * 
-     * @param frameForMove (int): number of frames used for simulating motion
+     * @param //frameForMove (int): number of frames used for simulating motion
      * @return (boolean): returns true if motion can occur
      */
   
     protected  boolean move(int framesForMove){
-        // TODO implements me #PROJECT #TUTO
+        // TODO : add area condition
+        if(!isMoving && getPosition().equals(targetMainCellCoordinates)){
+            this.framesForCurrentMove=framesForMove;
+            if(framesForCurrentMove > 1){
+                framesForCurrentMove = 1;
+            }
+
+            Vector orientation = getOrientation().toVector();
+            targetMainCellCoordinates = getCurrentMainCellCoordinates().jump(orientation);
+
+            isMoving=true;
+            return true;
+        }
         return false;
     }
 
@@ -63,7 +96,29 @@ public abstract class MovableAreaEntity extends AreaEntity {
     @Override
     public void update(float deltaTime) {
         // TODO implements me #PROJECT #TUTO
+
+        if(!getPosition().equals(targetMainCellCoordinates) && isMoving){
+
+            Vector distance = getOrientation().toVector();
+            distance = distance.mul(1.0f / framesForCurrentMove);
+            setCurrentPosition(getPosition().add(distance)) ;
+
+        }else{
+            this.resetMotion();
+        }
+
+
     }
+
+    @Override
+    /**only possible if not moving*/
+    protected void setOrientationOrientation(Orientation orientation) {
+        if(!isMoving){
+            super.setOrientationOrientation(orientation);
+        }
+
+    }
+
 
     /// Implements Positionable
 
@@ -72,6 +127,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
         // TODO implements me #PROJECT #TUTO
         // the velocity must be computed as the orientation vector (getOrientation().toVector() mutiplied by 
     	// framesForCurrentMove
-        return null;
+        return getOrientation().toVector().mul(1.0f/framesForCurrentMove);
     }
 }
