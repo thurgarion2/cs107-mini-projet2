@@ -135,10 +135,17 @@ public abstract class Area implements Playable {
      private final void purgeRegistration(){
         //if an actor cannot be add or deleted we do not leave it in the list (registered actor..)
         //private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
-        for(Intercable entry : intercablesToEnter.keySet()){
+        for(Interactable entry : intercablesToEnter.keySet()){
             areaBehavior.enter(entry, intercablesToEnter.get(entry));
-        //TODO next QESADIRE : "Entrer dans le truc du machin toute fin de 4.7.3 "
         }
+
+        intercablesToEnter.clear();
+
+        for(Interactable entry : intercablesToLeave.keySet()){
+            areaBehavior.leave(entry, intercablesToLeave.get(entry));
+        }
+
+        intercablesToLeave.clear();
 
         for(Actor actor : registeredActors){
             addActor(actor,false);
