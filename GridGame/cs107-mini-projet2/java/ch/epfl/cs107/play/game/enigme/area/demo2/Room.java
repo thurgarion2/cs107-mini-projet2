@@ -20,7 +20,6 @@ public abstract class Room extends Area {
 
         Actor background =  new Background(this);
         this.registerActor(background);
-        this.setViewCandidate(background);
         return true;
     }
 

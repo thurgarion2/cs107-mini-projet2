@@ -78,12 +78,16 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
         if(!isMoving || getPosition().equals(targetMainCellCoordinates.toVector())){
             Area current = ownerArea;
-            System.out.println("test");
-            if(!current.leaveAreaCells(this,this.getLeavingCells())
-                    || !current.enterAreaCells(this,this.getEnteringCells())){
+
+            if(!current.leaveAreaCells(this,this.getLeavingCells())){
                 return false;
             }
-            System.out.println("Can move");
+            //TODO fix the situation where the entity can quit the cell but cannot enter in it after
+            if(!current.enterAreaCells(this,this.getEnteringCells())){
+                current.enterAreaCells(this, this.getLeavingCells());
+                return false;
+            }
+
             this.framesForCurrentMove=framesForMove;
             if(framesForCurrentMove < 1){
                 framesForCurrentMove = 1;
@@ -91,7 +95,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
             Vector orientation = getOrientation().toVector();
             targetMainCellCoordinates = getCurrentMainCellCoordinates().jump(orientation);
-            System.out.println(targetMainCellCoordinates+" "+this.getCurrentMainCellCoordinates());
 
             isMoving=true;
             return true;
@@ -107,11 +110,10 @@ public abstract class MovableAreaEntity extends AreaEntity {
         // TODO implements me #PROJECT #TUTO
 
         if(!getPosition().equals(targetMainCellCoordinates.toVector()) && isMoving){
-            System.out.println("isMoving");
             Vector distance = getOrientation().toVector();
             distance = distance.mul(1.0f / (float) framesForCurrentMove);
             setCurrentPosition(getPosition().add(distance)) ;
-            System.out.println(this.getPosition()+" "+distance);
+
         }else{
             this.setCurrentPosition(targetMainCellCoordinates.toVector());
             this.resetMotion();

@@ -52,6 +52,7 @@ public class Demo2 extends AreaGame {
         }
 
         player.enterArea(currentArea,next);
+        currentArea.setViewCandidate(player);
 
     }
 

@@ -74,7 +74,6 @@ public class Demo2Player extends MovableAreaEntity {
 
        if(targetOrientation!=null){
            if(targetOrientation.equals(this.getOrientation())){
-               System.out.println(targetOrientation);
                this.move(ANIMATION_DURATION);
            }else {
                this.setOrientation(targetOrientation);
