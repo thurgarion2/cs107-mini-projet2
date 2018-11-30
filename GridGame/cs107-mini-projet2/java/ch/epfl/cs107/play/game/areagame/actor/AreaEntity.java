@@ -54,6 +54,11 @@ public abstract class AreaEntity extends Entity implements Interactable {
 
     }
 
+    /**Getter for OwnerArea*/
+    protected Area getOwnerArea(){
+        return ownerArea;
+    }
+
     @Override
     protected void setCurrentPosition(Vector v) {
         super.setCurrentPosition(v.round());

@@ -52,7 +52,8 @@ public abstract class Area implements Playable {
     private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
     private Map<Interactable, List<DiscreteCoordinates>> intercablesToLeave;
 
-    /**@return (boolean): if begin has been called once*/
+    /**@return(boolean) : true if entity can enter cells and add entity in area*/
+
     public final boolean enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
         boolean cond = areaBehavior.canEnter(entity, coordinates);
         if(cond) {
@@ -61,6 +62,7 @@ public abstract class Area implements Playable {
         return cond;
     }
 
+    /**@return(boolean) : true if entity can leave cells and remove entity of area*/
     public final boolean leaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
         boolean cond = areaBehavior.canLeave(entity, coordinates);
         if(cond){
@@ -68,6 +70,9 @@ public abstract class Area implements Playable {
         }
         return cond;
     }
+
+
+    /**@return (boolean): if begin has been called once*/
 
     public boolean isInitialised(){
         return initialised;
@@ -92,7 +97,7 @@ public abstract class Area implements Playable {
      * @param a (Actor): the actor to add, not null
      * @param forced (Boolean): if true, the method ends
      */
-    private void addActor(Actor a, boolean forced) {
+    private void addActor(Actor a, boolean forced) throws Exception {
         // TODO implements me #PROJECT #TUTO
         boolean errorOccured = !actors.add(a);
         // Here decisions at the area level to decide if an actor
@@ -106,6 +111,10 @@ public abstract class Area implements Playable {
             removeActor(a, true);
         }
 
+        if(errorOccured){
+            throw new Exception("Cannot add the actor");
+        }
+
     }
 
     /**
@@ -113,16 +122,24 @@ public abstract class Area implements Playable {
      * @param a (Actor): the actor to remove, not null
      * @param forced (Boolean): if true, the method ends
      */
-    private void removeActor(Actor a, boolean forced){
+    private void removeActor(Actor a, boolean forced) throws Exception{
         // TODO implements me #PROJECT #TUTO
-
+        boolean errorOccured = !actors.remove(a);
         // Here decisions at the area level to decide if an actor
         // must be remove or not
 
-        boolean errorOccured = !actors.remove(a);
+        if( a instanceof Interactable){
+            errorOccured = errorOccured || !leaveAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+        }
+
+
         if(errorOccured && !forced) {
             System.out.println("Actor " + a + " cannot be completely added, so leave it where he was");
             addActor(a, true);
+        }
+
+        if(errorOccured){
+            throw new Exception("Cannot remove the actor");
         }
     }
 
@@ -135,21 +152,27 @@ public abstract class Area implements Playable {
      private final void purgeRegistration(){
         //if an actor cannot be add or deleted we do not leave it in the list (registered actor..)
         //private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
-        for(Intercable entry : intercablesToEnter.keySet()){
+        for(Interactable entry : intercablesToEnter.keySet()){
             areaBehavior.enter(entry, intercablesToEnter.get(entry));
         //TODO next QESADIRE : "Entrer dans le truc du machin toute fin de 4.7.3 "
         }
 
-        for(Actor actor : registeredActors){
+
+         for(Interactable entry : intercablesToLeave.keySet()){
+             areaBehavior.leave(entry, intercablesToEnter.get(entry));
+             //TODO next QESADIRE : "Entrer dans le truc du machin toute fin de 4.7.3 "
+         }
+
+       /* for(Actor actor : registeredActors){
             addActor(actor,false);
         }
 
         for(Actor actor : unregisteredActors){
             removeActor(actor,false);
-        }
+        }*/
 
-        registeredActors.clear();
-        unregisteredActors.clear();
+        intercablesToEnter.clear();
+        intercablesToLeave.clear();
     }
 
     /**

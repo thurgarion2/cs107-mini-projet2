@@ -57,35 +57,41 @@ public abstract class AreaBehavior
         return height;
     }
 
+    /**@return (boolean): true if can leave all the cells*/
     public boolean canLeave(Interactable entity, List<DiscreteCoordinates> coordinates){
-        boolean out = true;
+
         for(DiscreteCoordinates coordinate : coordinates){
             if(!cells[coordinate.x][coordinate.y].canLeave(entity)){
-                out = false;
+                return false;
             }
         }
-        return out;
+        return true;
     }
 
+    /**@return (boolean): true if can enter in all the cells*/
     public boolean canEnter(Interactable entity, List<DiscreteCoordinates> coordinates){
         boolean out = true;
         for(DiscreteCoordinates coordinate : coordinates){
-            if(!cells[coordinate.x][coordinate.y].canEnter(entity)){
-                out = false;
+
+            if(coordinate.x < getWitdth() && coordinate.x >= 0 && coordinate.y < getHeight() && coordinate.y >= 0){
+                return  false;
             }
-            if((coordinate.x < getWitdth() && coordinate.x >= 0) || (coordinate.y < getHeight() && coordinate.y >= 0)){
-                out = false;
+
+            if(!cells[coordinate.x][coordinate.y].canEnter(entity)){
+               return false;
             }
         }
-        return out;
+        return true;
     }
 
+    /**remove the entity of all cells of coordinates*/
     protected void leave(Interactable entity, List<DiscreteCoordinates> coordinates){
         for (DiscreteCoordinates coordinate : coordinates) {
             cells[coordinate.x][coordinate.y].leave(entity);
         }
     }
 
+    /**add the entity in all cells of coordinates*/
     protected void enter(Interactable entity, List<DiscreteCoordinates> coordinates){
         for(DiscreteCoordinates coordinate : coordinates){
             cells[coordinate.x][coordinate.y].enter(entity);
@@ -108,20 +114,18 @@ public abstract class AreaBehavior
             canInteract = new HashSet<>();
         }
 
+        /**add the entity in the cell*/
         private void enter(Interactable i){
-            if(canEnter(i)) {
                 canInteract.add(i);
-            }
-        }
 
+        }
+        /**remove entity of the cell*/
         private void leave(Interactable i){
-            if(canLeave(i)) {
                 canInteract.remove(i);
-            }
         }
-
+        /**@return (boolean) : return true if the interactor can enter in cell*/
         protected abstract boolean canEnter(Interactable entity);
-
+        /**@return (boolean) : return true if the interactor can leave the cell*/
         protected abstract boolean canLeave(Interactable entity);
     }
 
