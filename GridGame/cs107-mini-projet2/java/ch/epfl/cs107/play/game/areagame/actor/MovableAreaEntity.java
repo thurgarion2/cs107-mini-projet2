@@ -64,7 +64,7 @@ public abstract class MovableAreaEntity extends AreaEntity {
         // TODO implements me #PROJECT #TUTO
         isMoving=false;
         framesForCurrentMove=0;
-        targetMainCellCoordinates=getCurrentMainCellCoordinates();
+        targetMainCellCoordinates=this.getCurrentMainCellCoordinates();
     }
 
     /**
@@ -91,6 +91,7 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
             Vector orientation = getOrientation().toVector();
             targetMainCellCoordinates = getCurrentMainCellCoordinates().jump(orientation);
+            System.out.println(targetMainCellCoordinates+" "+this.getCurrentMainCellCoordinates());
 
             isMoving=true;
             return true;
@@ -106,12 +107,13 @@ public abstract class MovableAreaEntity extends AreaEntity {
         // TODO implements me #PROJECT #TUTO
 
         if(!getPosition().equals(targetMainCellCoordinates.toVector()) && isMoving){
-
+            System.out.println("isMoving");
             Vector distance = getOrientation().toVector();
             distance = distance.mul(1.0f / (float) framesForCurrentMove);
             setCurrentPosition(getPosition().add(distance)) ;
             System.out.println(this.getPosition()+" "+distance);
         }else{
+            this.setCurrentPosition(targetMainCellCoordinates.toVector());
             this.resetMotion();
         }
 

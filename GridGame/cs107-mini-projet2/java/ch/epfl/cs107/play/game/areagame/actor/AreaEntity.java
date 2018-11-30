@@ -54,11 +54,13 @@ public abstract class AreaEntity extends Entity implements Interactable {
 
     }
 
-    //don0t work otherwise
-    /*@Override
+
+    @Override
     protected void setCurrentPosition(Vector v) {
-        super.setCurrentPosition(v.round());
-    }*/
+        //movable areaentity need float
+        super.setCurrentPosition(v);
+        currentMainCellCoordinates=new DiscreteCoordinates((int)v.round().x,(int)v.round().y);
+    }
 
     /**Getter for orientation*/
     protected Orientation getOrientation(){
