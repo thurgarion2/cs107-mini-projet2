@@ -2,13 +2,19 @@ package ch.epfl.cs107.play.game.enigme;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaGame;
+import ch.epfl.cs107.play.game.enigme.actor.demo2.Demo2Player;
 import ch.epfl.cs107.play.game.enigme.area.demo2.Room0;
 import ch.epfl.cs107.play.game.enigme.area.demo2.Room1;
 import ch.epfl.cs107.play.io.FileSystem;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 public class Demo2 extends AreaGame {
 
+    private Demo2Player player;
+    private DiscreteCoordinates room0=new DiscreteCoordinates(5,5);
+    private DiscreteCoordinates room1=new DiscreteCoordinates(5,2);
+    private boolean areaIsRoom0=true;
 
     public boolean begin(Window window, FileSystem fileSystem){
         super.begin(window,fileSystem);
@@ -19,7 +25,46 @@ public class Demo2 extends AreaGame {
 
         this.setCurrentArea( "LevelSelector" , false);
 
+
+        player= new Demo2Player(this.currentArea,room0);
+        player.initializeDirection(window);
+
+        currentArea.registerActor(player);
+        currentArea.enterAreaCells(player, player.getCurrentCells());
+        currentArea.setViewCandidate(player);
+
         return true;
+    }
+
+
+    private void changeArea(){
+        currentArea.suspend();
+        DiscreteCoordinates next;
+
+        if(areaIsRoom0){
+            setCurrentArea("Level1", false);
+            next=room1;
+            areaIsRoom0=false;
+        }else{
+            setCurrentArea("LevelSelector", false);
+            next=room0;
+            areaIsRoom0=true;
+        }
+
+        player.enterArea(currentArea,next);
+
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        player.initializeDirection(this.getWindow());
+
+
+        super.update(deltaTime);
+        if(player.isTroughDoor()){
+            changeArea();
+        }
+
     }
 
     @Override

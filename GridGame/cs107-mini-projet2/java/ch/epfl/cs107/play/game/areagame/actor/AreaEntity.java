@@ -54,15 +54,11 @@ public abstract class AreaEntity extends Entity implements Interactable {
 
     }
 
-    /**Getter for OwnerArea*/
-    protected Area getOwnerArea(){
-        return ownerArea;
-    }
-
-    @Override
+    //don0t work otherwise
+    /*@Override
     protected void setCurrentPosition(Vector v) {
         super.setCurrentPosition(v.round());
-    }
+    }*/
 
     /**Getter for orientation*/
     protected Orientation getOrientation(){
@@ -70,7 +66,7 @@ public abstract class AreaEntity extends Entity implements Interactable {
     }
 
     /**Setter for orientation*/
-    protected void setOrientationOrientation(Orientation orientation){
+    protected void setOrientation(Orientation orientation){
        this.orientation=orientation;
     }
 

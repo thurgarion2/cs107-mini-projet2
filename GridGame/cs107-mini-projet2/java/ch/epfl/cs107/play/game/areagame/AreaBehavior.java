@@ -68,12 +68,21 @@ public abstract class AreaBehavior
         return true;
     }
 
+    /**
+     * @param(discreteCoordinate) : coordinate of the cell
+     * @return(Cell) : getter for the cell
+     * */
+
+    public Cell getCell(DiscreteCoordinates coord){
+        return cells[coord.x][coord.y];
+    }
+
     /**@return (boolean): true if can enter in all the cells*/
     public boolean canEnter(Interactable entity, List<DiscreteCoordinates> coordinates){
         boolean out = true;
         for(DiscreteCoordinates coordinate : coordinates){
 
-            if(coordinate.x < getWitdth() && coordinate.x >= 0 && coordinate.y < getHeight() && coordinate.y >= 0){
+            if(coordinate.x >= getWitdth() && coordinate.x < 0 && coordinate.y >= getHeight() && coordinate.y < 0){
                 return  false;
             }
 

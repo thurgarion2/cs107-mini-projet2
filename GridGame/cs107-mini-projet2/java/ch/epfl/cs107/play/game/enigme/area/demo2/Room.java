@@ -11,7 +11,7 @@ public abstract class Room extends Area {
 
     @Override
     public float getCameraScaleFactor() {
-        return 2.2f*this.getHeight();
+        return 22;
     }
 
     public boolean begin(Window window, FileSystem fileSystem){

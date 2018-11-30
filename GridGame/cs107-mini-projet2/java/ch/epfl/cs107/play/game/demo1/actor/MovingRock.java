@@ -36,7 +36,7 @@ public class MovingRock extends GraphicsEntity{
    // (here compute displacement in function of deltaTim for example)
    // for simplification , deltaTime ignored :
 
-        System.out.println("Change position");
+
         setCurrentPosition(getPosition().sub(0.005f, 0.005f)) ;
     }
 }

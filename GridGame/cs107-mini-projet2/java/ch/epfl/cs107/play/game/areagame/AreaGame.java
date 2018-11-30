@@ -20,7 +20,7 @@ abstract public class AreaGame implements Game {
     /// A map containing all the Area of the Game
     private Map<String, Area> areas;
     ///  The current area the game is in
-    private Area currentArea;
+    protected Area currentArea;
 
     // TODO implements me #PROJECT #TUTO
 
@@ -32,6 +32,8 @@ abstract public class AreaGame implements Game {
         // TODO implements me #PROJECT #TUTO
         areas.put(a.getTitle(), a);
     }
+
+
 
     /**
      * Setter for the current area: Select an Area in the list from its key
@@ -67,7 +69,7 @@ abstract public class AreaGame implements Game {
     /**@return (Window) : the Graphic and Audio context*/
     protected final Window getWindow(){
         // TODO implements me #PROJECT #TUTO
-        return null;
+        return window;
     }
 
     /**@return (FIleSystem): the linked file system*/

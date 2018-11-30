@@ -13,6 +13,7 @@ import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,15 @@ public abstract class Area implements Playable {
         return cond;
     }
 
+    /**
+     * @param(discreteCoordinate) : coordinate of the cell
+     * @return(Cell) : getter for the cell
+     * */
+
+    public AreaBehavior.Cell getCell (DiscreteCoordinates coord){
+        return areaBehavior.getCell(coord);
+    }
+
 
     /**@return (boolean): if begin has been called once*/
 
@@ -97,7 +107,7 @@ public abstract class Area implements Playable {
      * @param a (Actor): the actor to add, not null
      * @param forced (Boolean): if true, the method ends
      */
-    private void addActor(Actor a, boolean forced) throws Exception {
+    private void addActor(Actor a, boolean forced) {
         // TODO implements me #PROJECT #TUTO
         boolean errorOccured = !actors.add(a);
         // Here decisions at the area level to decide if an actor
@@ -112,7 +122,7 @@ public abstract class Area implements Playable {
         }
 
         if(errorOccured){
-            throw new Exception("Cannot add the actor");
+            throw new Error("Cannot add the actor");
         }
 
     }
@@ -122,7 +132,7 @@ public abstract class Area implements Playable {
      * @param a (Actor): the actor to remove, not null
      * @param forced (Boolean): if true, the method ends
      */
-    private void removeActor(Actor a, boolean forced) throws Exception{
+    private void removeActor(Actor a, boolean forced){
         // TODO implements me #PROJECT #TUTO
         boolean errorOccured = !actors.remove(a);
         // Here decisions at the area level to decide if an actor
@@ -139,7 +149,7 @@ public abstract class Area implements Playable {
         }
 
         if(errorOccured){
-            throw new Exception("Cannot remove the actor");
+            throw new Error("Cannot remove the actor");
         }
     }
 
@@ -149,7 +159,7 @@ public abstract class Area implements Playable {
 
 
 
-     private final void purgeRegistration() throws Exception {
+     private final void purgeRegistration()  {
         //if an actor cannot be add or deleted we do not leave it in the list (registered actor..)
         //private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
         for(Interactable entry : intercablesToEnter.keySet()){
@@ -172,6 +182,8 @@ public abstract class Area implements Playable {
             removeActor(actor,false);
         }
 
+        registeredActors.clear();
+        unregisteredActors.clear();
         intercablesToEnter.clear();
         intercablesToLeave.clear();
     }
@@ -233,8 +245,13 @@ public abstract class Area implements Playable {
         this.fileSystem=fileSystem;
 
         actors = new LinkedList<>();
+
         registeredActors=new LinkedList<>();
         unregisteredActors= new LinkedList<>();
+
+        intercablesToLeave = new HashMap<>();
+        intercablesToEnter = new HashMap<>();
+
 
         viewCenter=Vector.ZERO;
         viewCandidate=null;

@@ -76,18 +76,16 @@ public abstract class MovableAreaEntity extends AreaEntity {
     protected  boolean move(int framesForMove){
 
 
-        if(!isMoving || getPosition().equals(targetMainCellCoordinates)){
-            Area current = this.getOwnerArea();
+        if(!isMoving || getPosition().equals(targetMainCellCoordinates.toVector())){
+            Area current = ownerArea;
+            System.out.println("test");
             if(!current.leaveAreaCells(this,this.getLeavingCells())
                     || !current.enterAreaCells(this,this.getEnteringCells())){
                 return false;
             }
-
-
-
-
+            System.out.println("Can move");
             this.framesForCurrentMove=framesForMove;
-            if(framesForCurrentMove > 1){
+            if(framesForCurrentMove < 1){
                 framesForCurrentMove = 1;
             }
 
@@ -107,12 +105,12 @@ public abstract class MovableAreaEntity extends AreaEntity {
     public void update(float deltaTime) {
         // TODO implements me #PROJECT #TUTO
 
-        if(!getPosition().equals(targetMainCellCoordinates) && isMoving){
+        if(!getPosition().equals(targetMainCellCoordinates.toVector()) && isMoving){
 
             Vector distance = getOrientation().toVector();
-            distance = distance.mul(1.0f / framesForCurrentMove);
+            distance = distance.mul(1.0f / (float) framesForCurrentMove);
             setCurrentPosition(getPosition().add(distance)) ;
-
+            System.out.println(this.getPosition()+" "+distance);
         }else{
             this.resetMotion();
         }
@@ -122,9 +120,9 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
     @Override
     /**only possible if not moving*/
-    protected void setOrientationOrientation(Orientation orientation) {
+    protected void setOrientation(Orientation orientation) {
         if(!isMoving){
-            super.setOrientationOrientation(orientation);
+            super.setOrientation(orientation);
         }
 
     }

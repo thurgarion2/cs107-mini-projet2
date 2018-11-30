@@ -62,6 +62,10 @@ public class Demo2Behavior extends AreaBehavior {
             this.type = type;
         }
 
+        public boolean isDoor(){
+            return type==Demo2CellType.DOOR;
+        }
+
         @Override
         public boolean takeCellSpace() {
             return false;
