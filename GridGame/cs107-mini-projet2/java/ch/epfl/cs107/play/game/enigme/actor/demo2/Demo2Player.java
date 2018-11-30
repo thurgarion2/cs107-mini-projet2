@@ -109,6 +109,7 @@ public class Demo2Player extends MovableAreaEntity {
         ownerArea.unregisterActor(this);
 
         this.setCurrentPosition(position.toVector());
+        this.setCurrentMainCellCoordinates(position);
         this.resetMotion();
 
         area.registerActor(this);

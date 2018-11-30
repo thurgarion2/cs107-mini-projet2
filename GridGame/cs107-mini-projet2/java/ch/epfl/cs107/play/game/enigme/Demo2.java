@@ -38,7 +38,6 @@ public class Demo2 extends AreaGame {
 
 
     private void changeArea(){
-        currentArea.suspend();
         DiscreteCoordinates next;
 
         if(areaIsRoom0){

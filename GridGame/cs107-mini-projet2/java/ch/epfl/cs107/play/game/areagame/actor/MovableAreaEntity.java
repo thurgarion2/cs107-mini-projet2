@@ -77,16 +77,12 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
 
         if(!isMoving || getPosition().equals(targetMainCellCoordinates.toVector())){
-            Area current = ownerArea;
 
-            if(!current.leaveAreaCells(this,this.getLeavingCells())){
+            if(!ownerArea.canEnterAreaCells(this,this.getEnteringCells()) || !ownerArea.canLeaveAreaCells(this,this.getLeavingCells())){
                 return false;
             }
-            //TODO fix the situation where the entity can quit the cell but cannot enter in it after
-            if(!current.enterAreaCells(this,this.getEnteringCells())){
-                current.enterAreaCells(this, this.getLeavingCells());
-                return false;
-            }
+
+            ownerArea.transfertEntity(this, this.getLeavingCells(), this.getEnteringCells());
 
             this.framesForCurrentMove=framesForMove;
             if(framesForCurrentMove < 1){
@@ -95,6 +91,7 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
             Vector orientation = getOrientation().toVector();
             targetMainCellCoordinates = getCurrentMainCellCoordinates().jump(orientation);
+            this.setCurrentMainCellCoordinates(targetMainCellCoordinates);
 
             isMoving=true;
             return true;

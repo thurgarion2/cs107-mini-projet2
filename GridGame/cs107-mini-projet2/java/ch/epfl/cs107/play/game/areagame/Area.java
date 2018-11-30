@@ -53,23 +53,50 @@ public abstract class Area implements Playable {
     private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
     private Map<Interactable, List<DiscreteCoordinates>> intercablesToLeave;
 
-    /**@return(boolean) : true if entity can enter cells and add entity in area*/
+    /**@return(boolean) : true if entity can enter area cells*/
 
-    public final boolean enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
-        boolean cond = areaBehavior.canEnter(entity, coordinates);
-        if(cond) {
-            intercablesToEnter.put(entity, coordinates);
-        }
-        return cond;
+    public final boolean canEnterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
+        return areaBehavior.canEnter(entity, coordinates);
     }
 
-    /**@return(boolean) : true if entity can leave cells and remove entity of area*/
-    public final boolean leaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
-        boolean cond = areaBehavior.canLeave(entity, coordinates);
-        if(cond){
-            intercablesToLeave.put(entity, coordinates);
+    /**@return(boolean) : true if entity can leave area cells*/
+
+    public final boolean canLeaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
+        return areaBehavior.canLeave(entity, coordinates);
+    }
+
+    /**if possible : set the entity in area cells (should be used with canEnter), throws an exception otherwise*/
+
+    public final void enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
+        if(!areaBehavior.canEnter(entity, coordinates)){
+            throw new Error("You should test first if possible to go on this cell");
+        }else{
+            intercablesToEnter.put(entity, coordinates);
         }
-        return cond;
+
+
+    }
+
+    /**if possible : remove the entity of area cells  (should be used with canLeave), throws an exception otherwise*/
+    public final void leaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
+        if(areaBehavior.canLeave(entity, coordinates)){
+            intercablesToLeave.put(entity, coordinates);
+        }else{
+            throw new Error("You should test first if possible to leave this cell");
+        }
+
+    }
+
+    /**
+     * @param(Interactable) : the entity to move
+     * @param(List<DiscreteCoordinates>) from :  the coordinates of the current cells
+     * @param(List<DiscreteCoordinates>) to :  the coordinates where to transfert entity
+     * if possible : transfert entity from current cells to next cells
+     * (should be used with canLeave and can enter), throws an exception otherwise.
+     * */
+    public final void transfertEntity (Interactable entity, List<DiscreteCoordinates> from, List<DiscreteCoordinates> to){
+        leaveAreaCells(entity, from);
+        enterAreaCells(entity, to);
     }
 
     /**
@@ -108,12 +135,15 @@ public abstract class Area implements Playable {
      * @param forced (Boolean): if true, the method ends
      */
     private void addActor(Actor a, boolean forced) {
-        // TODO implements me #PROJECT #TUTO
         boolean errorOccured = !actors.add(a);
         // Here decisions at the area level to decide if an actor
         // must be added or not
         if( a instanceof Interactable){
-            errorOccured = errorOccured || !enterAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+            errorOccured = errorOccured || !canEnterAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+
+            if(!errorOccured){
+                enterAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+            }
         }
 
         if(errorOccured && !forced) {
@@ -139,17 +169,20 @@ public abstract class Area implements Playable {
         // must be remove or not
 
         if( a instanceof Interactable){
-            errorOccured = errorOccured || !leaveAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+            errorOccured = errorOccured || !canLeaveAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+
+            if(!errorOccured){
+                leaveAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+            }
         }
 
 
         if(errorOccured && !forced) {
-            System.out.println("Actor " + a + " cannot be completely added, so leave it where he was");
             addActor(a, true);
         }
-
+        //TODO maybe change to exception
         if(errorOccured){
-            throw new Error("Cannot remove the actor");
+            throw new Error("Actor " + a + " cannot be completely added, so leave it where he was");
         }
     }
 
