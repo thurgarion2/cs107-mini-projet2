@@ -9,6 +9,8 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.List;
 
 public class DemoPlayer2 extends MovableAreaEntity {
+    private boolean isTroughDoor =false;
+
     /**
      * Default MovableAreaEntity constructor
      *
@@ -20,10 +22,19 @@ public class DemoPlayer2 extends MovableAreaEntity {
         super(area, orientation, position);
     }
 
+    /**
+     * @param area        (Area): area to enter. Not null
+     * @param position    (Coordinate): Initial position in the area. Not null
+    */
+    public void enterArea(Area area, DiscreteCoordinates position){
+        area.enterAreaCells()
+    }
+
     @Override
     public void draw(Canvas canvas) {
 
     }
+
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
@@ -32,16 +43,16 @@ public class DemoPlayer2 extends MovableAreaEntity {
 
     @Override
     public boolean takeCellSpace() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isViewInteractable() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCellInteractable() {
-        return false;
+        return true;
     }
 }
