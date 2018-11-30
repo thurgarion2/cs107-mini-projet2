@@ -154,8 +154,8 @@ public abstract class Area implements Playable {
         //private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
         for(Interactable entry : intercablesToEnter.keySet()){
             areaBehavior.enter(entry, intercablesToEnter.get(entry));
-        //TODO next QESADIRE : "Entrer dans le truc du machin toute fin de 4.7.3 "
         }
+
 
 
          for(Interactable entry : intercablesToLeave.keySet()){
@@ -164,6 +164,17 @@ public abstract class Area implements Playable {
          }
 
        /* for(Actor actor : registeredActors){
+
+        intercablesToEnter.clear();
+
+        for(Interactable entry : intercablesToLeave.keySet()){
+            areaBehavior.leave(entry, intercablesToLeave.get(entry));
+        }
+
+        intercablesToLeave.clear();
+
+        for(Actor actor : registeredActors){
+946784b92fe2120ba50bcf8ce3c82f3d51391416
             addActor(actor,false);
         }
 

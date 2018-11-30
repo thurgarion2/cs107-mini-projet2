@@ -17,7 +17,7 @@ public abstract class AreaEntity extends Entity implements Interactable {
     // TODO implements me #PROJECT #TUTO
 
     /// an AreaEntity knows its own Area
-    private Area ownerArea;
+    protected Area ownerArea;
     /// Orientation of the AreaEntity in the Area
     private Orientation orientation;
     /// Coordinate of the main Cell linked to the entity

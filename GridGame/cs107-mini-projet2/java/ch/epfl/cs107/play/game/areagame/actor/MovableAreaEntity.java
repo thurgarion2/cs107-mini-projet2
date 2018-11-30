@@ -75,12 +75,20 @@ public abstract class MovableAreaEntity extends AreaEntity {
   
     protected  boolean move(int framesForMove){
         // TODO : add area condition
+
         if(!isMoving || getPosition().equals(targetMainCellCoordinates)){
             Area current = this.getOwnerArea();
             if(!current.leaveAreaCells(this,this.getLeavingCells())
                     || !current.enterAreaCells(this,this.getEnteringCells())){
                 return false;
             }
+
+
+        if(this.getEnteringCells().canEnter(targetMainCellCoordinates)){
+            //TODO Still to do.
+        }
+
+        if(!isMoving && getPosition().equals(targetMainCellCoordinates)){
 
             this.framesForCurrentMove=framesForMove;
             if(framesForCurrentMove > 1){
