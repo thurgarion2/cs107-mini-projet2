@@ -1,6 +1,7 @@
 package ch.epfl.cs107.play.game.enigme;
 
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
+import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
 
@@ -48,7 +49,7 @@ public class Demo2Behavior extends AreaBehavior {
         }
     }
 
-    private class Demo2Cell extends Cell {
+    public class Demo2Cell extends Cell {
 
         private Demo2CellType type;
 
@@ -69,6 +70,16 @@ public class Demo2Behavior extends AreaBehavior {
 
         @Override
         public boolean isCellInteractable() {
+            return false;
+        }
+
+        @Override
+        protected boolean canEnter(Interactable entity) {
+            return false;
+        }
+
+        @Override
+        protected boolean canLeave(Interactable entity) {
             return false;
         }
     }

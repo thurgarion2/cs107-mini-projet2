@@ -23,4 +23,5 @@ public abstract class Room extends Area {
         this.setViewCandidate(background);
         return true;
     }
+
 }
