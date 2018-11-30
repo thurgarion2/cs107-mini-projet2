@@ -84,11 +84,7 @@ public abstract class MovableAreaEntity extends AreaEntity {
             }
 
 
-        if(this.getEnteringCells().canEnter(targetMainCellCoordinates)){
-            //TODO Still to do.
-        }
 
-        if(!isMoving && getPosition().equals(targetMainCellCoordinates)){
 
             this.framesForCurrentMove=framesForMove;
             if(framesForCurrentMove > 1){

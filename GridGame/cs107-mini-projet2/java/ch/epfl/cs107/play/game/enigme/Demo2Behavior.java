@@ -8,17 +8,21 @@ import ch.epfl.cs107.play.window.Window;
 public class Demo2Behavior extends AreaBehavior {
 
     public enum Demo2CellType {
-        NULL(0),
-        WALL(-16777216), // RGB code of black
-        DOOR(-65536), // RGB code of red
-        WATER(-16776961), // RGB code of blue
-        INDOOR_WALKABLE(-1),
-        OUTDOOR_WALKABLE(-14112955);
+        NULL(0,false),
+        WALL(-16777216,false), // RGB code of black
+        DOOR(-65536,true), // RGB code of red
+        WATER(-16776961,true), // RGB code of blue
+        INDOOR_WALKABLE(-1,true),
+        OUTDOOR_WALKABLE(-14112955,true);
 
         final int type;
-        Demo2CellType(int type){
+        final boolean canWalk;
+
+        Demo2CellType(int type, boolean canwalk){
             this.type = type;
+            this.canWalk=canwalk;
         }
+
 
         static  Demo2CellType toType(int type){
 
@@ -75,12 +79,13 @@ public class Demo2Behavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
-            return false;
+
+            return this.type.canWalk;
         }
 
         @Override
         protected boolean canLeave(Interactable entity) {
-            return false;
+            return true;
         }
     }
 }
