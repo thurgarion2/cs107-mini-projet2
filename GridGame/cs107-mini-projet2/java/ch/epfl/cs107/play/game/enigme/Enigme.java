@@ -1,7 +1,13 @@
 package ch.epfl.cs107.play.game.enigme;
 
 import ch.epfl.cs107.play.game.areagame.AreaGame;
+import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
+import ch.epfl.cs107.play.game.enigme.area.Level1;
+import ch.epfl.cs107.play.game.enigme.area.Level2;
+import ch.epfl.cs107.play.game.enigme.area.Level3;
+import ch.epfl.cs107.play.game.enigme.area.LevelSelector;
 import ch.epfl.cs107.play.io.FileSystem;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.io.FileSystem;
@@ -15,7 +21,7 @@ import ch.epfl.cs107.play.window.Window;
 public class Enigme extends AreaGame {
 
     /// The player is a concept of RPG games
-    // TODO implements me #PROJECT
+    private EnigmePlayer player;
 
 
     /// Enigme implements Playable
@@ -27,13 +33,33 @@ public class Enigme extends AreaGame {
 
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
-        // TODO implements me #PROJECT
-        return false;
+        super.begin(window, fileSystem);
+
+
+        this.addArea(new LevelSelector());
+        this.addArea(new Level1());
+        this.addArea(new Level2());
+        this.addArea(new Level3());
+
+        this.setCurrentArea("LevelSelector", false);
+        player = new EnigmePlayer(this.currentArea, new DiscreteCoordinates(5, 5));
+        currentArea.setViewCandidate(player);
+
+
+        return true;
     }
+
+    private void changeArea(String name){
+        this.setCurrentArea(name, false);
+        this.currentArea.setViewCandidate(player);
+    }
+
+
 
     @Override
     public void update(float deltaTime) {
         // TODO implements me #PROJECT
+        super.update(deltaTime);
     }
 
 

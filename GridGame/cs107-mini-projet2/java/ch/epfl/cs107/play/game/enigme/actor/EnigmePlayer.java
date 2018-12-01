@@ -15,7 +15,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class EnigmePlayer extends MovableAreaEntity {
-    private boolean isTroughDoor =false;
+    private boolean isPassingDoor =false;
+    private Door door;
+
     private Sprite sprite;
 
     /// Animation duration in frame number
@@ -71,22 +73,21 @@ public class EnigmePlayer extends MovableAreaEntity {
         area.enterAreaCells(this, this.getCurrentCells());
 
         ownerArea=area;
-        isTroughDoor=false;
+        isPassingDoor=false;
 
     }
-    /**getter for is through door*/
+    /**getter for isPassingdoor*/
     public boolean isTroughDoor() {
-        return isTroughDoor;
+        return isPassingDoor;
     }
-
-    @Override
-    protected boolean move(int framesForMove) {
-        Demo2Behavior.Demo2Cell cell = (Demo2Behavior.Demo2Cell) ownerArea.getCell(this.getEnteringCells().get(0));
-        if(cell.isDoor()){
-            isTroughDoor=true;
-        }
-
-        return super.move(framesForMove);
+    /**getter for door*/
+    public Door passedDoor(){
+        return door;
+    }
+    /**setter for isPassing door*/
+    public void setIsPassingDoor(Door door){
+        this.door=door;
+        isPassingDoor=true;
     }
 
     @Override

@@ -1,0 +1,34 @@
+Metodes les plus utiles
+
+Area :
+       
+contient deux types listes une pour les acteurs (dont on ne tient pas compte dans AreaBehavior) et une autre pour les Interactables qui prennent place sur la grille, si l’entité doit également se dessiner et se mettre à jour il sera à la fois un acteur et un interactable (une area entity).
+
+Méthode principale :
+
+    • transfertEntity  :  transfert une movable areaEntity dans la grille
+    • canEnterAreaCells 
+    • canLeaveAreaCells
+    • registerActor    : enregistre un nouvelle acteurs sur la grille (effectif prochaine update)
+    • unregisterActor : même supprime
+    • begin : initialise une area  (appelé dans areaGame, seulement redéfinnissement)
+    • resume : rien pour l’instant (appelé dans areaGame, seulement redéfinnissement)
+    • suspend : met en suspend une area (appelé dans areaGame, seulement redéfinnissement)
+    • end
+
+
+AreaGame :
+
+contient la liste des aires de jeu et représente le jeu
+
+Méthode principale :
+
+    • addArea   :  ajoute une aire courante
+    • setCurrentArea  : change l’aire courante
+      
+
+MovableAreaEntity :
+
+Une areaEntity qui peut se déplacer
+
+    • move : initite un déplacement selon l’orientation et le nombre de frames (dès le début de son déplacement l’entité est considéré comme avoir changer de cellule).

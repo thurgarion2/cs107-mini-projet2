@@ -5,6 +5,7 @@ import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.actor.GraphicsEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Background;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
+import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.demo1.actor.MovingRock;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -34,6 +35,8 @@ public abstract class Area implements Playable {
 
     //list of actor
     List<Actor> actors;
+    //LIst of the interactor
+    List<Interactor> interactors;
 
     //store actor to be removed or add to the next update
     private List<Actor> registeredActors;
@@ -136,6 +139,11 @@ public abstract class Area implements Playable {
      */
     private void addActor(Actor a, boolean forced) {
         boolean errorOccured = !actors.add(a);
+
+        if(a instanceof Interactor){
+            errorOccured =errorOccured||!interactors.add((Interactor)a);
+        }
+
         // Here decisions at the area level to decide if an actor
         // must be added or not
         if( a instanceof Interactable){
@@ -147,12 +155,14 @@ public abstract class Area implements Playable {
         }
 
         if(errorOccured && !forced) {
-            System.out.println("Actor " + a + " cannot be completely added, so remove it from where it was");
             removeActor(a, true);
+            if(a instanceof Interactor){
+                interactors.remove((Interactor)a);
+            }
         }
 
         if(errorOccured){
-            throw new Error("Cannot add the actor");
+            throw new Error("Actor " + a + " cannot be completely added, so remove it from where it was");
         }
 
     }
@@ -165,6 +175,10 @@ public abstract class Area implements Playable {
     private void removeActor(Actor a, boolean forced){
         // TODO implements me #PROJECT #TUTO
         boolean errorOccured = !actors.remove(a);
+
+        if(a instanceof Interactor){
+            errorOccured =errorOccured||!interactors.remove((Interactor)a);
+        }
         // Here decisions at the area level to decide if an actor
         // must be remove or not
 
@@ -179,6 +193,9 @@ public abstract class Area implements Playable {
 
         if(errorOccured && !forced) {
             addActor(a, true);
+            if(a instanceof Interactor){
+                interactors.add((Interactor)a);
+            }
         }
         //TODO maybe change to exception
         if(errorOccured){
@@ -278,6 +295,7 @@ public abstract class Area implements Playable {
         this.fileSystem=fileSystem;
 
         actors = new LinkedList<>();
+        interactors =new LinkedList<>();
 
         registeredActors=new LinkedList<>();
         unregisteredActors= new LinkedList<>();
@@ -306,14 +324,22 @@ public abstract class Area implements Playable {
 
     @Override
     public void update(float deltaTime) {
-        // TODO implements me #PROJECT #TUTO
         purgeRegistration();
 
         for(Actor actor : actors){
             actor.update(deltaTime);
         }
 
-        updateCamera();
+        for (Interactor interactor : interactors) {
+            if (interactor.wantsCellInteraction()) {
+                areaBehavior.cellInteractionOf(interactor);
+            } if (interactor.wantsViewInteraction()) {
+                areaBehavior.viewInteractionOf(interactor);
+            }
+        }
+
+
+            updateCamera();
 
 
         for(Actor actor : actors){
@@ -324,7 +350,6 @@ public abstract class Area implements Playable {
 
     /**set the camera at the right position*/
     private void updateCamera () {
-        // TODO implements me #PROJECT #TUTO
 
         Vector center = viewCenter;
         if(viewCandidate!=null){

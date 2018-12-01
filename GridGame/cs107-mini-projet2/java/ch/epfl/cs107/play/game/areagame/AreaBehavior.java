@@ -107,13 +107,34 @@ public abstract class AreaBehavior
         }
     }
 
+    /**@param(Interactor) : the entity to interact with cells
+     * make the entity interact with all  currentCells
+     *
+     * */
+    public void cellInteractionOf(Interactor interactor){
+        for(DiscreteCoordinates coord : interactor.getCurrentCells()){
+            cells[coord.x][coord.y].cellInteractionOf(interactor);
+        }
+    }
+
+    /**@param(Interactor) : the entity to interact with cells
+     * make the entity interact with all viewAbleCells
+     *
+     * */
+
+    public void viewInteractionOf(Interactor interactor){
+        for(DiscreteCoordinates coord : interactor.getFieldOfViewCells()){
+            cells[coord.x][coord.y].viewInteractionOf(interactor);
+        }
+    }
+
     public abstract class Cell implements Interactable{
         private DiscreteCoordinates coordinate;
         private Set<Interactable>  canInteract;
 
         @Override
         public List<DiscreteCoordinates> getCurrentCells() {
-            List<DiscreteCoordinates> out =new LinkedList<DiscreteCoordinates>();
+            List<DiscreteCoordinates> out =new LinkedList<>();
             out.add(coordinate);
             return out;
         }
@@ -128,6 +149,30 @@ public abstract class AreaBehavior
                 canInteract.add(i);
 
         }
+
+        /**@param(Interactor) : the entity to interact with cells
+         * make the entity interact with all CellsIneractable of canInteract
+         *
+         * */
+
+        private void cellInteractionOf(Interactor interactor){
+            for(Interactable interactable : canInteract){
+                if(interactable.isCellInteractable())
+                    interactor.interactWith(interactable);
+            }
+
+        }
+        /**@param(Interactor) : the entity to interact with cells
+         * make the entity interact with all viewIneractable of canInteract
+         *
+         * */
+        private void viewInteractionOf(Interactor interactor){
+            for(Interactable interactable : canInteract){
+                if(interactable.isViewInteractable())
+                    interactor.interactWith(interactable);
+            }
+        }
+
         /**remove entity of the cell*/
         private void leave(Interactable i){
                 canInteract.remove(i);
