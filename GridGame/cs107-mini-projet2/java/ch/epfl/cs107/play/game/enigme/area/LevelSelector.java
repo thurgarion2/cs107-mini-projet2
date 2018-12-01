@@ -16,11 +16,13 @@ public class LevelSelector extends EnigmeArea {
 
     @Override
     public boolean begin(Window window, FileSystem fileSystem) throws NullPointerException{
-        return super.begin(window, fileSystem);
+        boolean out = super.begin(window, fileSystem);
+        Door door1= new Door(this, "Level1", new DiscreteCoordinates(5, 1), Orientation.DOWN, new DiscreteCoordinates(1, 7), 0.25f, 0.25f);
 
-        this.registerActor( new Door(this, "Level1",  new DiscreteCoordinates(5, 1), Orientation.DOWN, new DiscreteCoordinates(2, 8), 1.0f, 1.0f));
-        //new Door(this, "Level1", new DiscreteCoordinates(5, 1), Orientation.DOWN, new DiscreteCoordinates(2, 8), 1, 1);
+        this.registerActor(door1);
 
 
+
+        return out;
     }
 }

@@ -59,12 +59,18 @@ public abstract class Area implements Playable {
     /**@return(boolean) : true if entity can enter area cells*/
 
     public final boolean canEnterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
+        if(coordinates.isEmpty()){
+            throw new Error("Coordinate shoould not be null");
+        }
         return areaBehavior.canEnter(entity, coordinates);
     }
 
     /**@return(boolean) : true if entity can leave area cells*/
 
     public final boolean canLeaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
+        if(coordinates.isEmpty()){
+            throw new Error("Coordinate shoould not be null");
+        }
         return areaBehavior.canLeave(entity, coordinates);
     }
 
@@ -150,7 +156,7 @@ public abstract class Area implements Playable {
             errorOccured = errorOccured || !canEnterAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
 
             if(!errorOccured){
-                enterAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+                this.enterAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
             }
         }
 
@@ -186,7 +192,7 @@ public abstract class Area implements Playable {
             errorOccured = errorOccured || !canLeaveAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
 
             if(!errorOccured){
-                leaveAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
+                this.leaveAreaCells(((Interactable) a), ((Interactable) a).getCurrentCells());
             }
         }
 
@@ -212,16 +218,7 @@ public abstract class Area implements Playable {
      private final void purgeRegistration()  {
         //if an actor cannot be add or deleted we do not leave it in the list (registered actor..)
         //private Map<Interactable, List<DiscreteCoordinates>> intercablesToEnter;
-        for(Interactable entry : intercablesToEnter.keySet()){
-            areaBehavior.enter(entry, intercablesToEnter.get(entry));
-        }
 
-
-
-         for(Interactable entry : intercablesToLeave.keySet()){
-             areaBehavior.leave(entry, intercablesToEnter.get(entry));
-             //TODO next QESADIRE : "Entrer dans le truc du machin toute fin de 4.7.3 "
-         }
 
        for(Actor actor : registeredActors){
             addActor(actor,true);
@@ -231,6 +228,16 @@ public abstract class Area implements Playable {
         for(Actor actor : unregisteredActors){
             removeActor(actor,false);
         }
+
+         for(Interactable entry : intercablesToEnter.keySet()){
+
+             areaBehavior.enter(entry, intercablesToEnter.get(entry));
+         }
+
+         for(Interactable entry : intercablesToLeave.keySet()){
+             areaBehavior.leave(entry, intercablesToLeave.get(entry));
+             //TODO next QESADIRE : "Entrer dans le truc du machin toute fin de 4.7.3 "
+         }
 
         registeredActors.clear();
         unregisteredActors.clear();
@@ -244,8 +251,6 @@ public abstract class Area implements Playable {
      * @return (boolean): true if the actor is correctly registered
      */
     public final boolean registerActor(Actor a){
-        // TODO implements me #PROJECT #TUTO
-
         return  registeredActors.add(a);
     }
 

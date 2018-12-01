@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.enigme.actor;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.Demo2Behavior;
 import ch.epfl.cs107.play.game.enigme.EnigmeBehavior;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
@@ -66,6 +67,12 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         this(area, Orientation.DOWN, coordinates);
     }
 
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v) {
+        if(v!=this){
+            ((EnigmeInteractionVisitor)v).interactWith(this);
+        }
+    }
 
     /**
      * @param area        (Area): area to enter. Not null

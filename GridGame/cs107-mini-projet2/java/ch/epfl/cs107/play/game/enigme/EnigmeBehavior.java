@@ -64,9 +64,6 @@ public class EnigmeBehavior extends AreaBehavior {
             this.type = type;
         }
 
-        public boolean isDoor(){
-            return type== EnigmeCellType.DOOR;
-        }
 
         @Override
         public boolean takeCellSpace() {
@@ -90,7 +87,11 @@ public class EnigmeBehavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
-
+            for(Interactable interact : this.canInteract){
+                if(interact.takeCellSpace()){
+                    return false;
+                }
+            }
             return this.type.canWalk;
         }
 

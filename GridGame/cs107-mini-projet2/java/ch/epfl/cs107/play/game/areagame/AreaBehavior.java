@@ -102,7 +102,9 @@ public abstract class AreaBehavior
 
     /**add the entity in all cells of coordinates*/
     protected void enter(Interactable entity, List<DiscreteCoordinates> coordinates){
+
         for(DiscreteCoordinates coordinate : coordinates){
+
             cells[coordinate.x][coordinate.y].enter(entity);
         }
     }
@@ -119,7 +121,7 @@ public abstract class AreaBehavior
 
     /**return if coord is in the area*/
     private boolean isInArea(DiscreteCoordinates coordinate){
-        if(coordinate.x >= getWitdth() && coordinate.x < 0 && coordinate.y >= getHeight() && coordinate.y < 0){
+        if(coordinate.x >= getWitdth() || coordinate.x < 0 || coordinate.y >= getHeight()|| coordinate.y < 0){
             return  false;
         }
         return true;
@@ -140,7 +142,7 @@ public abstract class AreaBehavior
 
     public abstract class Cell implements Interactable{
         private DiscreteCoordinates coordinate;
-        private Set<Interactable>  canInteract;
+        protected Set<Interactable>  canInteract;
 
         @Override
         public List<DiscreteCoordinates> getCurrentCells() {
@@ -166,9 +168,12 @@ public abstract class AreaBehavior
          * */
 
         private void cellInteractionOf(Interactor interactor){
+
             for(Interactable interactable : canInteract){
-                if(interactable.isCellInteractable())
+
+                if(interactable.isCellInteractable()) {
                     interactor.interactWith(interactable);
+                }
             }
 
         }
