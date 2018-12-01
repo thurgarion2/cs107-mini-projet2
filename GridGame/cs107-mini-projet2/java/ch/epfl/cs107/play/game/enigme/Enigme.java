@@ -1,6 +1,7 @@
 package ch.epfl.cs107.play.game.enigme;
 
 import ch.epfl.cs107.play.game.areagame.AreaGame;
+import ch.epfl.cs107.play.game.enigme.actor.Door;
 import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
 import ch.epfl.cs107.play.game.enigme.area.Level1;
 import ch.epfl.cs107.play.game.enigme.area.Level2;
@@ -43,23 +44,28 @@ public class Enigme extends AreaGame {
 
         this.setCurrentArea("LevelSelector", false);
         player = new EnigmePlayer(this.currentArea, new DiscreteCoordinates(5, 5));
+        currentArea.registerActor(player);
         currentArea.setViewCandidate(player);
 
 
         return true;
     }
 
-    private void changeArea(String name){
-        this.setCurrentArea(name, false);
+    private void changeArea( Door door){
+        this.setCurrentArea(door.getDestination(), false);
         this.currentArea.setViewCandidate(player);
+        player.enterArea(currentArea, door.getCoordArrivee());
     }
 
 
 
     @Override
     public void update(float deltaTime) {
-        // TODO implements me #PROJECT
+        player.initializeDirection(this.getWindow());
         super.update(deltaTime);
+        if(player.isPassingDoor()){
+            changeArea(player.passedDoor());
+        }
     }
 
 

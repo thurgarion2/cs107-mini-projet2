@@ -39,6 +39,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         private Button bouton;
         private final Orientation orientation;
     }
+    //L key
+    Button lKey;
 
     //TODO create a bag
     private List<Collectable> bag;
@@ -138,6 +140,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         Direction.rightArrow.bouton =   keyboard.get(Keyboard.RIGHT) ;
         Direction.upArrow.bouton    =   keyboard.get(Keyboard.UP) ;
         Direction.downArrow.bouton =  keyboard.get(Keyboard.DOWN) ;
+        lKey = keyboard.get(Keyboard.L);
 
     }
 
@@ -194,8 +197,10 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         @Override
         public void interactWith(Collectable item){
             // fait en sorte que la pomme soit ramassée
-            if(item.collect()){
-                bag.add(item);
+            if(lKey.isDown()){
+                if(item.collect()){
+                    bag.add(item);
+                }
             }
         }
     }
