@@ -1,20 +1,22 @@
 package ch.epfl.cs107.play.game.enigme.actor;
 
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.actor.MovableAreaEntity;
-import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.enigme.Demo2Behavior;
+import ch.epfl.cs107.play.game.enigme.EnigmeBehavior;
+import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
-public class EnigmePlayer extends MovableAreaEntity {
+public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     private boolean isPassingDoor =false;
     private Door door;
 
@@ -38,6 +40,12 @@ public class EnigmePlayer extends MovableAreaEntity {
         private final Orientation orientation;
     }
 
+    //TODO create a bag
+    private List<Collectable> bag;
+
+
+    private final EnigmePlayerHandler handler= new EnigmePlayerHandler();
+
 
     /**
      * Default MovableAreaEntity constructor
@@ -49,6 +57,7 @@ public class EnigmePlayer extends MovableAreaEntity {
     public EnigmePlayer(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
         sprite=new   Sprite("ghost.1", 1, 1.f, this);
+        bag=new LinkedList<>();
     }
 
     public EnigmePlayer(Area area, DiscreteCoordinates coordinates){
@@ -61,7 +70,6 @@ public class EnigmePlayer extends MovableAreaEntity {
      * @param position    (Coordinate): Initial position in the area. Not null
      */
     public void enterArea(Area area, DiscreteCoordinates position){
-
         ownerArea.leaveAreaCells(this, this.getCurrentCells());
         ownerArea.unregisterActor(this);
 
@@ -77,7 +85,7 @@ public class EnigmePlayer extends MovableAreaEntity {
 
     }
     /**getter for isPassingdoor*/
-    public boolean isTroughDoor() {
+    public boolean isPassingDoor() {
         return isPassingDoor;
     }
     /**getter for door*/
@@ -101,6 +109,25 @@ public class EnigmePlayer extends MovableAreaEntity {
         return Collections.singletonList(getCurrentMainCellCoordinates());
 
     }
+    /**return the cell of field of view without taking in account the limit of the area*/
+    @Override
+    public List<DiscreteCoordinates> getFieldOfViewCells() {
+        List<DiscreteCoordinates> coord = new LinkedList<>();
+        DiscreteCoordinates current = this.getCurrentMainCellCoordinates();
+        Vector direction = this.getOrientation().toVector().round();
+        coord.add(new DiscreteCoordinates((int) (current.x+direction.getX()),(int)(current.y+direction.getY()) ));
+        return coord;
+    }
+
+    @Override
+    public boolean wantsCellInteraction() {
+        return true;
+    }
+
+    @Override
+    public boolean wantsViewInteraction() {
+        return true;
+    }
 
     /**initialze button with the current keyboard*/
 
@@ -114,6 +141,9 @@ public class EnigmePlayer extends MovableAreaEntity {
 
     }
 
+    public void interactWith(Interactable other) {
+        other.acceptInteraction(handler);
+    }
 
 
     @Override
@@ -151,4 +181,23 @@ public class EnigmePlayer extends MovableAreaEntity {
     public boolean isCellInteractable() {
         return true;
     }
+
+
+    private  class EnigmePlayerHandler implements EnigmeInteractionVisitor {
+
+        @Override
+        public void interactWith(Door door) {
+             // fait en sorte que la porte soit passée par l'acteur
+            //ne peut pas changer the current area to EnigmeArea to test it
+            setIsPassingDoor(door);
+        }
+        @Override
+        public void interactWith(Collectable item){
+            // fait en sorte que la pomme soit ramassée
+            if(item.collect()){
+                bag.add(item);
+            }
+        }
+    }
+
 }

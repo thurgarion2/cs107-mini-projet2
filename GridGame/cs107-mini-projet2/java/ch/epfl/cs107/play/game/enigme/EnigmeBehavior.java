@@ -2,6 +2,8 @@ package ch.epfl.cs107.play.game.enigme;
 
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
 
@@ -69,6 +71,11 @@ public class EnigmeBehavior extends AreaBehavior {
         @Override
         public boolean takeCellSpace() {
             return false;
+        }
+
+        @Override
+        public void acceptInteraction(AreaInteractionVisitor v) {
+            ((EnigmeInteractionVisitor)v).interactWith(this);
         }
 
         @Override

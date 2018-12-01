@@ -82,7 +82,7 @@ public abstract class AreaBehavior
         boolean out = true;
         for(DiscreteCoordinates coordinate : coordinates){
 
-            if(coordinate.x >= getWitdth() && coordinate.x < 0 && coordinate.y >= getHeight() && coordinate.y < 0){
+            if(!isInArea(coordinate)){
                 return  false;
             }
 
@@ -117,6 +117,14 @@ public abstract class AreaBehavior
         }
     }
 
+    /**return if coord is in the area*/
+    private boolean isInArea(DiscreteCoordinates coordinate){
+        if(coordinate.x >= getWitdth() && coordinate.x < 0 && coordinate.y >= getHeight() && coordinate.y < 0){
+            return  false;
+        }
+        return true;
+    }
+
     /**@param(Interactor) : the entity to interact with cells
      * make the entity interact with all viewAbleCells
      *
@@ -124,7 +132,9 @@ public abstract class AreaBehavior
 
     public void viewInteractionOf(Interactor interactor){
         for(DiscreteCoordinates coord : interactor.getFieldOfViewCells()){
-            cells[coord.x][coord.y].viewInteractionOf(interactor);
+            if(isInArea(coord)){
+                cells[coord.x][coord.y].viewInteractionOf(interactor);
+            }
         }
     }
 
