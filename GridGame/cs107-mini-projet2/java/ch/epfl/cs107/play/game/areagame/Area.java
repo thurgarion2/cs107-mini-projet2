@@ -24,10 +24,10 @@ import java.util.Map;
  * Area is a "Part" of the AreaGame. It is characterized by its AreaBehavior and a List of Actors
  */
 public abstract class Area implements Playable {
-    // TODO implements me #PROJECT #TUTO
     // Context objects
     private Window window;
     private FileSystem fileSystem;
+    private Keyboard keyboard;
 
     //The behaviorMap
     private AreaBehavior areaBehavior;
@@ -60,7 +60,9 @@ public abstract class Area implements Playable {
 
     public final boolean canEnterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
         if(coordinates.isEmpty()){
-            throw new Error("Coordinate shoould not be null");
+            //adding an area entity on the area without giving an actual position on the grid
+            // is considered as an error of the programmer
+            throw new Error("Coordinate shoould not be empty");
         }
         return areaBehavior.canEnter(entity, coordinates);
     }
@@ -69,7 +71,9 @@ public abstract class Area implements Playable {
 
     public final boolean canLeaveAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
         if(coordinates.isEmpty()){
-            throw new Error("Coordinate shoould not be null");
+            //removing an area entity of the area without specify his actual position on the grid
+            // is considered as an error of the programmer
+            throw new Error("Coordinate shoould not be empty");
         }
         return areaBehavior.canLeave(entity, coordinates);
     }
@@ -230,13 +234,11 @@ public abstract class Area implements Playable {
         }
 
          for(Interactable entry : intercablesToEnter.keySet()){
-
              areaBehavior.enter(entry, intercablesToEnter.get(entry));
          }
 
          for(Interactable entry : intercablesToLeave.keySet()){
              areaBehavior.leave(entry, intercablesToLeave.get(entry));
-             //TODO next QESADIRE : "Entrer dans le truc du machin toute fin de 4.7.3 "
          }
 
         registeredActors.clear();
@@ -260,7 +262,6 @@ public abstract class Area implements Playable {
      * @return (boolean): true if the actor is correctly unregistered
      */
     public final boolean unregisterActor(Actor a){
-        // TODO implements me #PROJECT #TUTO
         return unregisteredActors.add(a);
     }
 
@@ -270,7 +271,6 @@ public abstract class Area implements Playable {
      * @return (int) : the width in number of cols
      */
     public final int getWidth(){
-        // TODO implements me #PROJECT #TUTO
         return  areaBehavior.getWitdth();
 
     }
@@ -281,14 +281,12 @@ public abstract class Area implements Playable {
      * @return (int) : the height in number of rows
      */
     public final int getHeight(){
-        // TODO implements me #PROJECT #TUTO
         return areaBehavior.getHeight();
     }
 
     /** @return the Window Keyboard for inputs */
     public final Keyboard getKeyboard () {
-        // TODO implements me #PROJECT #TUTO
-        return null;
+        return keyboard;
     }
 
     /// Area implements Playable
@@ -298,6 +296,7 @@ public abstract class Area implements Playable {
         // TODO implements me #PROJECT #TUTO
         this.window=window;
         this.fileSystem=fileSystem;
+        keyboard= window.getKeyboard();
 
         actors = new LinkedList<>();
         interactors =new LinkedList<>();
@@ -324,6 +323,7 @@ public abstract class Area implements Playable {
      * @return (boolean) : if the resume succeed, true by default
      */
     public boolean resume(Window window, FileSystem fileSystem){
+        keyboard= window.getKeyboard();
         return true;
     }
 

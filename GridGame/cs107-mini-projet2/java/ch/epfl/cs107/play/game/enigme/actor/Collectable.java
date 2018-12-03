@@ -43,7 +43,7 @@ public abstract class Collectable extends AreaEntity {
     /**return true if possible to add a collectable to the area and add it */
 
     public boolean deppose(Area area, DiscreteCoordinates position){
-        this.setCurrentMainCellCoordinates(position);
+        this.setCurrentPosition(position.toVector());
         if(!area.canEnterAreaCells(this, this.getCurrentCells())){
             return false;
         }
