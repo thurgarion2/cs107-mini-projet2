@@ -61,7 +61,6 @@ public class Enigme extends AreaGame {
 
     @Override
     public void update(float deltaTime) {
-        player.initializeDirection(this.getWindow());
         super.update(deltaTime);
         if(player.isPassingDoor()){
             changeArea(player.passedDoor());

@@ -17,7 +17,6 @@ import java.util.List;
  */
 public abstract class MovableAreaEntity extends AreaEntity {
 
-    // TODO implements me #PROJECT #TUTO
 
     /// Indicate if the actor is currently moving
     private boolean isMoving=false;
@@ -53,7 +52,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
      */
     public MovableAreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
-        // TODO implements me #PROJECT #TUTO
         resetMotion();
     }
 
@@ -91,7 +89,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
             Vector orientation = getOrientation().toVector();
             targetMainCellCoordinates = getCurrentMainCellCoordinates().jump(orientation);
-            this.setCurrentMainCellCoordinates(targetMainCellCoordinates);
 
             isMoving=true;
             return true;
@@ -133,7 +130,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
     @Override
     public Vector getVelocity() {
-        // TODO implements me #PROJECT #TUTO
         // the velocity must be computed as the orientation vector (getOrientation().toVector() mutiplied by 
     	// framesForCurrentMove
         return getOrientation().toVector().mul(1.0f/framesForCurrentMove);

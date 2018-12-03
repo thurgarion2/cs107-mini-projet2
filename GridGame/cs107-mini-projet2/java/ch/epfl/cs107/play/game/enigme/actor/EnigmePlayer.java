@@ -26,6 +26,9 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     /// Animation duration in frame number
     private final static int ANIMATION_DURATION = 8;
 
+    /// The keyboard
+    private Keyboard keyboard;
+
     //four directions
     private enum Direction{
         leftArrow(Orientation.LEFT),
@@ -61,6 +64,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         super(area, orientation, position);
         sprite=new   Sprite("ghost.1", 1, 1.f, this);
         bag=new LinkedList<>();
+        keyboard=area.getKeyboard();
+        initializeDirection();
     }
 
     public EnigmePlayer(Area area, DiscreteCoordinates coordinates){
@@ -83,13 +88,15 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         ownerArea.unregisterActor(this);
 
         this.setCurrentPosition(position.toVector());
-        this.setCurrentMainCellCoordinates(position);
         this.resetMotion();
 
         area.registerActor(this);
         area.enterAreaCells(this, this.getCurrentCells());
 
         ownerArea=area;
+        keyboard=ownerArea.getKeyboard();
+        initializeDirection();
+
         isPassingDoor=false;
 
     }
@@ -140,9 +147,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
     /**initialze button with the current keyboard*/
 
-    public void initializeDirection (Window w){
-        Keyboard keyboard = w.getKeyboard() ;
-
+   private void initializeDirection (){
         Direction.leftArrow.bouton =  keyboard.get(Keyboard.LEFT);
         Direction.rightArrow.bouton =   keyboard.get(Keyboard.RIGHT) ;
         Direction.upArrow.bouton    =   keyboard.get(Keyboard.UP) ;
@@ -159,7 +164,9 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
         Orientation targetOrientation=null;
+        this.initializeDirection ();
 
         for (Direction dir : Direction.values()){
             if(dir.bouton.isDown()){
