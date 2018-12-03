@@ -26,7 +26,8 @@ public class Door extends AreaEntity {
      * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
-    public Door(Area area, String destination, DiscreteCoordinates coordArivee, Orientation orientation, DiscreteCoordinates position, float demiaxeX, float demiaxeY)  {
+    public Door(Area area, String destination, DiscreteCoordinates coordArivee, Orientation orientation, DiscreteCoordinates position)  {
+        //TODO implemter en format ellipse les coord des cellules autres que principale
         super(area, orientation, position);
         this.destination=destination;
         this.coordArrivee=coordArivee;
@@ -56,6 +57,7 @@ public class Door extends AreaEntity {
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
         ((EnigmeInteractionVisitor)v).interactWith(this);
+        sprite = new Sprite("door.open.1", 1.0f, 1.0f, this);
     }
 
     @Override

@@ -36,6 +36,4 @@ public class Apple extends Collectable {
        sprite.draw(canvas);
     }
 
-
-
 }

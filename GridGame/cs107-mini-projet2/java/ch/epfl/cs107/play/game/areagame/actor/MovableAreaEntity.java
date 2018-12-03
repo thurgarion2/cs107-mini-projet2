@@ -27,6 +27,7 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
 
 
+
     /**@return (List<DiscreteCoordinates>): all the leaving coordinate*/
     protected  final List<DiscreteCoordinates> getLeavingCells(){
         return  this.getCurrentCells();
