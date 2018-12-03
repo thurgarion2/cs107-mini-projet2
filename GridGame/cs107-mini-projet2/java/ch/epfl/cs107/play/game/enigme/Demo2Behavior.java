@@ -83,7 +83,6 @@ public class Demo2Behavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
-
             return this.type.canWalk;
         }
 

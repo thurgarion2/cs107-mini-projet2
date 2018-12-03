@@ -154,6 +154,7 @@ public abstract class AreaBehavior
         public Cell(int x, int y){
             coordinate=new DiscreteCoordinates(x,y);
             canInteract = new HashSet<>();
+            canInteract.add(this);
         }
 
         /**add the entity in the cell*/
