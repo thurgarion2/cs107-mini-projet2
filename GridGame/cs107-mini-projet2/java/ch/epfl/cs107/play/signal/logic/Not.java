@@ -1,0 +1,19 @@
+package ch.epfl.cs107.play.signal.logic;
+
+import ch.epfl.cs107.play.signal.Signal;
+
+public class Not extends LogicSignal {
+    private Logic s;
+
+    public Not(Logic s){
+        this.s = s;
+    }
+
+    @Override
+    public boolean isOn() {
+        if(!s.isOn() && s != null) {
+            return true;
+        }
+        return false;
+    }
+}

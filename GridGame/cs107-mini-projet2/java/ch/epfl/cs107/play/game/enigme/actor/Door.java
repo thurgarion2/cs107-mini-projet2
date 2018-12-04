@@ -38,7 +38,7 @@ public class Door extends AreaEntity {
 
         currrentCells.add(position);
 
-        sprite=new Sprite("door.close.1", 1.0f, 1.0f, this);
+        sprite=new Sprite("door.close.2", 1.0f, 1.0f, this);
     }
     /**Getter for destination*/
     public String getDestination() {

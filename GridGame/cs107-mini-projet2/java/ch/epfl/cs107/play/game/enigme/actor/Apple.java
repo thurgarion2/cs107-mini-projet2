@@ -25,9 +25,6 @@ public class Apple extends Collectable {
     public Apple(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException {
         super(area, orientation, position);
         sprite= new Sprite("apple.1" , 1.0f, 1.0f, this);
-
-
-
     }
 
 
