@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.actor;
 
 import ch.epfl.cs107.play.game.Updatable;
 import ch.epfl.cs107.play.math.Positionable;
+import ch.epfl.cs107.play.signal.Signal;
 import ch.epfl.cs107.play.window.Audio;
 import ch.epfl.cs107.play.game.Updatable;
 import ch.epfl.cs107.play.math.Positionable;
@@ -12,7 +13,7 @@ import ch.epfl.cs107.play.window.Audio;
  * Top game object, which is directly managed by the game.
  * Smaller components and helpers are usually owned by actors themselves.
  */
-public interface Actor extends Updatable, Graphics, Acoustics, Positionable {
+public interface Actor extends Updatable, Graphics, Acoustics, Positionable, Signal {
     
     @Override
     default void update(float deltaTime) {

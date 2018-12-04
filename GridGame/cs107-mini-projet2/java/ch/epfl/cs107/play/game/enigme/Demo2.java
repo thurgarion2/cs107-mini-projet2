@@ -15,10 +15,10 @@ public class Demo2 extends AreaGame {
     private DiscreteCoordinates room0=new DiscreteCoordinates(5,5);
     private DiscreteCoordinates room1=new DiscreteCoordinates(5,2);
     private boolean areaIsRoom0=true;
+    public static final int scaleFactor = 22;
 
     public boolean begin(Window window, FileSystem fileSystem){
         super.begin(window,fileSystem);
-
 
         this.addArea(new Room0());
         this.addArea(new Room1());
@@ -58,8 +58,6 @@ public class Demo2 extends AreaGame {
     @Override
     public void update(float deltaTime) {
         player.initializeDirection(this.getWindow());
-
-
         super.update(deltaTime);
         if(player.isTroughDoor()){
             changeArea();

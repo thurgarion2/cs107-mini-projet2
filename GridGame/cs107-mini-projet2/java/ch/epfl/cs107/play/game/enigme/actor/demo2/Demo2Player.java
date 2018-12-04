@@ -37,7 +37,7 @@ public class Demo2Player extends MovableAreaEntity {
     public void initializeDirection (Window w){
         Keyboard keyboard = w.getKeyboard() ;
 
-        leftArrow =  keyboard.get(Keyboard.LEFT); ;
+        leftArrow =  keyboard.get(Keyboard.LEFT);
         rightArrow =   keyboard.get(Keyboard.RIGHT) ;
         upArrow    =   keyboard.get(Keyboard.UP) ;
         downArrow =  keyboard.get(Keyboard.DOWN) ;

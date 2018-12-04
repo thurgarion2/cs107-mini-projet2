@@ -18,9 +18,9 @@ public class Demo2Behavior extends AreaBehavior {
         final int type;
         final boolean canWalk;
 
-        Demo2CellType(int type, boolean canwalk){
+        Demo2CellType(int type, boolean canWalk){
             this.type = type;
-            this.canWalk=canwalk;
+            this.canWalk=canWalk;
         }
 
 
@@ -78,7 +78,7 @@ public class Demo2Behavior extends AreaBehavior {
 
         @Override
         public boolean isCellInteractable() {
-            return false;
+            return true;
         }
 
         @Override

@@ -19,7 +19,7 @@ import java.util.List;
 
 public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     private boolean isPassingDoor =false;
-    private Door door;
+    private Door door; // last door passed
 
     private Sprite sprite;
 
@@ -198,6 +198,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     public boolean isCellInteractable() {
         return true;
     }
+
 
 
     private  class EnigmePlayerHandler implements EnigmeInteractionVisitor {

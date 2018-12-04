@@ -22,10 +22,9 @@ import ch.epfl.cs107.play.window.Window;
 public class Enigme extends AreaGame {
 
     /// The player is a concept of RPG games
+    /// Enigme implements Playable
     private EnigmePlayer player;
 
-
-    /// Enigme implements Playable
 
     @Override
     public String getTitle() {
