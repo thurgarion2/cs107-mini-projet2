@@ -15,7 +15,7 @@ public class Level2 extends EnigmeArea {
     }
     public boolean begin(Window window, FileSystem fileSystem) {
         boolean out=super.begin(window, fileSystem);
-        this.registerActor(new Door(this, "LevelSelector", new DiscreteCoordinates(4, 6), Orientation.DOWN, new DiscreteCoordinates(5,0)));
+        this.registerActor(new Door(this, "LevelSelector", new DiscreteCoordinates(2, 6), Orientation.DOWN, new DiscreteCoordinates(5,0)));
         this.registerActor(new Apple(this, Orientation.DOWN, new DiscreteCoordinates(5, 6)));
         return out;
     }
