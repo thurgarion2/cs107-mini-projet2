@@ -11,8 +11,7 @@ public class Or extends LogicSignal {
 
     @Override
     public boolean isOn() {
-        boolean cond = (s1.isOn() || s2.isOn()) && s1 != null && s2 != null;
-        if(cond){
+        if( s1 != null && s2 != null && (s1.isOn() || s2.isOn())){
             return true;
         }
         return false;

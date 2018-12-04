@@ -15,12 +15,11 @@ public class MultipleAnd extends LogicSignal{
 
     @Override
     public boolean isOn() {
-        boolean resultat = true;
         for(int i = 0; i < signals.size(); ++i){
-            if(!signals.get(i).isOn() && signals.get(i) != null){
-                resultat = false;
+            if(signals.get(i) == null || !signals.get(i).isOn()){
+                return false;
             }
         }
-        return resultat;
+        return true;
     }
 }

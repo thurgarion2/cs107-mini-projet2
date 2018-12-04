@@ -11,7 +11,7 @@ public class Not extends LogicSignal {
 
     @Override
     public boolean isOn() {
-        if(!s.isOn() && s != null) {
+        if(s != null && !s.isOn() ) {
             return true;
         }
         return false;
