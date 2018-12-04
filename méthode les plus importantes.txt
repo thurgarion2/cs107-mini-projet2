@@ -32,3 +32,8 @@ MovableAreaEntity :
 Une areaEntity qui peut se déplacer
 
     • move : initite un déplacement selon l’orientation et le nombre de frames (dès le début de son déplacement l’entité est considéré comme avoir changer de cellule).
+
+
+TODO
+
+ask should the cells redefine metod takecellspace wheter in wall
