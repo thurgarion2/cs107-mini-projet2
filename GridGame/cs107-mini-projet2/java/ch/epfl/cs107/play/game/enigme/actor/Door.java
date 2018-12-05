@@ -17,7 +17,12 @@ public class Door extends AreaEntity {
     private String destination;
     private DiscreteCoordinates coordArrivee;
     private List<DiscreteCoordinates> currrentCells;
+
     private Sprite sprite;
+    private Sprite spriteOpen=new Sprite("door.open.1", 1.0f, 1.0f, this);;
+    private Sprite spriteClose=new Sprite("door.close.2", 1.0f, 1.0f, this);;
+
+    private boolean isOpen=true;
 
     /**
      * Default AreaEntity constructor
@@ -26,19 +31,17 @@ public class Door extends AreaEntity {
      * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
-    public Door(Area area, String destination, DiscreteCoordinates coordArivee, Orientation orientation, DiscreteCoordinates position)  {
-        //TODO implemter en format ellipse les coord des cellules autres que principale
+    public Door(Area area, String destination, DiscreteCoordinates coordArivee, Orientation orientation, DiscreteCoordinates position,DiscreteCoordinates...coordinates)  {
         super(area, orientation, position);
         this.destination=destination;
         this.coordArrivee=coordArivee;
 
         currrentCells=new LinkedList();
-
-        //ToDO implement correcty ellipse
-
         currrentCells.add(position);
-
-        sprite=new Sprite("door.close.2", 1.0f, 1.0f, this);
+        for(DiscreteCoordinates coord : coordinates){
+            currrentCells.add(coord);
+        }
+        sprite=spriteOpen;
     }
     /**Getter for destination*/
     public String getDestination() {
@@ -49,6 +52,16 @@ public class Door extends AreaEntity {
         return coordArrivee;
     }
 
+    protected void openDoor(){
+        isOpen=true;
+        sprite=spriteOpen;
+    }
+
+    protected void closeDoor(){
+        isOpen=false;
+        sprite=spriteClose;
+    }
+
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);
@@ -57,7 +70,6 @@ public class Door extends AreaEntity {
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
         ((EnigmeInteractionVisitor)v).interactWith(this);
-        sprite = new Sprite("door.open.1", 1.0f, 1.0f, this);
     }
 
     @Override
@@ -77,6 +89,6 @@ public class Door extends AreaEntity {
 
     @Override
     public boolean isCellInteractable() {
-        return true;
+        return isOpen;
     }
 }

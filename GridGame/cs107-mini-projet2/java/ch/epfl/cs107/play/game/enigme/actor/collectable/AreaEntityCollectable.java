@@ -28,7 +28,7 @@ public abstract class AreaEntityCollectable extends AreaEntity implements Collec
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        ((EnigmeInteractionVisitor)v).interactWith(this);
+        ((EnigmeInteractionVisitor)v).interactWith((AreaEntityCollectable)this);
     }
 
     /**return true if possible to remove collectable of area and remove it */

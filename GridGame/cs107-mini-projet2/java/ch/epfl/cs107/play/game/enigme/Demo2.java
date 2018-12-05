@@ -27,7 +27,6 @@ public class Demo2 extends AreaGame {
 
 
         player= new Demo2Player(this.currentArea,room0);
-        player.initializeDirection(window);
 
         currentArea.registerActor(player);
         currentArea.enterAreaCells(player, player.getCurrentCells());
@@ -39,7 +38,7 @@ public class Demo2 extends AreaGame {
 
     private void changeArea(){
         DiscreteCoordinates next;
-
+        player.leaveArea();
         if(areaIsRoom0){
             setCurrentArea("Level1", false);
             next=room1;
@@ -57,7 +56,6 @@ public class Demo2 extends AreaGame {
 
     @Override
     public void update(float deltaTime) {
-        player.initializeDirection(this.getWindow());
         super.update(deltaTime);
         if(player.isTroughDoor()){
             changeArea();

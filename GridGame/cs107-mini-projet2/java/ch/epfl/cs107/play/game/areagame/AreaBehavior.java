@@ -1,12 +1,14 @@
 package ch.epfl.cs107.play.game.areagame;
 
 import ch.epfl.cs107.play.game.actor.Actor;
+import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.areagame.io.ResourcePath;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
+import org.omg.PortableInterceptor.INACTIVE;
 
 import java.util.*;
 
@@ -79,7 +81,6 @@ public abstract class AreaBehavior
 
     /**@return (boolean): true if can enter in all the cells*/
     public boolean canEnter(Interactable entity, List<DiscreteCoordinates> coordinates){
-        boolean out = true;
         for(DiscreteCoordinates coordinate : coordinates){
 
             if(!isInArea(coordinate)){
@@ -98,6 +99,7 @@ public abstract class AreaBehavior
         for (DiscreteCoordinates coordinate : coordinates) {
             cells[coordinate.x][coordinate.y].leave(entity);
         }
+
     }
 
     /**add the entity in all cells of coordinates*/
@@ -158,9 +160,8 @@ public abstract class AreaBehavior
         }
 
         /**add the entity in the cell*/
-        private void enter(Interactable i){
-                canInteract.add(i);
-
+        private boolean enter(Interactable i){
+                return canInteract.add(i);
         }
 
         /**@param(Interactor) : the entity to interact with cells
@@ -190,8 +191,8 @@ public abstract class AreaBehavior
         }
 
         /**remove entity of the cell*/
-        private void leave(Interactable i){
-                canInteract.remove(i);
+        private boolean leave(Interactable i){
+                return canInteract.remove(i);
         }
         /**@return (boolean) : return true if the interactor can enter in cell*/
         protected abstract boolean canEnter(Interactable entity);

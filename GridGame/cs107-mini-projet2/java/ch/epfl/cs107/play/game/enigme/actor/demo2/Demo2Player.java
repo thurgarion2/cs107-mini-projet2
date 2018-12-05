@@ -34,8 +34,8 @@ public class Demo2Player extends MovableAreaEntity {
 
     /**initialze button with the current keyboard*/
 
-    public void initializeDirection (Window w){
-        Keyboard keyboard = w.getKeyboard() ;
+    private void initializeDirection (){
+        Keyboard keyboard = ownerArea.getKeyboard() ;
 
         leftArrow =  keyboard.get(Keyboard.LEFT);
         rightArrow =   keyboard.get(Keyboard.RIGHT) ;
@@ -49,6 +49,7 @@ public class Demo2Player extends MovableAreaEntity {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        initializeDirection ();
 
         Orientation targetOrientation=null;
 
@@ -92,10 +93,16 @@ public class Demo2Player extends MovableAreaEntity {
     public Demo2Player(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
         sprite=new   Sprite("ghost.1", 1, 1.f, this);
+        initializeDirection ();
     }
 
     public Demo2Player(Area area, DiscreteCoordinates coordinates){
         this(area, Orientation.DOWN, coordinates);
+    }
+
+    /**make the player leave current area*/
+    public void leaveArea(){
+        ownerArea.unregisterActor(this);
     }
 
 
@@ -104,9 +111,6 @@ public class Demo2Player extends MovableAreaEntity {
      * @param position    (Coordinate): Initial position in the area. Not null
     */
     public void enterArea(Area area, DiscreteCoordinates position){
-
-        ownerArea.leaveAreaCells(this, this.getCurrentCells());
-        ownerArea.unregisterActor(this);
 
         this.setCurrentPosition(position.toVector());
         this.resetMotion();

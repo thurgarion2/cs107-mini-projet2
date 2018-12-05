@@ -1,12 +1,13 @@
-package ch.epfl.cs107.play.game.enigme.actor.signalActor;
+package ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
-public class Lever extends AreaEntityInteruptor implements  CellInteruptor{
+public class Lever extends AreaEntityInteruptor implements ViewInteruptor {
     /**
      * Default AreaEntity constructor
      *
@@ -15,14 +16,23 @@ public class Lever extends AreaEntityInteruptor implements  CellInteruptor{
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
     public Lever(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException {
-        super(area, orientation, position);
-        this.setSprite(new Sprite("lever.big.right", 1.0f, 1.0f, this), new Sprite("lever.big.left", 1.0f, 1.0f, this));
-        this.setEtat(Logic.FALSE);
+        super(area, orientation, position,Logic.FALSE,"lever.big.right","lever.big.left");
+    }
+
+    @Override
+    public void viewInteraction() {
+        this.switchEtat();
     }
 
     @Override
     public boolean takeCellSpace() {
         return true;
+    }
+
+
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v) {
+        ((EnigmeInteractionVisitor)v).interactWith( (ViewInteruptor) this);
     }
 
 

@@ -6,6 +6,8 @@ import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.Demo2Behavior;
 import ch.epfl.cs107.play.game.enigme.EnigmeBehavior;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.AreaEntityCollectable;
+import ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur.CellInteruptor;
+import ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur.ViewInteruptor;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Vector;
@@ -80,24 +82,26 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         }
     }
 
+    /**make the player quit the current area*/
+
+    public void leaveArea(){
+        ownerArea.unregisterActor(this);
+        this.resetMotion();
+    }
+
     /**
      * @param area        (Area): area to enter. Not null
      * @param position    (Coordinate): Initial position in the area. Not null
      */
     public void enterArea(Area area, DiscreteCoordinates position){
-        ownerArea.leaveAreaCells(this, this.getCurrentCells());
-        ownerArea.unregisterActor(this);
-
+        this.ownerArea=area;
         this.setCurrentPosition(position.toVector());
         this.resetMotion();
 
-        area.registerActor(this);
-        area.enterAreaCells(this, this.getCurrentCells());
-
-        ownerArea=area;
+        ownerArea.registerActor(this);
+        ownerArea.enterAreaCells(this, this.getCurrentCells());
         keyboard=ownerArea.getKeyboard();
         initializeDirection();
-
         isPassingDoor=false;
 
     }
@@ -213,11 +217,23 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         @Override
         public void interactWith(AreaEntityCollectable item){
             // fait en sorte que la pomme soit ramassée
-            if(lKey.isDown()){
+            if(lKey.isPressed()){
                 if(item.collect()){
                     bag.add(item);
                 }
             }
+        }
+
+        @Override
+        public void interactWith(ViewInteruptor interuptor) {
+            if(lKey.isPressed()){
+                interuptor.viewInteraction();
+            }
+        }
+
+        @Override
+        public void interactWith(CellInteruptor interuptor) {
+            interuptor.contactInteraction();
         }
     }
 

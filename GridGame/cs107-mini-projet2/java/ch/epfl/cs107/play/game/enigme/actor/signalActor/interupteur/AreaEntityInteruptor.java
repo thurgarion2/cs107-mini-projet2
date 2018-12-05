@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.enigme.actor.signalActor;
+package ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.AreaEntity;
@@ -14,36 +14,34 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class  AreaEntityInteruptor extends AreaEntity  {
-    private Sprite spriteOn;
-    private  Sprite spriteOff;
+    private final Sprite spriteOn;
+    private final Sprite spriteOff;
     private Sprite currentSprite;
-    private Logic etat=Logic.FALSE;
+    private Logic etat;
 
     /**
      * Default AreaEntity constructor
-     *
-     * @param area        (Area): Owner area. Not null
-     * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
-     * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
-     *
+     *@param area        (Area): Owner area. Not null
+     *@param orientation (Orientation): Initial orientation of the entity in the Area. Not null
+     *@param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
+     *@param etat        (Logic) : Initial state
+     *@param nomOn       (String) : name of the on sprite   (existing)
+     *@param nomOff      (String) : name of the off sprite (existing)
      */
-    public AreaEntityInteruptor(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException {
+    public AreaEntityInteruptor(Area area, Orientation orientation, DiscreteCoordinates position, Logic etat, String nomOn, String nomOff) throws NullPointerException {
         super(area, orientation, position);
+        spriteOn=new Sprite(nomOn, 1.0f, 1.0f, this);
+        spriteOff=new Sprite(nomOff, 1.0f, 1.0f, this);
+        currentSprite=spriteOff;
+        this.etat=etat;
     }
 
     public Logic getEtat(){
         return etat;
     }
 
-    //sprite cannot be inisialized in constructor need first that instance is construct
-    protected void setSprite(Sprite spriteOn, Sprite spriteOff){
-        this.spriteOn=spriteOn;
-        this.spriteOff=spriteOff;
-        currentSprite=spriteOff;
-    }
 
-
-    //set current state to signal
+    //set current state to signal (only if you don't know current state)
     protected void setEtat (Logic signal){
         if(signal==Logic.TRUE){
             currentSprite=spriteOn;
@@ -64,15 +62,6 @@ public abstract class  AreaEntityInteruptor extends AreaEntity  {
         }
     }
 
-    //by default when you interact with an interruptor you switch his state
-    public void interact(){
-        this.switchEtat();
-    }
-
-    @Override
-    public void acceptInteraction(AreaInteractionVisitor v) {
-        ((EnigmeInteractionVisitor)v).interactWith(this);
-    }
 
     @Override
     public void draw(Canvas canvas) {

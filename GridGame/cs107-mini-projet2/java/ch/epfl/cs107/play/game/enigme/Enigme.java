@@ -51,6 +51,7 @@ public class Enigme extends AreaGame {
     }
 
     private void changeArea( Door door){
+        player.leaveArea();
         this.setCurrentArea(door.getDestination(), false);
         this.currentArea.setViewCandidate(player);
         player.enterArea(currentArea, door.getCoordArrivee());

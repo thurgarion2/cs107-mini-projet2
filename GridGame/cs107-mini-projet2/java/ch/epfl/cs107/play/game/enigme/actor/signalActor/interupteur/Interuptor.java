@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.enigme.actor.signalActor;
+package ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur;
 
 
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;

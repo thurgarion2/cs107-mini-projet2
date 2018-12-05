@@ -1,9 +1,9 @@
-package ch.epfl.cs107.play.game.enigme.actor.signalActor;
+package ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
@@ -19,23 +19,29 @@ public class Torch extends AreaEntityInteruptor implements ViewInteruptor {
      *
      */
     public Torch(Area area, Orientation orientation, DiscreteCoordinates position, Logic state) throws NullPointerException {
-        super(area, orientation, position);
-        this.setSprite(new Sprite("torch.ground.on.1", 1.0f, 1.0f, this), new Sprite("torch.ground.off" , 1.0f, 1.0f, this));
+        super(area, orientation, position,state,"torch.ground.on.1","torch.ground.off");
         this.setEtat(state);
     }
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        super.acceptInteraction(v);
+        ((EnigmeInteractionVisitor)v).interactWith( (ViewInteruptor) this);
     }
 
     @Override
     public boolean takeCellSpace() {
-        return false;
+        return true;
+    }
+
+
+
+    @Override
+    public void viewInteraction() {
+        this.switchEtat();
     }
 
     @Override
     public void switchEtat() {
-
+        super.switchEtat();
     }
 }
