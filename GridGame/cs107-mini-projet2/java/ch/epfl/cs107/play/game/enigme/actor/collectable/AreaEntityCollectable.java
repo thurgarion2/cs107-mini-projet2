@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AreaEntityCollectable extends AreaEntity implements Collectable {
-    Sprite sprite;
+    private Sprite sprite;
     /**
      * Default AreaEntity constructor
      *
@@ -21,8 +21,9 @@ public abstract class AreaEntityCollectable extends AreaEntity implements Collec
      * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
-    public AreaEntityCollectable(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException {
+    public AreaEntityCollectable(Area area, Orientation orientation, DiscreteCoordinates position, String spriteName) throws NullPointerException {
         super(area, orientation, position);
+        this.sprite=new Sprite(spriteName,1.0f,1.0f,this);
     }
 
     @Override

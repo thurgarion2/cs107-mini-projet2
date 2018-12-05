@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Apple extends AreaEntityCollectable {
-    private Sprite sprite;
+
 
     /**
      * Default AreaEntity constructor
@@ -23,14 +23,9 @@ public class Apple extends AreaEntityCollectable {
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
     public Apple(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException {
-        super(area, orientation, position);
-        sprite= new Sprite("apple.1" , 1.0f, 1.0f, this);
+        super(area, orientation, position, "apple.1");
     }
 
 
-    @Override
-    public void draw(Canvas canvas) {
-       sprite.draw(canvas);
-    }
 
 }
