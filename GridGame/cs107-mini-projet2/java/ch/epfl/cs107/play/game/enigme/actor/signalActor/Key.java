@@ -1,9 +1,10 @@
-package ch.epfl.cs107.play.game.enigme.actor.collectable;
+package ch.epfl.cs107.play.game.enigme.actor.signalActor;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.enigme.actor.Collectable;
+import ch.epfl.cs107.play.game.enigme.actor.collectable.Collectable;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.Signal;
 import ch.epfl.cs107.play.signal.logic.Logic;
