@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.enigme.actor.signalActor;
+package ch.epfl.cs107.play.game.enigme.actor.collectable;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
