@@ -12,7 +12,7 @@ public class Key extends AreaEntityCollectable implements Interuptor {
     private Logic signal= Logic.FALSE;
 
     public Key(Area area, Orientation orientation, DiscreteCoordinates position){
-        super(area, orientation, position,"key1");
+        super(area, orientation, position,"key.1");
     }
 
     @Override

@@ -3,6 +3,7 @@ package ch.epfl.cs107.play.game.enigme.area;
 import ch.epfl.cs107.play.game.areagame.actor.AreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.enigme.actor.Door;
+import ch.epfl.cs107.play.game.enigme.actor.collectable.Key;
 import ch.epfl.cs107.play.game.enigme.actor.signalActor.SignalDoor;
 import ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur.Lever;
 import ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur.PressurePlate;
@@ -25,7 +26,7 @@ public class LevelSelector extends EnigmeArea {
         boolean out = super.begin(window, fileSystem);
 
         String[] nomNiveau= {"Level1","Level2","LevelSelector","LevelSelector","LevelSelector","LevelSelector","LevelSelector","LevelSelector"};
-        PressureSwitch test = new PressureSwitch(this, new DiscreteCoordinates(5, 4));
+        Key test = new Key(this, Orientation.DOWN, new DiscreteCoordinates(5, 4));
 
         for(int i=0; i<7; i++){
             DiscreteCoordinates arrivee;
