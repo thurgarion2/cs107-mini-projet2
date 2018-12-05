@@ -7,6 +7,8 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.Signal;
 
 public class SignalDoor extends Door implements Signal {
+
+
     /**
      * Default AreaEntity constructor
      *

@@ -5,27 +5,15 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public abstract class ViewInteruptor extends Interuptor {
+public interface ViewInteruptor extends Interuptor {
 
-    /**
-     * Default AreaEntity constructor
-     *
-     * @param area        (Area): Owner area. Not null
-     * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
-     * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
-     *
-     */
-    public ViewInteruptor(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException {
-        super(area, orientation, position);
-    }
 
-    @Override
-    public boolean isViewInteractable() {
+
+    default boolean isViewInteractable() {
         return true;
     }
 
-    @Override
-    public boolean isCellInteractable() {
+    default boolean isCellInteractable() {
         return false;
     }
 }

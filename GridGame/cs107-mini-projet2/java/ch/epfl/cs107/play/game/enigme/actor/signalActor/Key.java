@@ -9,7 +9,7 @@ import ch.epfl.cs107.play.signal.Signal;
 import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Key extends Collectable implements Signal {
+public class Key extends Collectable implements Signal, ViewInteruptor {
     private Sprite sprite;
     private Logic signal= Logic.FALSE;
 
@@ -20,13 +20,27 @@ public class Key extends Collectable implements Signal {
 
     @Override
     public boolean collect() {
-        this.signal = Logic.TRUE;
+        switchEtat();
         return super.collect();
     }
 
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);
+    }
+
+    @Override
+    public Logic getEtat() {
+        return signal;
+    }
+
+    @Override
+    public void switchEtat() {
+        if(signal == Logic.FALSE){
+           signal = Logic.TRUE;
+        }else if(signal == Logic.TRUE){
+            signal = Logic.FALSE;
+        }
     }
 
     @Override
