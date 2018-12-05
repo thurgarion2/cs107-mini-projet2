@@ -54,7 +54,7 @@ public abstract class  AreaEntityInteruptor extends AreaEntity  {
         }
     }
     //change current state to opposite
-    protected void switchEtat (){
+    protected void switchEtat(){
         if(etat==Logic.TRUE){
             currentSprite=spriteOff;
             etat=Logic.FALSE;

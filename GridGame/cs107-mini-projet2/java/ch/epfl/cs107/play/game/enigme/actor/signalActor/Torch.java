@@ -4,13 +4,11 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.game.enigme.actor.Collectable;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
-import ch.epfl.cs107.play.window.Canvas;
-import sun.misc.Signal;
 
-public class Torch extends ViewInteruptor {
+
+public class Torch extends AreaEntityInteruptor implements ViewInteruptor {
 
     /**
      * Default AreaEntity constructor
@@ -34,5 +32,10 @@ public class Torch extends ViewInteruptor {
     @Override
     public boolean takeCellSpace() {
         return false;
+    }
+
+    @Override
+    public void switchEtat() {
+
     }
 }
