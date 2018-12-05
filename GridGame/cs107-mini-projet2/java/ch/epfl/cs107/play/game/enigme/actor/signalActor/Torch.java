@@ -3,37 +3,37 @@ package ch.epfl.cs107.play.game.enigme.actor.signalActor;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
+import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.actor.Collectable;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 import sun.misc.Signal;
 
-public class Torch extends SignalCollectable {
-    private Sprite sprite; // current sprite to be drawn
-    private Sprite spriteOn; // sprite allumée
-    private Sprite spriteOff; // sprtie éteinte
+public class Torch extends ViewInteruptor {
 
-    public Torch(Area area, Orientation orientation, DiscreteCoordinates position, boolean isOnFire){
+    /**
+     * Default AreaEntity constructor
+     *
+     * @param area        (Area): Owner area. Not null
+     * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
+     * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
+     *
+     */
+    public Torch(Area area, Orientation orientation, DiscreteCoordinates position, Logic state) throws NullPointerException {
         super(area, orientation, position);
-        spriteOn = new Sprite("torch.groundon.1", 1.0f, 1.0f, this);
-        spriteOff = new Sprite("torch.ground.off", 1.0f, 1.0f, this);
-        if(isOnFire){
-            sprite = spriteOn;
-            signal=Logic.TRUE;
-        }else{
-            sprite = spriteOff;
-            signal=Logic.FALSE;
-        }
+        this.setSprite(new Sprite("torch.ground.on.1", 1.0f, 1.0f, this), new Sprite("torch.ground.off" , 1.0f, 1.0f, this));
+        this.setEtat(state);
     }
 
     @Override
-    public boolean collect() {
+    public void acceptInteraction(AreaInteractionVisitor v) {
+        this.switchEtat();
+        super.acceptInteraction(v);
+    }
+
+    @Override
+    public boolean takeCellSpace() {
         return false;
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        sprite.draw(canvas);
     }
 }

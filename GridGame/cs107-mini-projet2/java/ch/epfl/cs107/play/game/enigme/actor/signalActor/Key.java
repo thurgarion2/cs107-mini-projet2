@@ -9,8 +9,9 @@ import ch.epfl.cs107.play.signal.Signal;
 import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 
-public class Key extends SignalCollectable {
+public class Key extends Collectable implements Signal {
     private Sprite sprite;
+    private Logic signal= Logic.FALSE;
 
     public Key(Area area, Orientation orientation, DiscreteCoordinates position){
         super(area, orientation, position);
@@ -26,6 +27,11 @@ public class Key extends SignalCollectable {
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);
+    }
+
+    @Override
+    public float getIntensity(float t) {
+        return signal.getIntensity();
     }
 
 
