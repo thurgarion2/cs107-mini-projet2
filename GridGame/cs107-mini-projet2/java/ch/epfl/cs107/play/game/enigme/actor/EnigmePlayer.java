@@ -5,6 +5,7 @@ import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.Demo2Behavior;
 import ch.epfl.cs107.play.game.enigme.EnigmeBehavior;
+import ch.epfl.cs107.play.game.enigme.actor.collectable.AreaEntityCollectable;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Vector;
@@ -47,7 +48,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     Button lKey;
 
     //TODO create a bag
-    private List<Collectable> bag;
+    private List<AreaEntityCollectable> bag;
 
 
     private final EnigmePlayerHandler handler= new EnigmePlayerHandler();
@@ -210,7 +211,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
             setIsPassingDoor(door);
         }
         @Override
-        public void interactWith(Collectable item){
+        public void interactWith(AreaEntityCollectable item){
             // fait en sorte que la pomme soit ramassée
             if(lKey.isDown()){
                 if(item.collect()){

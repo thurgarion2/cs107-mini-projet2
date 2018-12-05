@@ -2,12 +2,12 @@ package ch.epfl.cs107.play.game.enigme.handler;
 
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.EnigmeBehavior;
-import ch.epfl.cs107.play.game.enigme.actor.Collectable;
 import ch.epfl.cs107.play.game.enigme.actor.Door;
 import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
+import ch.epfl.cs107.play.game.enigme.actor.collectable.AreaEntityCollectable;
 
 public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
-    default void interactWith(Collectable item){
+    default void interactWith(AreaEntityCollectable item){
         // by default the interaction is empty
     }
 
