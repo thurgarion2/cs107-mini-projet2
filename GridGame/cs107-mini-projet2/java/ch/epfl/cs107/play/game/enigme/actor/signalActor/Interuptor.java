@@ -61,6 +61,11 @@ public abstract class Interuptor extends AreaEntity implements Signal {
         }
     }
 
+    //by default when you interact with an interruptor you switch his state
+    public void interact(){
+      this.switchEtat();
+    }
+
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
         ((EnigmeInteractionVisitor)v).interactWith(this);

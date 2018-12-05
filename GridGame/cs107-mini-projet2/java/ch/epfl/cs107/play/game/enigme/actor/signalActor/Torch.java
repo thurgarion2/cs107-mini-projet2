@@ -28,7 +28,6 @@ public class Torch extends ViewInteruptor {
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        this.switchEtat();
         super.acceptInteraction(v);
     }
 
