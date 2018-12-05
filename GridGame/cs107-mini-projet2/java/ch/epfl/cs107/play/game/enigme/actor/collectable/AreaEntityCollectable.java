@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AreaEntityCollectable extends AreaEntity implements Collectable {
-
+    Sprite sprite;
     /**
      * Default AreaEntity constructor
      *
@@ -51,6 +51,11 @@ public abstract class AreaEntityCollectable extends AreaEntity implements Collec
         ownerArea.registerActor(this);
         this.setCurrentPosition(position.toVector());
         return true;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        sprite.draw(canvas);
     }
 
     @Override
