@@ -6,7 +6,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
-public class Lever extends ViewInteruptor {
+public class Lever extends AreaEntityInteruptor implements  CellInteruptor{
     /**
      * Default AreaEntity constructor
      *
@@ -23,5 +23,11 @@ public class Lever extends ViewInteruptor {
     @Override
     public boolean takeCellSpace() {
         return true;
+    }
+
+
+    @Override
+    public void switchEtat() {
+        super.switchEtat();
     }
 }
