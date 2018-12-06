@@ -19,12 +19,12 @@ public class LevelSelector extends EnigmeArea {
     public boolean begin(Window window, FileSystem fileSystem) throws NullPointerException{
         boolean out = super.begin(window, fileSystem);
 
-        String[] nomNiveau= {"Level1","Level2","LevelSelector","LevelSelector","LevelSelector","LevelSelector","LevelSelector","LevelSelector"};
+        String[] nomNiveau= {"Level1","Level2","Level3","LevelSelector","LevelSelector","LevelSelector","LevelSelector","LevelSelector"};
         Key test = new Key(this, Orientation.DOWN, new DiscreteCoordinates(5, 4));
 
         for(int i=0; i<7; i++){
             DiscreteCoordinates arrivee;
-            if(i<=1){
+            if(i<=2){
                 arrivee=new DiscreteCoordinates(5, 1);
             }else {
                 arrivee=new DiscreteCoordinates(i+1, 6);
