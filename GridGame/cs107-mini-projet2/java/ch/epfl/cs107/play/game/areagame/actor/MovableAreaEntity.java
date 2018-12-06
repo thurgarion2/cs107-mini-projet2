@@ -60,10 +60,14 @@ public abstract class MovableAreaEntity extends AreaEntity {
      * Initialize or reset the current motion information
      */
     protected void resetMotion(){
-        // TODO implements me #PROJECT #TUTO
         isMoving=false;
         framesForCurrentMove=0;
         targetMainCellCoordinates=this.getCurrentMainCellCoordinates();
+    }
+
+    //getter to know wehter or not entity is moving
+    protected boolean isMoving(){
+        return isMoving;
     }
 
     /**
@@ -102,7 +106,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
     @Override
     public void update(float deltaTime) {
-        // TODO implements me #PROJECT #TUTO
 
         if(!getPosition().equals(targetMainCellCoordinates.toVector()) && isMoving){
             Vector distance = getOrientation().toVector();
@@ -114,7 +117,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
             this.resetMotion();
         }
 
-
     }
 
     @Override
@@ -123,7 +125,6 @@ public abstract class MovableAreaEntity extends AreaEntity {
         if(!isMoving){
             super.setOrientation(orientation);
         }
-
     }
 
 

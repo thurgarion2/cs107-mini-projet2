@@ -1,6 +1,7 @@
 package ch.epfl.cs107.play.game.enigme;
 
 import ch.epfl.cs107.play.game.areagame.AreaGame;
+import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayerAnimate;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
 import ch.epfl.cs107.play.game.enigme.area.Level1;
@@ -39,7 +40,7 @@ public class Enigme extends AreaGame {
         this.addArea(new Level3());
 
         this.setCurrentArea("LevelSelector", false);
-        player = new EnigmePlayer(this.currentArea, new DiscreteCoordinates(5, 5));
+        player = new EnigmePlayerAnimate(this.currentArea, new DiscreteCoordinates(5, 5));
         currentArea.registerActor(player);
         currentArea.setViewCandidate(player);
 
