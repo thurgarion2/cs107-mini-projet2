@@ -1,8 +1,6 @@
-package ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur;
+package ch.epfl.cs107.play.game.enigme.actor.interupteur;
 
 import ch.epfl.cs107.play.game.areagame.Area;
-import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
 

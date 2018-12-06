@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.enigme.actor;
+package ch.epfl.cs107.play.game.enigme.actor.door;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.AreaEntity;
@@ -13,14 +13,9 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Door extends AreaEntity {
+public class Door extends Gate {
     private String destination;
     private DiscreteCoordinates coordArrivee;
-    private List<DiscreteCoordinates> currrentCells;
-
-    private Sprite sprite;
-    private Sprite spriteOpen=new Sprite("door.open.1", 1.0f, 1.0f, this);;
-    private Sprite spriteClose=new Sprite("door.close.2", 1.0f, 1.0f, this);;
 
     private boolean isOpen=true;
 
@@ -32,16 +27,10 @@ public class Door extends AreaEntity {
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
     public Door(Area area, String destination, DiscreteCoordinates coordArivee, Orientation orientation, DiscreteCoordinates position,DiscreteCoordinates...coordinates)  {
-        super(area, orientation, position);
+        super(area, orientation,"door.open.1","door.close.2",true, position);
         this.destination=destination;
         this.coordArrivee=coordArivee;
 
-        currrentCells=new LinkedList();
-        currrentCells.add(position);
-        for(DiscreteCoordinates coord : coordinates){
-            currrentCells.add(coord);
-        }
-        sprite=spriteOpen;
     }
     /**Getter for destination*/
     public String getDestination() {
@@ -52,35 +41,12 @@ public class Door extends AreaEntity {
         return coordArrivee;
     }
 
-    protected void openDoor(){
-        isOpen=true;
-        sprite=spriteOpen;
-    }
-
-    protected void closeDoor(){
-        isOpen=false;
-        sprite=spriteClose;
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        sprite.draw(canvas);
-    }
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
         ((EnigmeInteractionVisitor)v).interactWith(this);
     }
 
-    @Override
-    public List<DiscreteCoordinates> getCurrentCells() {
-        return currrentCells;
-    }
-
-    @Override
-    public boolean takeCellSpace() {
-        return false;
-    }
 
     @Override
     public boolean isViewInteractable() {

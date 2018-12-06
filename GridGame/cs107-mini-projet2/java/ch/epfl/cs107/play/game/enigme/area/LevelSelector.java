@@ -1,17 +1,11 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
-import ch.epfl.cs107.play.game.areagame.actor.AreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.enigme.actor.Door;
+import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.Key;
-import ch.epfl.cs107.play.game.enigme.actor.signalActor.SignalDoor;
-import ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur.Lever;
-import ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur.PressurePlate;
-import ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur.PressureSwitch;
-import ch.epfl.cs107.play.game.enigme.actor.signalActor.interupteur.Torch;
+import ch.epfl.cs107.play.game.enigme.actor.door.SignalDoor;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Window;
 
 

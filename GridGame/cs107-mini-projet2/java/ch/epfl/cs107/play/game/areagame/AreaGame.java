@@ -29,10 +29,8 @@ abstract public class AreaGame implements Game {
      * @param a (Area): The area to add, not null
      */
     protected final void addArea(Area a){
-        // TODO implements me #PROJECT #TUTO
         areas.put(a.getTitle(), a);
     }
-
 
 
     /**
@@ -43,11 +41,9 @@ abstract public class AreaGame implements Game {
      * @return (Area): after setting it, return the new current area
      */
     protected final Area setCurrentArea(String key, boolean forceBegin) throws NullPointerException{
-        // TODO implements me #PROJECT #TUTO
         if(currentArea!=null){
             currentArea.suspend();
         }
-
 
         if(areas.get(key)!=null){
             currentArea=areas.get(key);
@@ -68,14 +64,12 @@ abstract public class AreaGame implements Game {
 
     /**@return (Window) : the Graphic and Audio context*/
     protected final Window getWindow(){
-        // TODO implements me #PROJECT #TUTO
         return window;
     }
 
     /**@return (FIleSystem): the linked file system*/
     protected final FileSystem getFileSystem(){
-        // TODO implements me #PROJECT #TUTO
-        return null;
+        return fileSystem;
     }
 
 
@@ -83,7 +77,6 @@ abstract public class AreaGame implements Game {
 
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
-        // TODO implements me #PROJECT #TUTO
         this.window=window;
         this.fileSystem=fileSystem;
 
@@ -94,7 +87,6 @@ abstract public class AreaGame implements Game {
 
     @Override
     public void update(float deltaTime) {
-        // TODO implements me #PROJECT #TUTO
         currentArea.update(deltaTime);
     }
 
