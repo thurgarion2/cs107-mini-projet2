@@ -43,7 +43,7 @@ public class Level3 extends EnigmeArea {
         LogicNumber islevers = new LogicNumber(5, lever1, lever2, lever3);
         Or signalRocher3= new Or(islevers,torch1);
 
-        MultipleAnd signalRocher2 = new MultipleAnd(pressureSwitch1,pressureSwitch2,pressureSwitch3,pressureSwitch4,pressureSwitch5,pressureSwitch6,pressureSwitch7,key1);
+        MultipleAnd signalRocher2 = new MultipleAnd(pressureSwitch1,pressureSwitch2,pressureSwitch3,pressureSwitch4,pressureSwitch5,pressureSwitch6,pressureSwitch7);
 
         Rocher rock1 = new Rocher( this, Orientation.DOWN, "Rock.3", false, pressurePlate1, new DiscreteCoordinates(4, 8));
         Rocher rock2 = new Rocher( this, Orientation.DOWN, "Rock.3", false, signalRocher2, new DiscreteCoordinates(5, 8));
