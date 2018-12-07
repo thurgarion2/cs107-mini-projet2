@@ -61,6 +61,8 @@ public abstract class Gate extends AreaEntity {
         sprite=spriteClose;
     }
 
+    protected boolean getIsOpen(){return isOpen;}
+
     @Override
     public void draw(Canvas canvas) {
         sprite.draw(canvas);
