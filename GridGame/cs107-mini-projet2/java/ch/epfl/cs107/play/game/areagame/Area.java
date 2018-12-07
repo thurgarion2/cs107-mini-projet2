@@ -234,10 +234,12 @@ public abstract class Area implements Playable {
         }
 
          for(Interactable entry : intercablesToEnter.keySet()){
+
              areaBehavior.enter(entry, intercablesToEnter.get(entry));
          }
 
          for(Interactable entry : intercablesToLeave.keySet()){
+
              areaBehavior.leave(entry, intercablesToLeave.get(entry));
          }
 

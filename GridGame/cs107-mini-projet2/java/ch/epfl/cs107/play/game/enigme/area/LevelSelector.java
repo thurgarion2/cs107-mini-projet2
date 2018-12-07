@@ -1,6 +1,7 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
+import ch.epfl.cs107.play.game.enigme.actor.decor.MovableRock;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.Key;
 import ch.epfl.cs107.play.game.enigme.actor.door.SignalDoor;
@@ -20,6 +21,7 @@ public class LevelSelector extends EnigmeArea {
         boolean out = super.begin(window, fileSystem);
 
         String[] nomNiveau= {"Level1","Level2","Level3","LevelSelector","LevelSelector","LevelSelector","LevelSelector","LevelSelector"};
+
 
         for(int i=0; i<7; i++){
             DiscreteCoordinates arrivee;

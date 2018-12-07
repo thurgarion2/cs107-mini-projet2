@@ -134,6 +134,9 @@ public abstract class MovableAreaEntity extends AreaEntity {
     public Vector getVelocity() {
         // the velocity must be computed as the orientation vector (getOrientation().toVector() mutiplied by 
     	// framesForCurrentMove
-        return getOrientation().toVector().mul(1.0f/framesForCurrentMove);
+        if(isMoving){
+            return getOrientation().toVector().mul(1.0f/framesForCurrentMove);
+        }
+        return Vector.ZERO;
     }
 }

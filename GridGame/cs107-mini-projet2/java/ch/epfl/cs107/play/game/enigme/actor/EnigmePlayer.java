@@ -4,6 +4,7 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.AreaEntityCollectable;
+import ch.epfl.cs107.play.game.enigme.actor.decor.MovableItem;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.CellInteruptor;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.ViewInteruptor;
@@ -219,6 +220,13 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
                 if(item.collect()){
                     bag.add(item);
                 }
+            }
+        }
+
+        @Override
+        public void interactWith(MovableItem item) {
+            if(lKey.isPressed()){
+                item.moveItem(getOrientation());
             }
         }
 
