@@ -53,7 +53,7 @@ public abstract class  AreaEntityInteruptor extends AreaEntity implements Interu
             this.etat=true;
         }else {
             currentSprite=spriteOff;
-           etat=false;
+           this.etat=false;
         }
     }
     //change current state to opposite

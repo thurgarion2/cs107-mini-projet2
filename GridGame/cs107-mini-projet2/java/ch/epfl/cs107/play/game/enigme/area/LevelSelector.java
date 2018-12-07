@@ -20,7 +20,6 @@ public class LevelSelector extends EnigmeArea {
         boolean out = super.begin(window, fileSystem);
 
         String[] nomNiveau= {"Level1","Level2","Level3","LevelSelector","LevelSelector","LevelSelector","LevelSelector","LevelSelector"};
-        Key test = new Key(this, Orientation.DOWN, new DiscreteCoordinates(5, 4));
 
         for(int i=0; i<7; i++){
             DiscreteCoordinates arrivee;
@@ -32,8 +31,7 @@ public class LevelSelector extends EnigmeArea {
 
             this.registerActor(new Door(this, nomNiveau[i], arrivee, Orientation.DOWN, new DiscreteCoordinates(i+1, 7)));
         }
-        this.registerActor(new SignalDoor(this, "LevelSelector", new DiscreteCoordinates(8, 6), Orientation.DOWN, new DiscreteCoordinates(8, 7), test));
-        this.registerActor(test);
+
 
         return out;
     }

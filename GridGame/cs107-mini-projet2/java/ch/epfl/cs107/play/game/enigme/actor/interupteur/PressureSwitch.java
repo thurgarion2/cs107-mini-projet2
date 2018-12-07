@@ -19,6 +19,10 @@ public class PressureSwitch extends AreaEntityInteruptor implements CellInterupt
         super(area,Orientation.DOWN, position, false, "GroundLightOn" , "GroundLightOff");
     }
 
+    public PressureSwitch(Area area, String nomOn, String nomOff, DiscreteCoordinates position)  {
+        super(area,Orientation.DOWN, position, false, nomOn , nomOff);
+    }
+
     protected boolean notSameInteraction(){
         if(frameWithoutInteraction<4){
             return false;

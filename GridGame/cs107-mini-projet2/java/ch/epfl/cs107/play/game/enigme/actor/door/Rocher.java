@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.enigme.actor;
+package ch.epfl.cs107.play.game.enigme.actor.door;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.AreaEntity;
@@ -7,14 +7,14 @@ import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.enigme.actor.door.Gate;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.Signal;
+import ch.epfl.cs107.play.signal.logic.Logic;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Rocher extends Gate {
-    private List<DiscreteCoordinates> currrentCells;
-
+    private Signal signal;
 
     /**
      * Default AreaEntity constructor
@@ -25,21 +25,24 @@ public class Rocher extends Gate {
      */
     public Rocher(Area area, Orientation orientation, String sprite, boolean isOpen,Signal signal, DiscreteCoordinates position ) throws NullPointerException {
         super(area, orientation, sprite, sprite, isOpen ,position);
-        currrentCells = new LinkedList<>();
-        currrentCells.add(position);
-
+        this.signal=signal;
     }
 
     @Override
     public void draw(Canvas canvas) {
-        if(getIsOpen()) {
+        if(!getIsOpen()) {
             getSprite().draw(canvas);
         }
     }
 
     @Override
-    public List<DiscreteCoordinates> getCurrentCells() {
-        return currrentCells;
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        if(signal.getIntensity(0)== Logic.TRUE.getIntensity()){
+            this.openGate();
+        }else{
+            this.closeGate();
+        }
     }
 
     @Override

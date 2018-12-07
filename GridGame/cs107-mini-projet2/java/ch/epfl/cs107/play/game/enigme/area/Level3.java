@@ -1,9 +1,8 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
-import ch.epfl.cs107.play.game.enigme.actor.Rocher;
+import ch.epfl.cs107.play.game.enigme.actor.door.Rocher;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.Key;
-import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.door.SignalDoor;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.Lever;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.PressurePlate;
@@ -11,9 +10,9 @@ import ch.epfl.cs107.play.game.enigme.actor.interupteur.PressureSwitch;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.Torch;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.signal.logic.Logic;
-import ch.epfl.cs107.play.signal.logic.LogicSignal;
+import ch.epfl.cs107.play.signal.logic.LogicNumber;
 import ch.epfl.cs107.play.signal.logic.MultipleAnd;
+import ch.epfl.cs107.play.signal.logic.Or;
 import ch.epfl.cs107.play.window.Window;
 
 public class Level3 extends EnigmeArea {
@@ -38,9 +37,17 @@ public class Level3 extends EnigmeArea {
         PressureSwitch pressureSwitch6 = new PressureSwitch( this, new DiscreteCoordinates(5,6));
         PressureSwitch pressureSwitch7 = new PressureSwitch( this, new DiscreteCoordinates(6,6));
         PressurePlate pressurePlate1 = new PressurePlate(this, new DiscreteCoordinates(9,8));
-        Rocher rock1 = new Rocher( this, Orientation.DOWN, "Rock3", false, key1, new DiscreteCoordinates(5, 8));
 
-        MultipleAnd islevers = new MultipleAnd(lever1, lever2, lever3);
+
+
+        LogicNumber islevers = new LogicNumber(5, lever1, lever2, lever3);
+        Or signalRocher3= new Or(islevers,torch1);
+
+        MultipleAnd signalRocher2 = new MultipleAnd(pressureSwitch1,pressureSwitch2,pressureSwitch3,pressureSwitch4,pressureSwitch5,pressureSwitch6,pressureSwitch7,key1);
+
+        Rocher rock1 = new Rocher( this, Orientation.DOWN, "Rock.3", false, pressurePlate1, new DiscreteCoordinates(4, 8));
+        Rocher rock2 = new Rocher( this, Orientation.DOWN, "Rock.3", false, signalRocher2, new DiscreteCoordinates(5, 8));
+        Rocher rock3 = new Rocher( this, Orientation.DOWN, "Rock.3", false, signalRocher3, new DiscreteCoordinates(6, 8));
 
         this.registerActor(new SignalDoor(this, "LevelSelector", new DiscreteCoordinates(3, 6), Orientation.DOWN, new DiscreteCoordinates(5,9), key1));
         this.registerActor(key1);
@@ -48,6 +55,8 @@ public class Level3 extends EnigmeArea {
         this.registerActor(lever2);
         this.registerActor(lever3);
         this.registerActor(torch1);
+        this.registerActor(rock2);
+        this.registerActor(rock3);
         this.registerActor(pressureSwitch1);
         this.registerActor(pressureSwitch2);
         this.registerActor(pressureSwitch3);

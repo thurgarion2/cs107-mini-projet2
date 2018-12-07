@@ -2,7 +2,7 @@ package ch.epfl.cs107.play.game.enigme.actor.interupteur;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.signal.logic.Logic;
+
 
 
 public class PressurePlate extends PressureSwitch{
@@ -17,18 +17,17 @@ public class PressurePlate extends PressureSwitch{
      * @param time        (float) : time to reset
      */
     public PressurePlate(Area area, DiscreteCoordinates position, float time) {
-        super(area, position);
+        super(area,"GroundLightOn", "GroundPlateOff" ,position);
         this.timeReset=(long)time;
     }
 
     public PressurePlate(Area area, DiscreteCoordinates position) {
-
         this(area,position,0.3f);
     }
 
     @Override
     public void contactInteraction() {
-       this.setEtat(false);
+       this.setEtat(true);
        lastInteraction= System.currentTimeMillis();
     }
 
