@@ -28,7 +28,7 @@ public class Level3 extends EnigmeArea {
         Lever lever1 = new Lever( this, Orientation.DOWN, new DiscreteCoordinates(8,5));
         Lever lever2 = new Lever( this, Orientation.DOWN, new DiscreteCoordinates(9,5));
         Lever lever3 = new Lever( this, Orientation.DOWN, new DiscreteCoordinates(10,5));
-        Torch torch1 = new Torch(this,Orientation.DOWN, new DiscreteCoordinates(7,5), Logic.FALSE);
+        Torch torch1 = new Torch(this,Orientation.DOWN, new DiscreteCoordinates(7,5),false);
         PressureSwitch pressureSwitch1 = new PressureSwitch( this, new DiscreteCoordinates(4,4));
         PressureSwitch pressureSwitch2 = new PressureSwitch( this, new DiscreteCoordinates(5,4));
         PressureSwitch pressureSwitch3 = new PressureSwitch( this, new DiscreteCoordinates(6,4));
@@ -38,7 +38,7 @@ public class Level3 extends EnigmeArea {
         PressureSwitch pressureSwitch7 = new PressureSwitch( this, new DiscreteCoordinates(6,6));
         PressurePlate pressurePlate1 = new PressurePlate(this, new DiscreteCoordinates(9,8));
 
-        MultipleAnd islevers = new MultipleAnd(lever1.getEtat(), lever2.getEtat(), lever3.getEtat());
+        MultipleAnd islevers = new MultipleAnd(lever1, lever2, lever3);
 
         this.registerActor(new SignalDoor(this, "LevelSelector", new DiscreteCoordinates(3, 6), Orientation.DOWN, new DiscreteCoordinates(5,9), key1));
         this.registerActor(key1);
