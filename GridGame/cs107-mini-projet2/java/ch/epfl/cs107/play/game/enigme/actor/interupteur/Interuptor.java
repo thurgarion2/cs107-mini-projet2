@@ -6,18 +6,9 @@ import ch.epfl.cs107.play.signal.Signal;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
 
-public interface Interuptor extends Signal {
-
-    Logic getEtat();
+public interface Interuptor extends Logic {
 
     void switchEtat();
 
-    default float getIntensity(){
-        return getEtat().getIntensity();
-    }
-
-    default float getIntensity(float t) {
-        return getIntensity();
-    }
 
 }

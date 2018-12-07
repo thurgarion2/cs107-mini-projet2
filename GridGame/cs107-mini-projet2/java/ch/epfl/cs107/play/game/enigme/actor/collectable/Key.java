@@ -7,7 +7,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.signal.logic.Logic;
 
 public class Key extends AreaEntityCollectable implements Interuptor {
-    private Logic signal= Logic.FALSE;
+    private boolean etat;
 
     public Key(Area area, Orientation orientation, DiscreteCoordinates position){
         super(area, orientation, position,"key.1");
@@ -21,16 +21,16 @@ public class Key extends AreaEntityCollectable implements Interuptor {
 
 
     @Override
-    public Logic getEtat() {
-        return signal;
+    public boolean isOn() {
+        return etat;
     }
 
     @Override
     public void switchEtat() {
-        if(signal == Logic.FALSE){
-           signal = Logic.TRUE;
-        }else if(signal == Logic.TRUE){
-            signal = Logic.FALSE;
+        if(etat){
+           etat=false;
+        }else {
+            etat=true;
         }
     }
 }

@@ -16,7 +16,7 @@ public class Lever extends AreaEntityInteruptor implements ViewInteruptor {
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
     public Lever(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException {
-        super(area, orientation, position,Logic.FALSE,"lever.big.right","lever.big.left");
+        super(area, orientation, position,false,"lever.big.right","lever.big.left");
     }
 
     @Override

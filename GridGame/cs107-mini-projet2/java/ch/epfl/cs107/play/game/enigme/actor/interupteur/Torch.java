@@ -18,7 +18,7 @@ public class Torch extends AreaEntityInteruptor implements ViewInteruptor {
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      *
      */
-    public Torch(Area area, Orientation orientation, DiscreteCoordinates position, Logic state) throws NullPointerException {
+    public Torch(Area area, Orientation orientation, DiscreteCoordinates position, boolean state) throws NullPointerException {
         super(area, orientation, position,state,"torch.ground.on.1","torch.ground.off");
         this.setEtat(state);
     }
@@ -40,8 +40,5 @@ public class Torch extends AreaEntityInteruptor implements ViewInteruptor {
         this.switchEtat();
     }
 
-    @Override
-    public void switchEtat() {
-        super.switchEtat();
-    }
+
 }
