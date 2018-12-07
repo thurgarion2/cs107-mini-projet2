@@ -45,7 +45,6 @@ public class PressureSwitch extends AreaEntityInteruptor implements CellInterupt
 
     @Override
     public void update(float deltaTime) {
-        super.update(deltaTime);
         frameWithoutInteraction++;
     }
 }

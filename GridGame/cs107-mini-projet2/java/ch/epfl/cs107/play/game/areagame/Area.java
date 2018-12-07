@@ -62,7 +62,7 @@ public abstract class Area implements Playable {
         if(coordinates.isEmpty()){
             //adding an area entity on the area without giving an actual position on the grid
             // is considered as an error of the programmer
-            throw new Error("Coordinate shoould not be empty");
+            throw new AssertionError("Coordinate shoould not be empty");
         }
         return areaBehavior.canEnter(entity, coordinates);
     }
@@ -73,7 +73,7 @@ public abstract class Area implements Playable {
         if(coordinates.isEmpty()){
             //removing an area entity of the area without specify his actual position on the grid
             // is considered as an error of the programmer
-            throw new Error("Coordinate shoould not be empty");
+            throw new AssertionError("Coordinate shoould not be empty");
         }
         return areaBehavior.canLeave(entity, coordinates);
     }
@@ -82,7 +82,7 @@ public abstract class Area implements Playable {
 
     public final void enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
         if(!areaBehavior.canEnter(entity, coordinates)){
-            throw new Error("You should test first if possible to go on this cell");
+            throw new AssertionError("You should test first if possible to go on this cell");
         }else{
             intercablesToEnter.put(entity, coordinates);
         }
@@ -95,7 +95,7 @@ public abstract class Area implements Playable {
         if(areaBehavior.canLeave(entity, coordinates)){
             intercablesToLeave.put(entity, coordinates);
         }else{
-            throw new Error("You should test first if possible to leave this cell");
+            throw new AssertionError("You should test first if possible to leave this cell");
         }
 
     }
@@ -331,6 +331,8 @@ public abstract class Area implements Playable {
     public void update(float deltaTime) {
         purgeRegistration();
 
+
+
         for(Actor actor : actors){
             actor.update(deltaTime);
         }
@@ -344,7 +346,7 @@ public abstract class Area implements Playable {
         }
 
 
-            updateCamera();
+        updateCamera();
 
 
         for(Actor actor : actors){

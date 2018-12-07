@@ -18,7 +18,7 @@ public class PressurePlate extends PressureSwitch{
      */
     public PressurePlate(Area area, DiscreteCoordinates position, float time) {
         super(area,"GroundLightOn", "GroundPlateOff" ,position);
-        this.timeReset=(long)time;
+        this.timeReset=(long)(1000*time);
     }
 
     public PressurePlate(Area area, DiscreteCoordinates position) {
@@ -34,9 +34,9 @@ public class PressurePlate extends PressureSwitch{
 
     @Override
     public void update(float deltaTime) {
-        super.update(deltaTime);
-        if(lastInteraction<System.currentTimeMillis()+timeReset && this.getEtat()){
+        if(lastInteraction+timeReset<System.currentTimeMillis()&& this.getEtat() ) {
             this.setEtat(false);
         }
+
     }
 }
