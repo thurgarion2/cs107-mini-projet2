@@ -62,6 +62,7 @@ public abstract class Gate extends AreaEntity {
     }
 
     protected boolean getIsOpen(){return isOpen;}
+    protected Sprite getSprite(){return sprite;}
 
     @Override
     public void draw(Canvas canvas) {

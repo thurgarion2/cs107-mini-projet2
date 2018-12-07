@@ -1,6 +1,7 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
+import ch.epfl.cs107.play.game.enigme.actor.Rocher;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.Key;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.door.SignalDoor;
@@ -37,6 +38,7 @@ public class Level3 extends EnigmeArea {
         PressureSwitch pressureSwitch6 = new PressureSwitch( this, new DiscreteCoordinates(5,6));
         PressureSwitch pressureSwitch7 = new PressureSwitch( this, new DiscreteCoordinates(6,6));
         PressurePlate pressurePlate1 = new PressurePlate(this, new DiscreteCoordinates(9,8));
+        Rocher rock1 = new Rocher( this, Orientation.DOWN, "Rock3", false, key1, new DiscreteCoordinates(5, 8));
 
         MultipleAnd islevers = new MultipleAnd(lever1, lever2, lever3);
 
@@ -54,8 +56,7 @@ public class Level3 extends EnigmeArea {
         this.registerActor(pressureSwitch6);
         this.registerActor(pressureSwitch7);
         this.registerActor(pressurePlate1);
-
-
+        this.registerActor(rock1);
 
         return out;
     }
