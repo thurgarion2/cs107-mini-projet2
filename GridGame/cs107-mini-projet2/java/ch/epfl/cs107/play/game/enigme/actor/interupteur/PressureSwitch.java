@@ -5,7 +5,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.signal.logic.Logic;
+
 
 public class PressureSwitch extends AreaEntityInteruptor implements CellInteruptor {
     private int frameWithoutInteraction=5;
@@ -16,7 +16,7 @@ public class PressureSwitch extends AreaEntityInteruptor implements CellInterupt
      * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
      */
     public PressureSwitch(Area area, DiscreteCoordinates position)  {
-        super(area,Orientation.DOWN, position, Logic.FALSE, "GroundLightOn" , "GroundLightOff");
+        super(area,Orientation.DOWN, position, false, "GroundLightOn" , "GroundLightOff");
     }
 
     protected boolean notSameInteraction(){
@@ -24,11 +24,6 @@ public class PressureSwitch extends AreaEntityInteruptor implements CellInterupt
             return false;
         }
         return true;
-    }
-
-    @Override
-    public void switchEtat() {
-        super.switchEtat();
     }
 
     @Override

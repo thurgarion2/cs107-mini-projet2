@@ -22,13 +22,13 @@ public abstract class Gate extends AreaEntity {
     /**
      * Default AreaEntity constructor
      *
-     * @param area        (Area): Owner area. Not null
-     * @param orientation (Orientation): Initial orientation of the entity in the Area. Not null
-     * @param open        (String) : name of sprite open gate
+     * @param area         (Area): Owner area. Not null
+     * @param orientation  (Orientation): Initial orientation of the entity in the Area. Not null
+     * @param open         (String) : name of sprite open gate
      * @param close        (String) : name of sprite close gate
      * @param isOpen       (bollean) : wether gate is open or not at he begining
-     * @param position    (DiscreteCoordinate): Initial position of the entity in the Area. Not null
-     * @param coordinates (DiscreteCoordinate): all the cells of the gate
+     * @param position     (DiscreteCoordinate): Initial position of the entity in the Area. Not null
+     * @param coordinates  (DiscreteCoordinate): all the cells of the gate
      */
     public Gate(Area area, Orientation orientation, String open, String close, boolean isOpen, DiscreteCoordinates position, DiscreteCoordinates...coordinates)  {
         super(area, orientation, position);

@@ -13,11 +13,11 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class  AreaEntityInteruptor extends AreaEntity  {
+public abstract class  AreaEntityInteruptor extends AreaEntity implements Interuptor  {
     private final Sprite spriteOn;
     private final Sprite spriteOff;
     private Sprite currentSprite;
-    private Logic etat;
+    private boolean etat;
 
     /**
      * Default AreaEntity constructor
@@ -28,37 +28,42 @@ public abstract class  AreaEntityInteruptor extends AreaEntity  {
      *@param nomOn       (String) : name of the on sprite   (existing)
      *@param nomOff      (String) : name of the off sprite (existing)
      */
-    public AreaEntityInteruptor(Area area, Orientation orientation, DiscreteCoordinates position, Logic etat, String nomOn, String nomOff) throws NullPointerException {
+    public AreaEntityInteruptor(Area area, Orientation orientation, DiscreteCoordinates position, boolean etat, String nomOn, String nomOff) throws NullPointerException {
         super(area, orientation, position);
         spriteOn=new Sprite(nomOn, 1.0f, 1.0f, this);
         spriteOff=new Sprite(nomOff, 1.0f, 1.0f, this);
-        currentSprite=spriteOff;
-        this.etat=etat;
+        setEtat ( etat);
     }
 
-    public Logic getEtat(){
+
+    @Override
+    public boolean isOn() {
         return etat;
     }
 
+    //getter for the current state
+    protected boolean getEtat(){
+        return etat;
+    }
 
     //set current state to signal (only if you don't know current state)
-    protected void setEtat (Logic signal){
-        if(signal==Logic.TRUE){
+    protected void setEtat (boolean etat){
+        if(etat){
             currentSprite=spriteOn;
-            etat=Logic.TRUE;
+            this.etat=true;
         }else {
             currentSprite=spriteOff;
-            etat=Logic.FALSE;
+           etat=false;
         }
     }
     //change current state to opposite
-    protected void switchEtat(){
-        if(etat==Logic.TRUE){
+    public void switchEtat(){
+        if(etat){
             currentSprite=spriteOff;
-            etat=Logic.FALSE;
+            etat=false;
         }else {
             currentSprite=spriteOn;
-            etat=Logic.TRUE;
+            etat=true;
         }
     }
 

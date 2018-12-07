@@ -28,7 +28,7 @@ public class PressurePlate extends PressureSwitch{
 
     @Override
     public void contactInteraction() {
-       this.setEtat(Logic.TRUE);
+       this.setEtat(false);
        lastInteraction= System.currentTimeMillis();
     }
 
@@ -36,8 +36,8 @@ public class PressurePlate extends PressureSwitch{
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        if(lastInteraction<System.currentTimeMillis()+timeReset && this.getEtat()==Logic.TRUE){
-            this.setEtat(Logic.FALSE);
+        if(lastInteraction<System.currentTimeMillis()+timeReset && this.getEtat()){
+            this.setEtat(false);
         }
     }
 }
