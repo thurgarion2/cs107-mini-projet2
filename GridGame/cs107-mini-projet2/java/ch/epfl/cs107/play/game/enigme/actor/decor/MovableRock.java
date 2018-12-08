@@ -8,7 +8,7 @@ import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.List;
 
-public class MovableRock extends MovableItem {
+public class MovableRock  extends MovableItem {
     private Sprite sprite;
     /**
      * Default MovableAreaEntity constructor
@@ -24,9 +24,10 @@ public class MovableRock extends MovableItem {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    protected void affiche(Canvas canvas) {
         sprite.draw(canvas);
     }
+
 
     @Override
     public List<DiscreteCoordinates> getFieldOfViewCells() {

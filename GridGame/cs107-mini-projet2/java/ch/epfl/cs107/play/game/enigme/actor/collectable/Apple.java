@@ -20,5 +20,20 @@ public class Apple extends AreaEntityCollectable {
     }
 
 
+    @Override
+    public boolean peutEtreEquipe() {
+        return false;
+    }
+
+    @Override
+    public String affiche() {
+        return "Une pomme c'est bon";
+    }
+
+    @Override
+    public String nom() {
+        return "Une pomme";
+    }
+
 
 }

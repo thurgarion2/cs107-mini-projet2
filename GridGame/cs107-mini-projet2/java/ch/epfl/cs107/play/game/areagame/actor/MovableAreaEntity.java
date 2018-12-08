@@ -63,6 +63,7 @@ public abstract class MovableAreaEntity extends AreaEntity {
         isMoving=false;
         framesForCurrentMove=0;
         targetMainCellCoordinates=this.getCurrentMainCellCoordinates();
+        this.setCurrentPosition(this.targetMainCellCoordinates.toVector());
     }
 
     //getter to know wehter or not entity is moving
@@ -106,14 +107,12 @@ public abstract class MovableAreaEntity extends AreaEntity {
 
     @Override
     public void update(float deltaTime) {
-
         if(!getPosition().equals(targetMainCellCoordinates.toVector()) && isMoving){
             Vector distance = getOrientation().toVector();
             distance = distance.mul(1.0f / (float) framesForCurrentMove);
             setCurrentPosition(getPosition().add(distance)) ;
 
         }else{
-            this.setCurrentPosition(targetMainCellCoordinates.toVector());
             this.resetMotion();
         }
 
@@ -134,9 +133,8 @@ public abstract class MovableAreaEntity extends AreaEntity {
     public Vector getVelocity() {
         // the velocity must be computed as the orientation vector (getOrientation().toVector() mutiplied by 
     	// framesForCurrentMove
-        if(isMoving){
-            return getOrientation().toVector().mul(1.0f/framesForCurrentMove);
-        }
-        return Vector.ZERO;
+
+        return getOrientation().toVector().mul(1.0f/framesForCurrentMove);
+
     }
 }

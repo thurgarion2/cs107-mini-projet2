@@ -7,6 +7,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Background;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Interactor;
 import ch.epfl.cs107.play.game.demo1.actor.MovingRock;
+import ch.epfl.cs107.play.game.enigme.cellType.Water;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Transform;
@@ -82,6 +83,7 @@ public abstract class Area implements Playable {
 
     public final void enterAreaCells(Interactable entity, List<DiscreteCoordinates> coordinates){
         if(!areaBehavior.canEnter(entity, coordinates)){
+            System.out.println(entity+" "+coordinates);
             throw new AssertionError("You should test first if possible to go on this cell");
         }else{
             intercablesToEnter.put(entity, coordinates);
@@ -328,7 +330,6 @@ public abstract class Area implements Playable {
         keyboard= window.getKeyboard();
         return true;
     }
-
     @Override
     public void update(float deltaTime) {
         purgeRegistration();
@@ -354,7 +355,6 @@ public abstract class Area implements Playable {
         for(Actor actor : actors){
             actor.draw(window);
         }
-
     }
 
     /**set the camera at the right position*/

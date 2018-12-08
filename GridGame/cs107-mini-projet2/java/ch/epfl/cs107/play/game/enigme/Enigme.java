@@ -4,10 +4,7 @@ import ch.epfl.cs107.play.game.areagame.AreaGame;
 import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayerAnimate;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
-import ch.epfl.cs107.play.game.enigme.area.Level1;
-import ch.epfl.cs107.play.game.enigme.area.Level2;
-import ch.epfl.cs107.play.game.enigme.area.Level3;
-import ch.epfl.cs107.play.game.enigme.area.LevelSelector;
+import ch.epfl.cs107.play.game.enigme.area.*;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
@@ -38,9 +35,10 @@ public class Enigme extends AreaGame {
         this.addArea(new Level1());
         this.addArea(new Level2());
         this.addArea(new Level3());
+        this.addArea(new Level4());
 
         this.setCurrentArea("LevelSelector", false);
-        player = new EnigmePlayerAnimate(this.currentArea, new DiscreteCoordinates(5, 5));
+        player = new EnigmePlayer(this.currentArea, new DiscreteCoordinates(5, 5));
         currentArea.registerActor(player);
         currentArea.setViewCandidate(player);
 
@@ -50,6 +48,7 @@ public class Enigme extends AreaGame {
 
     private void changeArea( Door door){
         player.leaveArea();
+        System.out.println(door.getDestination());
         this.setCurrentArea(door.getDestination(), false);
         this.currentArea.setViewCandidate(player);
         player.enterArea(currentArea, door.getCoordArrivee());

@@ -6,4 +6,10 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 public interface Collectable {
     boolean collect();
     boolean drop(Area area, DiscreteCoordinates position);
+
+    boolean peutEtreEquipe();
+
+
+    String affiche();
+    String nom();
 }

@@ -19,7 +19,7 @@ public abstract class AreaBehavior
 {
 
     /// The behavior is an Image of size height x width
-    // TODO implements me #PROJECT #TUTO
+
 
     private final Image behaviorMap;
     private final int height, width;
@@ -145,6 +145,7 @@ public abstract class AreaBehavior
     public abstract class Cell implements Interactable{
         private DiscreteCoordinates coordinate;
         protected Set<Interactable>  canInteract;
+
 
         @Override
         public List<DiscreteCoordinates> getCurrentCells() {

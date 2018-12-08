@@ -4,10 +4,13 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.AreaEntityCollectable;
+import ch.epfl.cs107.play.game.enigme.actor.collectable.GestionaireItem;
 import ch.epfl.cs107.play.game.enigme.actor.decor.MovableItem;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.CellInteruptor;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.ViewInteruptor;
+import ch.epfl.cs107.play.game.enigme.cellType.Glissant;
+import ch.epfl.cs107.play.game.enigme.cellType.Liquide;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Vector;
@@ -27,6 +30,9 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
     /// Animation duration in frame number
     private final static int ANIMATION_DURATION = 8;
+
+    /// La position de depart
+    List<DiscreteCoordinates> depart;
 
     /// The keyboard
     private Keyboard keyboard;
@@ -49,7 +55,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     Button lKey;
 
     //TODO create a bag
-    private List<AreaEntityCollectable> bag;
+    private GestionaireItem bag;
 
 
     private final EnigmePlayerHandler handler= new EnigmePlayerHandler();
@@ -65,8 +71,13 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     public EnigmePlayer(Area area, Orientation orientation, DiscreteCoordinates position) {
         super(area, orientation, position);
         sprite=new   Sprite("ghost.1", 1, 1.f, this);
-        bag=new LinkedList<>();
+
+        bag=new GestionaireItem();
+
         keyboard=area.getKeyboard();
+        depart=new LinkedList<>();
+        depart=this.getCurrentCells();
+
         initializeDirection();
     }
 
@@ -90,7 +101,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
     /**
      * @param area        (Area): area to enter. Not null
-     * @param position    (Coordinate): Initial position in the area. Not null
+     * @param position    (Coordinate): Initial position in the area. Not null (and) existing
      */
     public void enterArea(Area area, DiscreteCoordinates position){
         this.ownerArea=area;
@@ -102,6 +113,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         keyboard=ownerArea.getKeyboard();
         initializeDirection();
         isPassingDoor=false;
+        depart=this.getCurrentCells();
 
     }
     /**getter for isPassingdoor*/
@@ -120,9 +132,14 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
     @Override
     public void draw(Canvas canvas) {
+        initializeDirection();
+        if(Direction.downArrow.bouton.isPressed()){
+            System.out.println("ok");
+            bag.beginLoot(ownerArea);
+        }
+        bag.draw(canvas);
         sprite.draw(canvas);
     }
-
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
@@ -168,6 +185,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        bag.update();
+
 
         Orientation targetOrientation=null;
         this.initializeDirection ();
@@ -204,6 +223,10 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     }
 
 
+    private EnigmePlayer getInstance(){
+       return this;
+    }
+
 
     private  class EnigmePlayerHandler implements EnigmeInteractionVisitor {
 
@@ -230,10 +253,20 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
             }
         }
 
+
         @Override
         public void interactWith(ViewInteruptor interuptor) {
             if(lKey.isPressed()){
                 interuptor.viewInteraction();
+            }
+        }
+
+        @Override
+        public void interactWith(Liquide cell) {
+            getInstance().resetMotion();
+            if(ownerArea.canLeaveAreaCells(getInstance(), getCurrentCells()) &&  ownerArea.canEnterAreaCells(getInstance(),depart)){
+                ownerArea.transfertEntity(getInstance(), getCurrentCells(), depart);
+                getInstance().setCurrentPosition(depart.get(0).toVector());
             }
         }
 

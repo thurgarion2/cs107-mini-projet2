@@ -8,6 +8,8 @@ import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.AreaEntityCollectable;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.CellInteruptor;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.ViewInteruptor;
+import ch.epfl.cs107.play.game.enigme.cellType.Glissant;
+import ch.epfl.cs107.play.game.enigme.cellType.Liquide;
 
 public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
     default void interactWith(AreaEntityCollectable item){
@@ -15,6 +17,14 @@ public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
     }
 
     default void interactWith(MovableItem item){
+        // by default the interaction is empty
+    }
+
+    default void interactWith(Glissant cell){
+        // by default the interaction is empty
+    }
+
+    default void interactWith(Liquide cell){
         // by default the interaction is empty
     }
 
