@@ -189,13 +189,12 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        if(!bag.isOpen()) {
-            Orientation targetOrientation = null;
-            this.initializeDirection();
+
 
         if(!bag.isOpen()) {
-            Orientation targetOrientation = null;
+
             this.initializeDirection();
+            Orientation targetOrientation = null;
 
             for (Direction dir : Direction.values()) {
                 if (dir.bouton.isDown()) {
@@ -210,7 +209,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
                     this.setOrientation(targetOrientation);
                 }
             }
-
+        }
 
     }
 
