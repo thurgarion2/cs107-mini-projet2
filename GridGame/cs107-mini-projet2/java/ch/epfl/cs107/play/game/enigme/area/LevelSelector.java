@@ -23,14 +23,15 @@ public class LevelSelector extends EnigmeArea {
         boolean out = super.begin(window, fileSystem);
 
 
+
         String[] nomNiveau= {"Level1","Level2","Level3", "LevelSelector", "LevelSelector","LevelSelector","LevelSelector","LevelSelector"};
 
 
-        
         int [] [] coord ={{5,1},{5,1},{5,3},{10,4},{12,1},{6,6},{7,6}};
 
         for(int i=0; i<7; i++){
             DiscreteCoordinates arrivee=new DiscreteCoordinates(coord[i][0],coord[i][1] );
+
             this.registerActor(new Door(this, nomNiveau[i], arrivee, Orientation.DOWN, new DiscreteCoordinates(i+1, 7)));
         }
 
