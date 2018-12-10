@@ -8,7 +8,9 @@ import ch.epfl.cs107.play.window.Canvas;
 public class BoucleAnimation {
     private Sprite[] animation;
     private int nbFrame;
-    private int currentFrame;
+    private int currentFrame=0;
+    private int frameUpdate=1;
+    private int relativeFrame=1;
 
     /***
      * @param nom (String)         : nom du sprite
@@ -50,11 +52,18 @@ public class BoucleAnimation {
         this.nbFrame=frame.length;
     }
 
+    public void setFrameUpdate(int frame){
+        this.frameUpdate=frame;
+    }
+
     public void nextFrame(){
-        currentFrame++;
-        if(currentFrame==nbFrame){
-            this.reset();
+        if(relativeFrame==1){
+            currentFrame++;
+            if(currentFrame==nbFrame){
+                this.reset();
+            }
         }
+        relativeFrame=(relativeFrame+1)%frameUpdate;
     }
 
 

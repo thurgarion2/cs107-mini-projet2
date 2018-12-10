@@ -19,7 +19,7 @@ public abstract class AreaBehavior
 {
 
     /// The behavior is an Image of size height x width
-    // TODO implements me #PROJECT #TUTO
+
 
     private final Image behaviorMap;
     private final int height, width;
@@ -96,6 +96,7 @@ public abstract class AreaBehavior
 
     /**remove the entity of all cells of coordinates*/
     protected void leave(Interactable entity, List<DiscreteCoordinates> coordinates){
+
         for (DiscreteCoordinates coordinate : coordinates) {
             cells[coordinate.x][coordinate.y].leave(entity);
         }
@@ -106,7 +107,6 @@ public abstract class AreaBehavior
     protected void enter(Interactable entity, List<DiscreteCoordinates> coordinates){
 
         for(DiscreteCoordinates coordinate : coordinates){
-
             cells[coordinate.x][coordinate.y].enter(entity);
         }
     }
@@ -145,6 +145,7 @@ public abstract class AreaBehavior
     public abstract class Cell implements Interactable{
         private DiscreteCoordinates coordinate;
         protected Set<Interactable>  canInteract;
+
 
         @Override
         public List<DiscreteCoordinates> getCurrentCells() {

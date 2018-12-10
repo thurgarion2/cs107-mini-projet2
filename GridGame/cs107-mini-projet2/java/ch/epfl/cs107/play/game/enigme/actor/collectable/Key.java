@@ -19,6 +19,21 @@ public class Key extends AreaEntityCollectable implements Interuptor {
         return super.collect();
     }
 
+    @Override
+    public boolean peutEtreEquipe() {
+        return false;
+    }
+
+    @Override
+    public String affiche() {
+        return "Ca ouvre des portes.";
+    }
+
+    @Override
+    public String nom() {
+        return "Une cle";
+    }
+
 
     @Override
     public boolean isOn() {

@@ -1,4 +1,4 @@
-package ch.epfl.cs107.play.game.enigme;
+package ch.epfl.cs107.play.game.demo2;
 
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;

@@ -1,22 +1,17 @@
-package ch.epfl.cs107.play.game.enigme.actor.demo2;
+package ch.epfl.cs107.play.game.demo2.actor;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.MovableAreaEntity;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
-import ch.epfl.cs107.play.game.enigme.Demo2Behavior;
+import ch.epfl.cs107.play.game.demo2.Demo2Behavior;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
-import ch.epfl.cs107.play.window.Window;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-
-import static ch.epfl.cs107.play.window.Keyboard.LEFT;
 
 public class Demo2Player extends MovableAreaEntity {
     private boolean isTroughDoor =false;

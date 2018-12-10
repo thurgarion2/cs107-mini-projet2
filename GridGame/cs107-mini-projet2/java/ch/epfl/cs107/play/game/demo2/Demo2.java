@@ -1,10 +1,9 @@
-package ch.epfl.cs107.play.game.enigme;
+package ch.epfl.cs107.play.game.demo2;
 
-import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.AreaGame;
-import ch.epfl.cs107.play.game.enigme.actor.demo2.Demo2Player;
-import ch.epfl.cs107.play.game.enigme.area.demo2.Room0;
-import ch.epfl.cs107.play.game.enigme.area.demo2.Room1;
+import ch.epfl.cs107.play.game.demo2.actor.Demo2Player;
+import ch.epfl.cs107.play.game.demo2.area.Room0;
+import ch.epfl.cs107.play.game.demo2.area.Room1;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;

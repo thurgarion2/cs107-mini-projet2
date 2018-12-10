@@ -1,6 +1,7 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
+import ch.epfl.cs107.play.game.enigme.actor.decor.MovableRock;
 import ch.epfl.cs107.play.game.enigme.actor.door.Rocher;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.Key;
 import ch.epfl.cs107.play.game.enigme.actor.door.SignalDoor;
@@ -66,6 +67,7 @@ public class Level3 extends EnigmeArea {
         this.registerActor(pressureSwitch7);
         this.registerActor(pressurePlate1);
         this.registerActor(rock1);
+
 
         return out;
     }
