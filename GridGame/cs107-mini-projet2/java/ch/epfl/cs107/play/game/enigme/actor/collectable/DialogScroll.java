@@ -23,7 +23,7 @@ public class DialogScroll extends Dialog {
      * @param mot            (int) : the index of words
      *
      */
-    
+
     public void resetDialog(String[] newText, int mot) {
         String affiche="";
         if(mot>0){

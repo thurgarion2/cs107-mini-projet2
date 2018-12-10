@@ -56,7 +56,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
     //Space bar to open bag
     Button spaceKey;
-
+    //a to drop item
+    Button akey;
     //TODO create a bag
     private GestionaireItem bag;
 
@@ -80,6 +81,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         keyboard=area.getKeyboard();
         depart=new LinkedList<>();
         depart=this.getCurrentCells();
+
+        akey = keyboard.get(Keyboard.A);
 
         initializeDirection();
     }
@@ -184,6 +187,19 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         other.acceptInteraction(handler);
     }
 
+    public void dropItem{
+       DiscreteCoordinates dropPoint = new DiscreteCoordinates(this.getCurrentMainCellCoordinates().x, this.getCurrentMainCellCoordinates().y);
+       if (this.getOrientation() == Orientation.DOWN){
+           dropPoint = new DiscreteCoordinates(dropPoint.x, dropPoint.y -1);
+       }else if(this.getOrientation() == Orientation.LEFT){
+           dropPoint = new DiscreteCoordinates(dropPoint.x -1, dropPoint.y);
+       }else if(this.getOrientation() == Orientation.UP){
+           dropPoint = new DiscreteCoordinates(dropPoint.x, dropPoint.y + 1);
+       }else if(this.getOrientation() == Orientation.RIGHT){
+           dropPoint = new DiscreteCoordinates(dropPoint.x +1, dropPoint.y);
+       }
+       bag.drop(ownerArea, dropPoint);
+    }
 
     @Override
     public void update(float deltaTime) {
@@ -252,6 +268,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
                 }
             }
         }
+
+
 
         @Override
         public void interactWith(MovableItem item) {
