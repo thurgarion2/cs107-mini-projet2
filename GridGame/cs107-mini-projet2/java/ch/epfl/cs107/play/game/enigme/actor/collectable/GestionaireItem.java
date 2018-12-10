@@ -3,6 +3,7 @@ package ch.epfl.cs107.play.game.enigme.actor.collectable;
 import ch.epfl.cs107.play.game.areagame.Area;
 
 import ch.epfl.cs107.play.game.enigme.actor.Dialog;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
@@ -25,7 +26,7 @@ public class GestionaireItem extends ArrayList<Collectable> {
     private Button right;
     private Button b;
     private Button i;
-    private Button a;
+
 
     private final String debut ="fleche (doite/gauche) faire defiler, i exit, b back, enter choisir un item";
 
@@ -51,7 +52,6 @@ public class GestionaireItem extends ArrayList<Collectable> {
            left= keyboard.get(Keyboard.LEFT);
            right= keyboard.get(Keyboard.RIGHT);
            i= keyboard.get(Keyboard.I);
-           a = keyboard.get(Keyboard.A);
     }
 
 
@@ -91,6 +91,9 @@ public class GestionaireItem extends ArrayList<Collectable> {
            return out;
         }
 
+        public void drop(Area area, DiscreteCoordinates position){
+
+        }
 
 
         public void update(){
@@ -112,7 +115,7 @@ public class GestionaireItem extends ArrayList<Collectable> {
                        currentItem++;
                    }
                }else if(a.isPressed()){
-                   currentItem.drop();
+                   this.get(currentItem).drop(area, );
                }
 
                if(isSelected){
