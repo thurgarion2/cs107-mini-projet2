@@ -8,9 +8,11 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
-public class GestionaireItem extends ArrayList<Collectable> {
-    private Keyboard keyboard;
+public abstract class GestionaireItem extends ArrayList<Collectable> {
+    protected Keyboard keyboard;
     private Dialog communique;
     private Area area;
 
@@ -18,6 +20,8 @@ public class GestionaireItem extends ArrayList<Collectable> {
 
     private int currentItem;
     private boolean isSelected;
+
+    private List<Collectable> toReturn;
 
 
     private Button enter;
@@ -32,6 +36,7 @@ public class GestionaireItem extends ArrayList<Collectable> {
 
 
     public void beginLoot(Area area){
+        toReturn=new LinkedList<>();
         affiche=true;
         currentItem=0;
         isSelected=false;
@@ -43,7 +48,7 @@ public class GestionaireItem extends ArrayList<Collectable> {
 
 
 
-    private void iniKeyboard(){
+    protected void iniKeyboard(){
            keyboard=area.getKeyboard();
            enter= keyboard.get(Keyboard.ENTER);
            b= keyboard.get(Keyboard.B);
@@ -57,7 +62,17 @@ public class GestionaireItem extends ArrayList<Collectable> {
             this.add(item);
     }
 
-    private String affiche(){
+    public List<Collectable> getItem(){
+        return toReturn;
+    }
+
+    protected void removeItem(){
+        toReturn.add(this.get(currentItem));
+        this.remove(currentItem);
+        currentItem=0;
+    }
+
+    protected String affiche(){
         String out="";
         if(currentItem==0){
              out=out+debut+" : ";
@@ -77,37 +92,55 @@ public class GestionaireItem extends ArrayList<Collectable> {
         return out;
     }
 
-        private String affiche(Collectable item){
+    protected String affiche(Collectable item){
            String out="";
            out+=item.affiche();
-           out+="  appuyer sur a pour jeter";
-           if(item.peutEtreEquipe()){
-               out+=" / sur d pour equiper";
-           }
+           out+="  appuyer sur enter pour jeter";
 
            return out;
+    }
+
+    protected void select(){
+        isSelected=true;
+    }
+    protected void deselect(){
+        isSelected=false;
+    }
+
+    protected void exit(){
+        affiche=false;
+    }
+
+    protected void move(int i){
+        if(currentItem+i>=0 && currentItem+i<this.size()){
+            currentItem=currentItem+i;
         }
+    }
+
+    protected boolean isSelected(){
+        return isSelected;
+    }
 
 
-
-        public void update(){
+    public void update(){
 
            if(affiche){
                iniKeyboard();
                if(enter.isPressed()){
-                   isSelected=true;
+                   if(isSelected){
+                       removeItem();
+                       deselect();
+                   }else{
+                       select();
+                   }
                }else if(i.isPressed()){
-                   affiche=false;
+                   exit();
                }else if(b.isPressed()){
-                   isSelected=false;
+                  deselect();
                }else if(left.isDown()){
-                   if(currentItem>0){
-                       currentItem--;
-                   }
+                   move(1);
                }else if(right.isPressed()){
-                   if(currentItem+1<this.size()){
-                       currentItem++;
-                   }
+                   move(-1);
                }
 
                if(isSelected){
@@ -117,13 +150,14 @@ public class GestionaireItem extends ArrayList<Collectable> {
                }
            }
 
-        }
+    }
 
-        public void draw(Canvas canvas){
+
+    public void draw(Canvas canvas){
            if(affiche){
                communique.draw(canvas);
            }
 
-        }
+    }
 
 }
