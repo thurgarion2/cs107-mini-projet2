@@ -9,6 +9,12 @@ public interface Collectable {
 
     boolean peutEtreEquipe();
 
+    default void whenLoot(){
+        //On pourrait définir cette methode non-default et définir pour chaque collectable ce quise passe quand l objet est ramassé
+        // ex : pour Key le changement de signal;
+        //de meme qu une méthode whenDrop() (ici)
+    }
+    default void whenDrop(){}
 
     String affiche();
     String nom();

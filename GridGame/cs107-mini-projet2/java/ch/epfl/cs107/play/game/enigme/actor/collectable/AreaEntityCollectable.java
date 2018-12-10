@@ -78,4 +78,5 @@ public abstract class AreaEntityCollectable extends AreaEntity implements Collec
     public boolean isCellInteractable() {
         return false;
     }
+
 }

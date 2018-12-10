@@ -54,6 +54,9 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     //L key
     Button lKey;
 
+    //Space bar to open bag
+    Button spaceKey;
+
     //TODO create a bag
     private GestionaireItem bag;
 
@@ -133,7 +136,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     @Override
     public void draw(Canvas canvas) {
         initializeDirection();
-        if(Direction.downArrow.bouton.isPressed()){
+        if(spaceKey.isPressed()){
             System.out.println("ok");
             bag.beginLoot(ownerArea);
         }
@@ -174,6 +177,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         Direction.upArrow.bouton    =   keyboard.get(Keyboard.UP) ;
         Direction.downArrow.bouton =  keyboard.get(Keyboard.DOWN) ;
         lKey = keyboard.get(Keyboard.L);
+        spaceKey = keyboard.get(Keyboard.SPACE);
 
     }
 
@@ -187,21 +191,22 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         super.update(deltaTime);
         bag.update();
 
+        if(!bag.isOpen()) {
+            Orientation targetOrientation = null;
+            this.initializeDirection();
 
-        Orientation targetOrientation=null;
-        this.initializeDirection ();
-
-        for (Direction dir : Direction.values()){
-            if(dir.bouton.isDown()){
-                targetOrientation=dir.orientation;
+            for (Direction dir : Direction.values()) {
+                if (dir.bouton.isDown()) {
+                    targetOrientation = dir.orientation;
+                }
             }
-        }
 
-        if(targetOrientation!=null){
-            if(targetOrientation.equals(this.getOrientation())){
-                this.move(ANIMATION_DURATION);
-            }else {
-                this.setOrientation(targetOrientation);
+            if (targetOrientation != null) {
+                if (targetOrientation.equals(this.getOrientation())) {
+                    this.move(ANIMATION_DURATION);
+                } else {
+                    this.setOrientation(targetOrientation);
+                }
             }
         }
 
@@ -241,7 +246,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
             // fait en sorte que la pomme soit ramassée
             if(lKey.isPressed()){
                 if(item.collect()){
-                    bag.add(item);
+                    bag.addItem(item);
                 }
             }
         }

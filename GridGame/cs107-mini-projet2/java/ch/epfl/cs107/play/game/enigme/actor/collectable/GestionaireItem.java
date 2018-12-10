@@ -14,7 +14,7 @@ public class GestionaireItem extends ArrayList<Collectable> {
     private Dialog communique;
     private Area area;
 
-    private boolean affiche=false;
+    private boolean affiche=false; // true if bag is open, false otherwise
 
     private int currentItem;
     private boolean isSelected;
@@ -25,11 +25,12 @@ public class GestionaireItem extends ArrayList<Collectable> {
     private Button right;
     private Button b;
     private Button i;
+    private Button a;
 
     private final String debut ="fleche (doite/gauche) faire defiler, i exit, b back, enter choisir un item";
 
 
-
+    public  boolean isOpen(){return affiche;}
 
     public void beginLoot(Area area){
         affiche=true;
@@ -50,11 +51,13 @@ public class GestionaireItem extends ArrayList<Collectable> {
            left= keyboard.get(Keyboard.LEFT);
            right= keyboard.get(Keyboard.RIGHT);
            i= keyboard.get(Keyboard.I);
+           a = keyboard.get(Keyboard.A);
     }
 
 
     public void addItem(Collectable item){
             this.add(item);
+            item.whenLoot(); //A def
     }
 
     private String affiche(){
@@ -108,6 +111,8 @@ public class GestionaireItem extends ArrayList<Collectable> {
                    if(currentItem+1<this.size()){
                        currentItem++;
                    }
+               }else if(a.isPressed()){
+                   currentItem.drop();
                }
 
                if(isSelected){
