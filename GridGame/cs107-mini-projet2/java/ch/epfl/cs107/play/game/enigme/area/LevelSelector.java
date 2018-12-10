@@ -29,6 +29,7 @@ public class LevelSelector extends EnigmeArea {
 
 
 
+
         int [] [] coord ={{5,1},{5,1},{5,3},{10,4},{12,1},{6,6},{7,6}};
 
         for(int i=0; i<7; i++){

@@ -193,7 +193,9 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
             Orientation targetOrientation = null;
             this.initializeDirection();
 
-
+        if(!bag.isOpen()) {
+            Orientation targetOrientation = null;
+            this.initializeDirection();
 
             for (Direction dir : Direction.values()) {
                 if (dir.bouton.isDown()) {

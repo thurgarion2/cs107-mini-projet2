@@ -63,6 +63,7 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
     public void addItem(Collectable item){
             this.add(item);
             item.whenLoot(); //A def
+
     }
 
     public List<Collectable> getItem(){
@@ -73,6 +74,7 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
         toReturn.add(this.get(currentItem));
         this.remove(currentItem);
         currentItem=0;
+
 
     }
 
@@ -154,7 +156,6 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
                    }
                }else if(a.isPressed()){
                    currentItem.drop();
-
                }
 
                if(isSelected){
