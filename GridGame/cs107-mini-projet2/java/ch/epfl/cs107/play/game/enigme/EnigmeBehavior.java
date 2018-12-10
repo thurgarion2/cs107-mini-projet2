@@ -4,8 +4,7 @@ import ch.epfl.cs107.play.game.actor.Actor;
 import ch.epfl.cs107.play.game.areagame.AreaBehavior;
 import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.game.enigme.cellType.Glissant;
-import ch.epfl.cs107.play.game.enigme.cellType.Liquide;
+import ch.epfl.cs107.play.game.enigme.cellType.*;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
 import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
@@ -14,30 +13,29 @@ import ch.epfl.cs107.play.window.Window;
 public class EnigmeBehavior extends AreaBehavior {
 
     public enum EnigmeCellType {
-        NULL(0,true,false),
-        WALL(-16777216,true,false), // RGB code of black
-        DOOR(-65536,false,false), // RGB code of red
-        WATER(-16776961,false,false), // RGB code of blue
-        INDOOR_WALKABLE(-1,false,false),
-        OUTDOOR_WALKABLE(-14112955,false,false);
+        NULL(0,new Wall()),
+        WALL(-16777216,new Wall()), // RGB code of black
+        DOOR(-65536,new Other()), // RGB code of red
+        WATER(-16776961,new Water()), // RGB code of blue
+        INDOOR_WALKABLE(-1,new Other()),
+        OUTDOOR_WALKABLE(-14112955,new Other());
 
         final int type;
-        final boolean canWalk;
-        final boolean isViewinteractor;
+        final CellBehavior behavior;
 
 
-        EnigmeCellType(int type, boolean canWalk, boolean isViewinteractor){
-            this.type = type;
-            this.canWalk=canWalk;
-            this.isViewinteractor=isViewinteractor;
+        EnigmeCellType(int type, CellBehavior behavior){
+           this.type=type;
+           this.behavior=behavior;
+
+
         }
 
-
-        static EnigmeCellType toType(int type){
+        static CellBehavior toType(int type){
 
             for(EnigmeCellType cell : EnigmeCellType.values()){
                 if(cell.type==type){
-                    return cell;
+                    return cell.behavior.newCell();
                 }
             }
             return null;
@@ -69,14 +67,14 @@ public class EnigmeBehavior extends AreaBehavior {
 
     public class EnigmeCell extends Cell implements Liquide, Glissant {
 
-        private EnigmeCellType type;
+        private CellBehavior behavior;
         //test if two movable area entity want to go in the same cells
         //during the same frame
         private boolean reserve=false;
 
-        private EnigmeCell(int x, int y, EnigmeCellType type) {
+        private EnigmeCell(int x, int y, CellBehavior behavior) {
             super(x, y);
-           this.type=type;
+            this.behavior=behavior;
 
         }
 
@@ -85,29 +83,22 @@ public class EnigmeBehavior extends AreaBehavior {
 
         @Override
         public boolean takeCellSpace() {
-            return this.type.canWalk;
+            return this.behavior.takeCellSpace();
         }
 
         @Override
         public void acceptInteraction(AreaInteractionVisitor v) {
-             if(type==EnigmeCellType.OUTDOOR_WALKABLE){
-                 ((EnigmeInteractionVisitor)v).interactWith((Glissant)this);
-             }else if(type==EnigmeCellType.WATER){
-                 ((EnigmeInteractionVisitor)v).interactWith((Liquide)this);
-             }else{
-                 ((EnigmeInteractionVisitor)v).interactWith(this);
-             }
-
+            behavior.acceptInteraction(v);
         }
 
         @Override
         public boolean isViewInteractable() {
-            return type.isViewinteractor;
+            return this.behavior.isViewInteractable();
         }
 
         @Override
         public boolean isCellInteractable() {
-            return true;
+            return this.behavior.isCellInteractable();
         }
 
         @Override

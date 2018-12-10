@@ -6,7 +6,12 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
 import java.util.List;
 
-public class Wall implements CellBehavior {
+public class Ice implements CellBehavior, Glissant {
+
+    @Override
+    public CellBehavior newCell() {
+        return new Ice();
+    }
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
@@ -14,13 +19,8 @@ public class Wall implements CellBehavior {
     }
 
     @Override
-    public void acceptInteraction(AreaInteractionVisitor v) {
-        ((EnigmeInteractionVisitor)v).interactWith((CellBehavior)this);
-    }
-
-    @Override
     public boolean takeCellSpace() {
-        return true;
+        return false;
     }
 
     @Override
@@ -30,11 +30,11 @@ public class Wall implements CellBehavior {
 
     @Override
     public boolean isCellInteractable() {
-        return false;
+        return true;
     }
 
     @Override
-    public CellBehavior newCell() {
-        return new Wall();
+    public void acceptInteraction(AreaInteractionVisitor v) {
+        ((EnigmeInteractionVisitor)v).interactWith((Glissant)this);
     }
 }

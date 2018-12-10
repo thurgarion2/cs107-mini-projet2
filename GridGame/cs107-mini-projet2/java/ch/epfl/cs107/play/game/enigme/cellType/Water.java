@@ -13,9 +13,9 @@ import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.List;
 
-public class Water extends CellBehavior implements Liquide, Glissant{
+public class Water  implements CellBehavior, Liquide{
 
-    private enum Etat{
+    /*private enum Etat{
         Solide,
         Liquide;
 
@@ -30,15 +30,10 @@ public class Water extends CellBehavior implements Liquide, Glissant{
             frame.nextFrame();
         }
 
-    }
+    }*/
 
-    private Etat etat;
 
-    public Water(Water behavior) {
-        super(behavior);
-    }
 
-    public Water(boolean isLiquide) {
 
 
 
@@ -58,38 +53,17 @@ public class Water extends CellBehavior implements Liquide, Glissant{
         water.setFrameUpdate(4);
         Etat.Liquide.setAnimation(water);*/
 
-        etat=Etat.Liquide;
-        if(!isLiquide){
-            etat=Etat.Solide;
-        }
 
-    }
 
-    public void switchEtat(){
-        if(etat==Etat.Solide){
-            etat=Etat.Liquide;
-        }else{
-            etat=Etat.Solide;
-        }
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        etat.draw(canvas);
-    }
-
-    @Override
-    public boolean isCellInteractable() {
-        return true;
-    }
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v) {
-        if(etat==Etat.Liquide){
-            ((EnigmeInteractionVisitor)v).interactWith((Liquide)this);
-        }else {
-            ((EnigmeInteractionVisitor)v).interactWith((Glissant)this);
-        }
+        ((EnigmeInteractionVisitor)v).interactWith((Liquide)this);
+    }
+
+    @Override
+    public List<DiscreteCoordinates> getCurrentCells() {
+        return null;
     }
 
     @Override
@@ -103,8 +77,14 @@ public class Water extends CellBehavior implements Liquide, Glissant{
     }
 
     @Override
-    public boolean isDrawAble() {
+    public boolean isCellInteractable() {
         return true;
+    }
+
+
+    @Override
+    public CellBehavior newCell() {
+        return new Water();
     }
 
 

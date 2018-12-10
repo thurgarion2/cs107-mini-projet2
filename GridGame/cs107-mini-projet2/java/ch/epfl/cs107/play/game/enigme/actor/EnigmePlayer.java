@@ -72,7 +72,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         super(area, orientation, position);
         sprite=new   Sprite("ghost.1", 1, 1.f, this);
 
-        bag=new GestionaireItem();
+
 
         keyboard=area.getKeyboard();
         depart=new LinkedList<>();
@@ -241,7 +241,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
             // fait en sorte que la pomme soit ramassée
             if(lKey.isPressed()){
                 if(item.collect()){
-                    bag.add(item);
+
                 }
             }
         }
