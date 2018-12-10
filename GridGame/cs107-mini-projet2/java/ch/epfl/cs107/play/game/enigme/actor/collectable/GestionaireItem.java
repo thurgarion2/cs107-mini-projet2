@@ -73,6 +73,7 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
         toReturn.add(this.get(currentItem));
         this.remove(currentItem);
         currentItem=0;
+
     }
 
     protected String affiche(){
@@ -144,7 +145,15 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
                    move(1);
                }else if(right.isPressed()){
 
+
                    move(-1);
+
+
+                   if(currentItem+1<this.size()){
+                       currentItem++;
+                   }
+               }else if(a.isPressed()){
+                   currentItem.drop();
 
                }
 
