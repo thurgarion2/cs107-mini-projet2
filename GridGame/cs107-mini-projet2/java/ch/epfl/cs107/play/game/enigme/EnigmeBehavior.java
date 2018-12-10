@@ -6,8 +6,12 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.cellType.*;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
+import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class EnigmeBehavior extends AreaBehavior {
@@ -18,7 +22,7 @@ public class EnigmeBehavior extends AreaBehavior {
         DOOR(-65536,new Other()), // RGB code of red
         WATER(-16776961,new Water()), // RGB code of blue
         INDOOR_WALKABLE(-1,new Other()),
-        OUTDOOR_WALKABLE(-14112955,new Other());
+        OUTDOOR_WALKABLE(-14112955,new Ice());
 
         final int type;
         final CellBehavior behavior;
@@ -43,6 +47,8 @@ public class EnigmeBehavior extends AreaBehavior {
 
     }
 
+    private List<EnigmeCell> cellToDraw;
+
 
     /**
      *
@@ -56,10 +62,17 @@ public class EnigmeBehavior extends AreaBehavior {
     /**Initialize cell according to the color of the image and the type define for each color in demoCelltype*/
     @Override
     protected void initializeCells(Cell[][] cells, Image img) {
+        cellToDraw=new LinkedList<>();
         for(int x=0; x<cells.length; x++){
             for(int y=0; y<cells[x].length; y++){
                 cells[x][y]=new EnigmeCell(x,y, EnigmeCellType.toType(img.getRGB(cells[x].length-1-y, x)));
             }
+        }
+    }
+
+    public void draw(Canvas canvas){
+        for(EnigmeCell cell : cellToDraw ){
+            cell.draw(canvas);
         }
     }
 
@@ -75,10 +88,16 @@ public class EnigmeBehavior extends AreaBehavior {
         private EnigmeCell(int x, int y, CellBehavior behavior) {
             super(x, y);
             this.behavior=behavior;
+            behavior.begin(new Ancre(this.getCoordinate().toVector()));
+            if(behavior.isDrawAble()){
+                cellToDraw.add(this);
+            }
 
         }
 
-
+        public  void draw(Canvas canvas){
+            behavior.draw(canvas);
+        }
 
 
         @Override

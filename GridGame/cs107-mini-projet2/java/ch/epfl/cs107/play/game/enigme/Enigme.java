@@ -35,12 +35,11 @@ public class Enigme extends AreaGame {
         this.addArea(new Level1());
         this.addArea(new Level2());
         this.addArea(new Level3());
-
         this.addArea(new Level4());
 
 
         this.setCurrentArea("LevelSelector", false);
-        player = new EnigmePlayer(this.currentArea, new DiscreteCoordinates(5, 5));
+        player = new EnigmePlayerAnimate(this.currentArea, new DiscreteCoordinates(5, 5));
         currentArea.registerActor(player);
         currentArea.setViewCandidate(player);
 

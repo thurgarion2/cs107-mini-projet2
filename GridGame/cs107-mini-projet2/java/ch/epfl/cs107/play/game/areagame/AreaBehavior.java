@@ -191,6 +191,10 @@ public abstract class AreaBehavior
             }
         }
 
+        protected DiscreteCoordinates getCoordinate(){
+            return coordinate;
+        }
+
         /**remove entity of the cell*/
         private boolean leave(Interactable i){
                 return canInteract.remove(i);

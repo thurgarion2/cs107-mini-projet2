@@ -4,7 +4,9 @@ import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.AreaEntityCollectable;
+import ch.epfl.cs107.play.game.enigme.actor.collectable.Collectable;
 import ch.epfl.cs107.play.game.enigme.actor.collectable.GestionaireItem;
+import ch.epfl.cs107.play.game.enigme.actor.collectable.Inventaire;
 import ch.epfl.cs107.play.game.enigme.actor.decor.MovableItem;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.CellInteruptor;
@@ -53,13 +55,12 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     }
     //L key
     Button lKey;
-
     //Space bar to open bag
     Button spaceKey;
     //a to drop item
     Button akey;
-    //TODO create a bag
-    private GestionaireItem bag;
+
+    private Inventaire bag;
 
 
     private final EnigmePlayerHandler handler= new EnigmePlayerHandler();
@@ -76,13 +77,11 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         super(area, orientation, position);
         sprite=new   Sprite("ghost.1", 1, 1.f, this);
 
-
-
         keyboard=area.getKeyboard();
         depart=new LinkedList<>();
         depart=this.getCurrentCells();
+        bag=new Inventaire();
 
-        akey = keyboard.get(Keyboard.A);
 
         initializeDirection();
     }
@@ -136,13 +135,16 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         isPassingDoor=true;
     }
 
+
     @Override
+    //redefine this methode to add new thing to draw
     public void draw(Canvas canvas) {
-        initializeDirection();
-        if(spaceKey.isPressed()){
-            System.out.println("ok");
-            bag.beginLoot(ownerArea);
-        }
+        drawPlayer(canvas);
+        bag.draw(canvas);
+    }
+
+    //redefine this methode if you want to change draw of the player
+    protected void drawPlayer(Canvas canvas){
         sprite.draw(canvas);
     }
 
@@ -187,29 +189,23 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         other.acceptInteraction(handler);
     }
 
-    public void dropItem{
-       DiscreteCoordinates dropPoint = new DiscreteCoordinates(this.getCurrentMainCellCoordinates().x, this.getCurrentMainCellCoordinates().y);
-       if (this.getOrientation() == Orientation.DOWN){
-           dropPoint = new DiscreteCoordinates(dropPoint.x, dropPoint.y -1);
-       }else if(this.getOrientation() == Orientation.LEFT){
-           dropPoint = new DiscreteCoordinates(dropPoint.x -1, dropPoint.y);
-       }else if(this.getOrientation() == Orientation.UP){
-           dropPoint = new DiscreteCoordinates(dropPoint.x, dropPoint.y + 1);
-       }else if(this.getOrientation() == Orientation.RIGHT){
-           dropPoint = new DiscreteCoordinates(dropPoint.x +1, dropPoint.y);
-       }
-       bag.drop(ownerArea, dropPoint);
+    public void addItem(Collectable item){
+       bag.addItem(item);
     }
+
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        bag.update();
+        this.initializeDirection();
 
+        if(spaceKey.isPressed() && !this.isMoving()){
+            bag.beginLoot(ownerArea,this);
+        }
 
 
         if(!bag.isOpen()) {
-
-            this.initializeDirection();
             Orientation targetOrientation = null;
 
             for (Direction dir : Direction.values()) {
@@ -225,6 +221,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
                     this.setOrientation(targetOrientation);
                 }
             }
+
         }
 
     }

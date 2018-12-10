@@ -37,7 +37,8 @@ public class EnigmePlayerAnimate extends EnigmePlayer {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    protected void drawPlayer(Canvas canvas) {
         seDeplace.draw(canvas);
     }
+
 }

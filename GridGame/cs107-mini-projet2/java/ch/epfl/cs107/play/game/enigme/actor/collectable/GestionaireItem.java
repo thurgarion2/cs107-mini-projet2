@@ -2,48 +2,54 @@ package ch.epfl.cs107.play.game.enigme.actor.collectable;
 
 import ch.epfl.cs107.play.game.areagame.Area;
 
-import ch.epfl.cs107.play.game.enigme.actor.Dialog;
-import ch.epfl.cs107.play.math.DiscreteCoordinates;
+
+import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 public abstract class GestionaireItem extends ArrayList<Collectable> {
     protected Keyboard keyboard;
-    private Dialog communique;
-    private Area area;
+    private DialogScroll communique;
+    protected EnigmePlayer interactor;
+    protected Area ownArea;
 
-    private boolean affiche=false; // true if bag is open, false otherwise
+    private enum State{
+        close,
+        scroll,
+        itemSelected;
+
+    }
+
+    private State etat=State.close;
 
     private int currentItem;
-    private boolean isSelected;
-
-    private List<Collectable> toReturn;
 
 
-    private Button enter;
-    private Button left;
-    private Button right;
-    private Button b;
-    private Button i;
+
+    protected Button enter;
+    protected Button left;
+    protected Button right;
+    protected Button b;
+    protected Button i;
 
 
-    private final String debut ="fleche (doite/gauche) faire defiler, i exit, b back, enter choisir un item";
+    private final String debut ="fleche (doite/gauche) faire defiler, i exit, b back, enter choisir un item :";
 
 
-    public  boolean isOpen(){return affiche;}
+    public  boolean isOpen(){return etat!=State.close;}
 
-    public void beginLoot(Area area){
-        toReturn=new LinkedList<>();
-        affiche=true;
+    public void beginLoot(Area area, EnigmePlayer player){
+        this.interactor=player;
+        this.ownArea=area;
         currentItem=0;
-        isSelected=false;
-        this.area=area;
-        communique=new Dialog("", "dialog.2", area);
+
+
+        etat=State.scroll;
+
+        communique=new DialogScroll(this.affiche(), "dialog.2", area);
         iniKeyboard();
 
     }
@@ -51,7 +57,7 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
 
 
     protected void iniKeyboard(){
-           keyboard=area.getKeyboard();
+           keyboard=ownArea.getKeyboard();
            enter= keyboard.get(Keyboard.ENTER);
            b= keyboard.get(Keyboard.B);
            left= keyboard.get(Keyboard.LEFT);
@@ -66,113 +72,113 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
 
     }
 
-    public List<Collectable> getItem(){
-        return toReturn;
-    }
 
     protected void removeItem(){
-        toReturn.add(this.get(currentItem));
-        this.remove(currentItem);
-        currentItem=0;
-
+           this.remove(currentItem-1);
+           if(currentItem>this.size()){
+               currentItem--;
+           }
 
     }
 
-    protected String affiche(){
-        String out="";
-        if(currentItem==0){
-             out=out+debut+" : ";
-        }
+    protected String[] affiche(){
+        String[] out=new String[this.size()+1];
+        out[0]=debut;
+        for(int i=1; i<=this.size(); i++){
+            out[i]=this.get(i-1).nom();
 
-        for(int i=currentItem; i<this.size(); i++){
-            if(i==currentItem){
-                out+="( ";
+            if(i==currentItem && i!=0){
+                out[i]=" ( "+out[i]+" ) ";
             }
-            out+="\n"+this.get(i).nom();
-            if(i==currentItem){
-                out+=" ) ";
-            }
-            out+=" - ";
         }
 
         return out;
     }
 
-    protected String affiche(Collectable item){
-           String out="";
-           out+=item.affiche();
-           out+="  appuyer sur enter pour jeter";
+    protected String[] affiche(Collectable item){
+           String[] out=new String[1];
+           out[0]=item.affiche();
+           out[0]+=" :  appuyer sur enter pour ";
 
            return out;
     }
 
-    protected void select(){
-        isSelected=true;
+    protected final int getCurrentItem(){
+        return currentItem-1;
     }
+
+
+    protected void select(){
+       etat=State.itemSelected;
+    }
+
     protected void deselect(){
-        isSelected=false;
+       etat=State.scroll;
     }
 
     protected void exit(){
-        affiche=false;
+
+        etat=State.close;
+
     }
 
     protected void move(int i){
-        if(currentItem+i>=0 && currentItem+i<this.size()){
+        if(currentItem+i>=0 && currentItem+i<=this.size()){
             currentItem=currentItem+i;
         }
     }
-    protected boolean isSelected(){
-        return isSelected;
+
+
+
+    public final void update(){
+        if(etat!=State.close){
+            this.iniKeyboard();
+            updateInventory();
+        }
     }
 
 
 
-    public void update(){
+    protected void updateInventory(){
+        this.iniKeyboard();
 
-           if(affiche){
-               iniKeyboard();
-               if(enter.isPressed()){
-                   if(isSelected){
-                       removeItem();
-                       deselect();
-                   }else{
-                       select();
-                   }
-               }else if(i.isPressed()){
-                   exit();
-               }else if(b.isPressed()){
-                  deselect();
-               }else if(left.isDown()){
-                   move(1);
-               }else if(right.isPressed()){
+        if(enter.isPressed()){
+            if(etat==State.itemSelected){
+                removeItem();
+                deselect();
+            }else if(currentItem>0){
+                select();
+            }
+        }else if(i.isPressed()){
+            exit();
+        }else if(b.isPressed()){
+            deselect();
+        }else if(right.isPressed()){
+            move(1);
+        }else if(left.isPressed()){
+            move(-1);
+        }
 
+        switch (etat){
 
-                   move(-1);
+            case scroll:
+                communique.resetDialog(this.affiche(), currentItem);
+                break;
+            case itemSelected:
+                communique.resetDialog(this.affiche(this.get(currentItem-1)), 0);
+                break;
+            default:
+                break;
 
-
-                   if(currentItem+1<this.size()){
-                       currentItem++;
-                   }
-               }else if(a.isPressed()){
-                   this.get(currentItem).drop(area, );
-               }
-
-               if(isSelected){
-                   communique.resetDialog(affiche(this.get(currentItem)));
-               }else{
-                   communique.resetDialog(this.affiche());
-               }
-           }
+        }
 
     }
 
 
     public void draw(Canvas canvas){
-           if(affiche){
+           if(etat!=State.close){
                communique.draw(canvas);
            }
-
     }
 
 }

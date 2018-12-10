@@ -25,12 +25,9 @@ public class LevelSelector extends EnigmeArea {
 
 
 
-        String[] nomNiveau= {"Level1","Level2","Level3", "LevelSelector", "LevelSelector","LevelSelector","LevelSelector","LevelSelector"};
+        String[] nomNiveau= {"Level1","Level2","Level3", "hiver.1", "LevelSelector","LevelSelector","LevelSelector","LevelSelector"};
 
-
-
-
-        int [] [] coord ={{5,1},{5,1},{5,3},{10,4},{12,1},{6,6},{7,6}};
+        int [] [] coord ={{5,1},{5,1},{5,3},{12,1},{5,6},{6,6},{7,6}};
 
         for(int i=0; i<7; i++){
             DiscreteCoordinates arrivee=new DiscreteCoordinates(coord[i][0],coord[i][1] );

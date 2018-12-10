@@ -33,7 +33,7 @@ public abstract class AreaEntity extends Entity implements Interactable {
     public AreaEntity(Area area, Orientation orientation, DiscreteCoordinates position) throws NullPointerException{
 
         super(position.toVector());
-        // TODO implements me #PROJECT #TUTO
+
         if(area==null){
             throw new NullPointerException("initial Owner is null");
         }
