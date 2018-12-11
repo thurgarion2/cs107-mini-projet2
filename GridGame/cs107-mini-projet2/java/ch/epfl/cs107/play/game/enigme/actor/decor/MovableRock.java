@@ -18,9 +18,9 @@ public class MovableRock  extends MovableItem {
      * @param position    (Coordinate): Initial position of the entity. Not null
      * @param coord
      */
-    public MovableRock(Area area, Orientation orientation, DiscreteCoordinates position, DiscreteCoordinates... coord) {
-        super(area, orientation, position, coord);
-        sprite=new Sprite("rock.3", 1.0f, 1.0f, this);
+    public MovableRock(Area area, Orientation orientation, DiscreteCoordinates position, boolean onIce, DiscreteCoordinates... coord) {
+        super(area, orientation, position, onIce, coord);
+        sprite=new Sprite("rock.2", 1.0f, 1.0f, this);
     }
 
     @Override

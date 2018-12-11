@@ -3,10 +3,9 @@ package ch.epfl.cs107.play.game.enigme.actor;
 import ch.epfl.cs107.play.game.areagame.Area;
 import ch.epfl.cs107.play.game.areagame.actor.*;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.game.enigme.actor.collectable.AreaEntityCollectable;
-import ch.epfl.cs107.play.game.enigme.actor.collectable.Collectable;
-import ch.epfl.cs107.play.game.enigme.actor.collectable.GestionaireItem;
-import ch.epfl.cs107.play.game.enigme.actor.collectable.Inventaire;
+import ch.epfl.cs107.play.game.enigme.actor.collectable.*;
+import ch.epfl.cs107.play.game.enigme.actor.decor.BlocDestructible;
+import ch.epfl.cs107.play.game.enigme.actor.decor.Coffre;
 import ch.epfl.cs107.play.game.enigme.actor.decor.MovableItem;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.CellInteruptor;
@@ -29,6 +28,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     private Door door; // last door passed
 
     private Sprite sprite;
+    private Collectable outils=null;
 
     /// Animation duration in frame number
     private final static int ANIMATION_DURATION = 8;
@@ -133,6 +133,10 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     public void setIsPassingDoor(Door door){
         this.door=door;
         isPassingDoor=true;
+    }
+
+    public void equipe(Collectable outils){
+        this.outils=outils;
     }
 
 
@@ -289,6 +293,20 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
             if(ownerArea.canLeaveAreaCells(getInstance(), getCurrentCells()) &&  ownerArea.canEnterAreaCells(getInstance(),depart)){
                 ownerArea.transfertEntity(getInstance(), getCurrentCells(), depart);
                 getInstance().setCurrentPosition(depart.get(0).toVector());
+            }
+        }
+
+        @Override
+        public void interactWith(BlocDestructible bloc) {
+            if(outils.getClass()== Pioche.class && lKey.isPressed()){
+                bloc.casseBloc();
+            }
+        }
+
+        @Override
+        public void interactWith(Coffre coffre) {
+            if(lKey.isPressed()){
+                coffre.loot(getInstance());
             }
         }
 

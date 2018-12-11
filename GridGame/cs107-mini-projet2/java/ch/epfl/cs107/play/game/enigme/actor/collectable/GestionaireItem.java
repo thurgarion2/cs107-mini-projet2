@@ -137,6 +137,13 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
         }
     }
 
+    protected boolean canBeEquipe(){
+        if(this.get(currentItem-1).peutEtreEquipe() && etat==State.itemSelected){
+            return true;
+        }
+        return false;
+    }
+
 
 
     protected void updateInventory(){

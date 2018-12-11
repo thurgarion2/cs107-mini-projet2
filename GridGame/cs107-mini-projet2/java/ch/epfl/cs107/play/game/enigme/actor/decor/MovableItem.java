@@ -25,6 +25,7 @@ public abstract class MovableItem extends MovableAreaEntity implements Interacto
     private List<DiscreteCoordinates> depart;
     private boolean estAffiche=true;
     private boolean isMoving=false;
+    private boolean isOnIce;
 
     /**
      * Default MovableAreaEntity constructor
@@ -33,10 +34,10 @@ public abstract class MovableItem extends MovableAreaEntity implements Interacto
      * @param orientation (Orientation): Initial orientation of the entity. Not null
      * @param position    (Coordinate): Initial position of the entity. Not null
      */
-    public MovableItem(Area area, Orientation orientation, DiscreteCoordinates position, DiscreteCoordinates...coord) {
+    public MovableItem(Area area, Orientation orientation, DiscreteCoordinates position, boolean onIce, DiscreteCoordinates...coord) {
         super(area, orientation, position);
 
-
+        isOnIce=onIce;
         currentCells=new LinkedList<>();
         currentCells.add(position);
 
@@ -49,6 +50,10 @@ public abstract class MovableItem extends MovableAreaEntity implements Interacto
         }
 
         this.handler=new MovableItemInteractor();
+    }
+
+    public boolean isOnIce() {
+        return isOnIce;
     }
 
     public boolean moveItem(Orientation orientation){

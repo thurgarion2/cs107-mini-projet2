@@ -43,9 +43,15 @@ public abstract class AreaBehavior
 
     }
 
-    // TODO implements me #PROJECT #TUTO
+
     /**metod to initialze the cell acording to the wanted type in subclass*/
     protected abstract void initializeCells(Cell[][] cells, Image img);
+
+    /**Getter for cells*/
+
+    protected Cell getCellule(DiscreteCoordinates coord){
+        return cells[coord.x][coord.y];
+    }
 
     /**@return (int): the width of the area*/
 

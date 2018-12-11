@@ -6,6 +6,7 @@ import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.cellType.*;
 import ch.epfl.cs107.play.game.enigme.handler.EnigmeInteractionVisitor;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Image;
 import ch.epfl.cs107.play.window.Window;
@@ -47,7 +48,6 @@ public class EnigmeBehavior extends AreaBehavior {
 
     }
 
-    private List<EnigmeCell> cellToDraw;
 
 
     /**
@@ -62,7 +62,6 @@ public class EnigmeBehavior extends AreaBehavior {
     /**Initialize cell according to the color of the image and the type define for each color in demoCelltype*/
     @Override
     protected void initializeCells(Cell[][] cells, Image img) {
-        cellToDraw=new LinkedList<>();
         for(int x=0; x<cells.length; x++){
             for(int y=0; y<cells[x].length; y++){
                 cells[x][y]=new EnigmeCell(x,y, EnigmeCellType.toType(img.getRGB(cells[x].length-1-y, x)));
@@ -70,12 +69,17 @@ public class EnigmeBehavior extends AreaBehavior {
         }
     }
 
-    public void draw(Canvas canvas){
-        for(EnigmeCell cell : cellToDraw ){
-            cell.draw(canvas);
+
+    public void update(){
+        for(int x=0; x<this.getWitdth(); x++){
+            for(int y=0; y<this.getHeight(); y++){
+                Cell cell = this.getCell(new DiscreteCoordinates(x, y));
+                if(cell instanceof EnigmeCell){
+                    ((EnigmeCell)cell).update();
+                }
+            }
         }
     }
-
 
 
     public class EnigmeCell extends Cell implements Liquide, Glissant {
@@ -83,20 +87,17 @@ public class EnigmeBehavior extends AreaBehavior {
         private CellBehavior behavior;
         //test if two movable area entity want to go in the same cells
         //during the same frame
-        private boolean reserve=false;
+        private Interactable reserve=null;
 
         private EnigmeCell(int x, int y, CellBehavior behavior) {
             super(x, y);
             this.behavior=behavior;
-            behavior.begin(new Ancre(this.getCoordinate().toVector()));
-            if(behavior.isDrawAble()){
-                cellToDraw.add(this);
-            }
-
         }
 
-        public  void draw(Canvas canvas){
-            behavior.draw(canvas);
+
+
+        public void update(){
+            reserve=null;
         }
 
 
@@ -122,12 +123,23 @@ public class EnigmeBehavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
+            if(!behavior.canEnter(entity)){
+                return false;
+            }
 
             for(Interactable interact : this.canInteract){
                 if(interact.takeCellSpace()){
-
                     return false;
                 }
+
+            }
+
+            if (reserve!= null && reserve!=entity){
+                return false;
+            }
+
+            if(reserve==null){
+                reserve=entity;
             }
 
             return true;

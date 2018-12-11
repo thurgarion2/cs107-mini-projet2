@@ -335,7 +335,6 @@ public abstract class Area implements Playable {
         purgeRegistration();
 
 
-
         for(Actor actor : actors){
             actor.update(deltaTime);
         }
@@ -355,6 +354,8 @@ public abstract class Area implements Playable {
         for(Actor actor : actors){
             actor.draw(window);
         }
+
+
     }
 
     /**set the camera at the right position*/

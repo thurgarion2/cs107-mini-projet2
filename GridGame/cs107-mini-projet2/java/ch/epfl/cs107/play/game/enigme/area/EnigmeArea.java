@@ -22,21 +22,15 @@ public abstract class EnigmeArea extends Area {
         behavior=new EnigmeBehavior(window,this.getTitle());
         this.setAreaBehavior(behavior);
 
-        this.registerActor(setBackground());
+        this.registerActor(new Background(this));
         return true;
     }
 
-    protected Background setBackground(){
-        return new Background(this);
-    }
-
-    public void drawCells(Canvas canvas){
-        this.behavior.draw(canvas);
-    }
 
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        this.behavior.update();
     }
 }

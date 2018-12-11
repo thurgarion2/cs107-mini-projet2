@@ -2,6 +2,7 @@ package ch.epfl.cs107.play.game.enigme.cellType;
 
 import ch.epfl.cs107.play.game.actor.Entity;
 import ch.epfl.cs107.play.game.areagame.actor.BoucleAnimation;
+import ch.epfl.cs107.play.game.areagame.actor.Interactable;
 import ch.epfl.cs107.play.game.areagame.actor.Sprite;
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.EnigmeBehavior;
@@ -76,6 +77,11 @@ public class Water  implements CellBehavior, Liquide{
 
     @Override
     public boolean isDrawAble() {
+        return true;
+    }
+
+    @Override
+    public boolean canEnter(Interactable entiy) {
         return true;
     }
 

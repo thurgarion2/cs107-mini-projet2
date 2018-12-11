@@ -2,6 +2,8 @@ package ch.epfl.cs107.play.game.enigme.handler;
 
 import ch.epfl.cs107.play.game.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.game.enigme.EnigmeBehavior;
+import ch.epfl.cs107.play.game.enigme.actor.decor.BlocDestructible;
+import ch.epfl.cs107.play.game.enigme.actor.decor.Coffre;
 import ch.epfl.cs107.play.game.enigme.actor.decor.MovableItem;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
 import ch.epfl.cs107.play.game.enigme.actor.EnigmePlayer;
@@ -46,6 +48,14 @@ public interface EnigmeInteractionVisitor extends AreaInteractionVisitor {
     }
 
     default void interactWith(CellInteruptor interuptor){
+        // by default the interaction is empty
+    }
+
+    default void interactWith(Coffre coffre){
+        // by default the interaction is empty
+    }
+
+    default void interactWith(BlocDestructible bloc){
         // by default the interaction is empty
     }
 

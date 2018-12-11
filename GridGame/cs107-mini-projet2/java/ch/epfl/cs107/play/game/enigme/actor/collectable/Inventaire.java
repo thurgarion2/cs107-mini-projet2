@@ -11,14 +11,22 @@ public class Inventaire extends  GestionaireItem {
 
     @Override
     protected String[] affiche(Collectable item) {
-         String[]  out =super.affiche(item);
-         out[0]+=" jeter";
-         if(item.peutEtreEquipe()){
-             out[0]+="/ sur a pour equiper";
-         }
-         return out;
+        String[]  out =super.affiche(item);
+        out[0]+=" jeter";
+        if(item.peutEtreEquipe()){
+            out[0]+="/ sur a pour equiper";
+        }
+        return out;
     }
 
+    @Override
+    protected void updateInventory() {
+        if(a.isPressed() && this.canBeEquipe()){
+            this.interactor.equipe(this.get(this.getCurrentItem()));
+        }else{
+            super.updateInventory();
+        }
+    }
 
     @Override
     protected void iniKeyboard() {
