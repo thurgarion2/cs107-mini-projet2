@@ -44,6 +44,7 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
     public void beginLoot(Area area, EnigmePlayer player){
         this.interactor=player;
         this.ownArea=area;
+        interactor.beginLoot();
         currentItem=0;
 
 
@@ -119,7 +120,7 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
     protected void exit(){
 
         etat=State.close;
-
+        interactor.endLoot();
     }
 
     protected void move(int i){

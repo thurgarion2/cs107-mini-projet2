@@ -43,7 +43,7 @@ public class BlocDestructible extends AreaEntity {
 
     public void casseBloc(){
         if(ownerArea.canLeaveAreaCells(this, this.getCurrentCells())){
-            ownerArea.leaveAreaCells(this, this.getCurrentCells() );
+            ownerArea.unregisterActor(this);
         }
     }
 

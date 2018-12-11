@@ -25,7 +25,9 @@ import java.util.List;
 
 public class EnigmePlayer extends MovableAreaEntity implements Interactor {
     private boolean isPassingDoor =false;
+    private boolean isLooting=false;
     private Door door; // last door passed
+
 
     private Sprite sprite;
     private Collectable outils=null;
@@ -189,6 +191,14 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
     }
 
+    public void beginLoot(){
+       isLooting=true;
+    }
+
+    public void endLoot(){
+       isLooting=false;
+    }
+
     public void interactWith(Interactable other) {
         other.acceptInteraction(handler);
     }
@@ -209,7 +219,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         }
 
 
-        if(!bag.isOpen()) {
+        if(!isLooting) {
             Orientation targetOrientation = null;
 
             for (Direction dir : Direction.values()) {
@@ -298,7 +308,8 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
 
         @Override
         public void interactWith(BlocDestructible bloc) {
-            if(outils.getClass()== Pioche.class && lKey.isPressed()){
+
+            if(outils!=null && outils.getClass()== Pioche.class && lKey.isPressed()){
                 bloc.casseBloc();
             }
         }
@@ -306,6 +317,7 @@ public class EnigmePlayer extends MovableAreaEntity implements Interactor {
         @Override
         public void interactWith(Coffre coffre) {
             if(lKey.isPressed()){
+                System.out.println("Interagit");
                 coffre.loot(getInstance());
             }
         }

@@ -17,7 +17,7 @@ public class Level4 extends EnigmeArea {
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
         boolean out=super.begin(window, fileSystem);
-        this.registerActor(new Door(this, "LevelSelector", new DiscreteCoordinates(4,6 ), Orientation.DOWN, new DiscreteCoordinates(4,0 )));
+        this.registerActor(new Door(this, "Hiver.2", new DiscreteCoordinates(5,12 ), Orientation.DOWN, new DiscreteCoordinates(4,0 )));
 
         PressurePlate [] plaques = new PressurePlate[3];
         plaques[0]=new PressurePlate(this, new DiscreteCoordinates(3, 4));
@@ -32,7 +32,7 @@ public class Level4 extends EnigmeArea {
         this.registerActor(new MovableRock(this, Orientation.DOWN,new DiscreteCoordinates(2, 8),true));
 
         MultipleAnd signal = new MultipleAnd(plaques[0],plaques[1],plaques[2]);
-        this.registerActor(new SignalDoor(this, "LevelSelector", new DiscreteCoordinates(4,6 ), Orientation.DOWN, new DiscreteCoordinates(4,11 ),signal));
+        this.registerActor(new SignalDoor(this, "Hiver.3", new DiscreteCoordinates(2,1 ), Orientation.DOWN, new DiscreteCoordinates(4,11 ),signal));
         return out;
     }
 

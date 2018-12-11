@@ -33,8 +33,15 @@ public class Coffre extends AreaEntity {
     }
 
     @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+        inventaire.update();
+    }
+
+    @Override
     public void draw(Canvas canvas) {
        sprite.draw(canvas);
+       inventaire.draw(canvas);
     }
 
     public void loot(EnigmePlayer interactor){
