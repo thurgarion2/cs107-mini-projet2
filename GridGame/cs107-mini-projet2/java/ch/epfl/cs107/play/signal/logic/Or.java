@@ -10,6 +10,9 @@ public class Or extends LogicSignal {
     }
 
     @Override
+    /*
+    * @return true if one of the Logics is true otherwise false
+    */
     public boolean isOn() {
 
         if( s1 != null && s2 != null && (s1.isOn() || s2.isOn())){

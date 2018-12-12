@@ -10,6 +10,9 @@ public class Not extends LogicSignal {
     }
 
     @Override
+    /*
+    * return the opposite logical value of s;
+    */
     public boolean isOn() {
         if(s != null && !s.isOn() ) {
             return true;

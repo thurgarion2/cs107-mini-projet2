@@ -1,6 +1,5 @@
 package ch.epfl.cs107.play.game.enigme.area;
 
-import ch.epfl.cs107.play.game.areagame.actor.Background;
 import ch.epfl.cs107.play.game.areagame.actor.Orientation;
 import ch.epfl.cs107.play.game.enigme.actor.decor.MovableRock;
 import ch.epfl.cs107.play.game.enigme.actor.door.Door;
@@ -8,7 +7,6 @@ import ch.epfl.cs107.play.game.enigme.actor.door.SignalDoor;
 import ch.epfl.cs107.play.game.enigme.actor.interupteur.PressurePlate;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.signal.logic.And;
 import ch.epfl.cs107.play.signal.logic.MultipleAnd;
 import ch.epfl.cs107.play.window.Window;
 
