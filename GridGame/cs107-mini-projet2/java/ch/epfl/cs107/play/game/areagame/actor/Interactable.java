@@ -25,4 +25,4 @@ public interface Interactable {
        System.out.println("attention acceptInteraction pas redefini");
     }
 
-    }
+}

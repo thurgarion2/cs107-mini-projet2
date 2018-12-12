@@ -3,7 +3,7 @@ package ch.epfl.cs107.play.game.areagame.actor;
 import ch.epfl.cs107.play.window.Canvas;
 
 //gère les déplacemnts (au niveau Graphique) d'une movableAreaEntity
-//suppose que chaque déplacement respecte la norme (4 frame, taille ect)
+//suppose que chaque déplacement respecte la norme (4 frame, taille etc)
 public class Deplacement {
     private MovableAreaEntity personnage;
 

@@ -16,6 +16,7 @@ public class Demo2 extends AreaGame {
     private boolean areaIsRoom0=true;
     public static final int scaleFactor = 22;
 
+    @Override
     public boolean begin(Window window, FileSystem fileSystem){
         super.begin(window,fileSystem);
 
@@ -35,6 +36,7 @@ public class Demo2 extends AreaGame {
     }
 
 
+    //fait le changement d area
     private void changeArea(){
         DiscreteCoordinates next;
         player.leaveArea();

@@ -15,6 +15,7 @@ public abstract class Room extends Area {
         return Demo2.scaleFactor;
     }
 
+    @Override
     public boolean begin(Window window, FileSystem fileSystem){
         super.begin(window,fileSystem);
         this.setAreaBehavior(new Demo2Behavior(window,this.getTitle()));

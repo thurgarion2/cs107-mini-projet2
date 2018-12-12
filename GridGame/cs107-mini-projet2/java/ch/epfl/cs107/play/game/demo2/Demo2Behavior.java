@@ -57,6 +57,13 @@ public class Demo2Behavior extends AreaBehavior {
 
         private Demo2CellType type;
 
+        /**
+         * The postion of the cell :
+         * @param x
+         * @param y
+         * The type of the cell
+         * @param type
+         */
         private Demo2Cell(int x, int y, Demo2CellType type) {
             super(x, y);
             this.type = type;

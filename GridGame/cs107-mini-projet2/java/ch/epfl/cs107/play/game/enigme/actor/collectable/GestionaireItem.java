@@ -10,6 +10,10 @@ import ch.epfl.cs107.play.window.Keyboard;
 
 import java.util.ArrayList;
 
+/**
+ * cette classe met en place le concepte de gestion d'item de manière général
+ */
+
 public abstract class GestionaireItem extends ArrayList<Collectable> {
     protected Keyboard keyboard;
     private DialogScroll communique;
@@ -27,6 +31,9 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
 
     private int currentItem;
 
+    /**
+     * Contrôle dans l'inventaire
+     */
 
 
     protected Button enter;
@@ -38,9 +45,16 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
 
     private final String debut ="fleche (doite/gauche) faire defiler, i exit, b back, enter choisir un item :";
 
-
+    /**
+     * possibilité de vérifier être ouvert
+     */
     public  boolean isOpen(){return etat!=State.close;}
 
+    /**
+     * @param area
+     * @param player
+     * ouvre le sac
+     */
     public void beginLoot(Area area, EnigmePlayer player){
         this.interactor=player;
         this.ownArea=area;
@@ -56,7 +70,9 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
     }
 
 
-
+    /**
+     * initialise le Keyboard
+     */
     protected void iniKeyboard(){
            keyboard=ownArea.getKeyboard();
            enter= keyboard.get(Keyboard.ENTER);
@@ -66,22 +82,29 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
            i= keyboard.get(Keyboard.I);
     }
 
+    /**
+     * ajoute un item
+     * @param item (un collectable)
+     */
 
     public void addItem(Collectable item){
             this.add(item);
             item.whenLoot(); //A def
-
     }
 
-
+    /**
+     * enlève le stockage dun item
+     */
     protected void removeItem(){
            this.remove(currentItem-1);
            if(currentItem>this.size()){
                currentItem--;
            }
-
     }
 
+    /**
+     * @return le contenu du sac en String[] ("Interface du sac")
+     */
     protected String[] affiche(){
         String[] out=new String[this.size()+1];
         out[0]=debut;
@@ -96,6 +119,11 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
         return out;
     }
 
+    /**
+     *affiche les commande possible à effectuer sur un item (Interface de l'item)
+     * @param item (collectable)
+     * @return les commande possible sur l'item
+     */
     protected String[] affiche(Collectable item){
            String[] out=new String[1];
            out[0]=item.affiche();
@@ -108,14 +136,24 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
         return currentItem-1;
     }
 
+    /**
+     * premet de selectionner un item et ouvrire l "interface" de ce dernier
+     */
 
     protected void select(){
        etat=State.itemSelected;
     }
 
+    /**
+     * retourne sur l'inventaire "général"
+     */
     protected void deselect(){
        etat=State.scroll;
     }
+
+    /**
+     * ferme le sac
+     */
 
     protected void exit(){
 
@@ -123,6 +161,10 @@ public abstract class GestionaireItem extends ArrayList<Collectable> {
         interactor.endLoot();
     }
 
+    /**
+     * permet de se dplacer de i case dans la la List d'item
+     * @param i
+     */
     protected void move(int i){
         if(currentItem+i>=0 && currentItem+i<=this.size()){
             currentItem=currentItem+i;
